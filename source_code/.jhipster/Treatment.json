@@ -1,0 +1,60 @@
+{
+    "name": "Treatment",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "duration",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "discount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "serv",
+            "otherEntityName": "serv",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "staff",
+            "otherEntityName": "staff",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "treatment"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "booking",
+            "otherEntityName": "booking",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "treatment"
+        }
+    ],
+    "changelogDate": "20210531022545",
+    "entityTableName": "treatment",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

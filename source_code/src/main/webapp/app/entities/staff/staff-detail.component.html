@@ -1,0 +1,57 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="staff">
+            <h2><span jhiTranslate="homespaApp.staff.detail.title">Staff</span> {{staff.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.staff.type">Type</span></dt>
+                <dd>
+                    <span>{{staff.type}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.staff.status">Status</span></dt>
+                <dd>
+                    <span>{{staff.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.staff.startTime">Start Time</span></dt>
+                <dd>
+                    <span>{{staff.startTime}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.staff.endTime">End Time</span></dt>
+                <dd>
+                    <span>{{staff.endTime}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.staff.category">Category</span></dt>
+                <dd>
+                    <span *ngFor="let category of staff.categories; let last = last">
+                        <a [routerLink]="['/category', category?.id, 'view' ]">{{category.category}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.staff.treatment">Treatment</span></dt>
+                <dd>
+                    <span *ngFor="let treatment of staff.treatments; let last = last">
+                        <a [routerLink]="['/treatment', treatment?.id, 'view' ]">{{treatment.treatment}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.staff.partner">Partner</span></dt>
+                <dd>
+                    <div *ngIf="staff.partner">
+                        <a [routerLink]="['/partner', staff.partner?.id, 'view']">{{staff.partner?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/staff', staff.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

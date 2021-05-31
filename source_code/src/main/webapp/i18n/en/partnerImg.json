@@ -1,0 +1,25 @@
+
+{
+    "homespaApp": {
+        "partnerImg" : {
+            "home": {
+                "title": "Partner Imgs",
+                "createLabel": "Create a new Partner Img",
+                "createOrEditLabel": "Create or edit a Partner Img"
+            },
+            "created": "A new Partner Img is created with identifier {{ param }}",
+            "updated": "A Partner Img is updated with identifier {{ param }}",
+            "deleted": "A Partner Img is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Partner Img {{ id }}?"
+            },
+            "detail": {
+                "title": "Partner Img"
+            },
+            "imgUrl": "Img Url",
+            "isHiddent": "Is Hiddent",
+            "index": "Index",
+            "partner": "Partner"
+        }
+    }
+}

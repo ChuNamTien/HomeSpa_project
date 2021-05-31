@@ -1,0 +1,25 @@
+
+{
+    "homespaApp": {
+        "timeline" : {
+            "home": {
+                "title": "Timelines",
+                "createLabel": "Thêm mới một Timeline",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Timeline"
+            },
+            "created": "Một Timeline mới được tạo với định danh {{ param }}",
+            "updated": "Một Timeline cập nhật với định danh {{ param }}",
+            "deleted": "Một Timeline đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Timeline {{ id }}?"
+            },
+            "detail": {
+                "title": "Timeline"
+            },
+            "timeStart": "Time Start",
+            "content": "Content",
+            "createdBy": "Created By",
+            "createdDate": "Created Date"
+        }
+    }
+}

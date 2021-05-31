@@ -1,0 +1,34 @@
+{
+    "name": "ServImg",
+    "fields": [
+        {
+            "fieldName": "imgUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "index",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "serv",
+            "otherEntityName": "serv",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20210531022544",
+    "entityTableName": "serv_img",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

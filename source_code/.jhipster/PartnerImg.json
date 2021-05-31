@@ -1,0 +1,34 @@
+{
+    "name": "PartnerImg",
+    "fields": [
+        {
+            "fieldName": "imgUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "isHiddent",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "index",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "partner",
+            "otherEntityName": "partner",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20210531022540",
+    "entityTableName": "partner_img",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

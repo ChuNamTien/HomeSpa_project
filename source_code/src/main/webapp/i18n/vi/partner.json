@@ -1,0 +1,41 @@
+
+{
+    "homespaApp": {
+        "partner" : {
+            "home": {
+                "title": "Partners",
+                "createLabel": "Thêm mới một Partner",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Partner"
+            },
+            "created": "Một Partner mới được tạo với định danh {{ param }}",
+            "updated": "Một Partner cập nhật với định danh {{ param }}",
+            "deleted": "Một Partner đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Partner {{ id }}?"
+            },
+            "detail": {
+                "title": "Partner"
+            },
+            "name": "Name",
+            "partnerType": "Partner Type",
+            "customerType": "Customer Type",
+            "description": "Description",
+            "city": "City",
+            "address": "Address",
+            "phone": "Phone",
+            "longCoord": "Long Coord",
+            "latCoord": "Lat Coord",
+            "openTime": "Open Time",
+            "closeTime": "Close Time",
+            "isWeekendOpen": "Is Weekend Open",
+            "status": "Status",
+            "timeConfirm": "Time Confirm",
+            "bussinessLicenseUrl": "Bussiness License Url",
+            "partnerImg": "Partner Img",
+            "staff": "Staff",
+            "serv": "Serv",
+            "voucher": "Voucher",
+            "category": "Category"
+        }
+    }
+}

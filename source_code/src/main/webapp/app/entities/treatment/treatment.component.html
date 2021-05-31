@@ -1,0 +1,78 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homespaApp.treatment.home.title">Treatments</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-treatment" [routerLink]="['/treatment/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="homespaApp.treatment.home.createLabel">
+            Create new Treatment
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="treatments">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="name"><span jhiTranslate="homespaApp.treatment.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="homespaApp.treatment.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="duration"><span jhiTranslate="homespaApp.treatment.duration">Duration</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="price"><span jhiTranslate="homespaApp.treatment.price">Price</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="discount"><span jhiTranslate="homespaApp.treatment.discount">Discount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="homespaApp.treatment.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="serv.id"><span jhiTranslate="homespaApp.treatment.serv">Serv</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let treatment of treatments ;trackBy: trackId">
+                <td><a [routerLink]="['/treatment', treatment.id, 'view' ]">{{treatment.id}}</a></td>
+                <td>{{treatment.name}}</td>
+                <td>{{treatment.status}}</td>
+                <td>{{treatment.duration}}</td>
+                <td>{{treatment.price}}</td>
+                <td>{{treatment.discount}}</td>
+                <td>{{treatment.description}}</td>
+                <td>
+                    <div *ngIf="treatment.serv">
+                        <a [routerLink]="['../serv', treatment.serv?.id, 'view' ]" >{{treatment.serv?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/treatment', treatment.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/treatment', treatment.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'treatment/'+ treatment.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="treatments && treatments.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

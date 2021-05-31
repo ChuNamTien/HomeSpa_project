@@ -1,0 +1,54 @@
+{
+    "name": "Staff",
+    "fields": [
+        {
+            "fieldName": "type",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "startTime",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "staff",
+            "relationshipName": "category",
+            "otherEntityName": "category",
+            "otherEntityField": "category",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "staff",
+            "relationshipName": "treatment",
+            "otherEntityName": "treatment",
+            "otherEntityField": "treatment",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "partner",
+            "otherEntityName": "partner",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20210531022541",
+    "entityTableName": "staff",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

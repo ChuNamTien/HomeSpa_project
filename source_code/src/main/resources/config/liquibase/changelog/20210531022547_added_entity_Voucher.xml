@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity Voucher.
+    -->
+    <changeSet id="20210531022547-1" author="jhipster">
+        <createTable tableName="voucher">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="jhi_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="discription" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="discount" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="partner_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        
+        <createTable tableName="voucher_customer">
+            <column name="customers_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vouchers_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="vouchers_id, customers_id" tableName="voucher_customer"/>
+        
+        <createTable tableName="voucher_serv">
+            <column name="servs_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vouchers_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="vouchers_id, servs_id" tableName="voucher_serv"/>
+        
+        <createTable tableName="voucher_booking">
+            <column name="bookings_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vouchers_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="vouchers_id, bookings_id" tableName="voucher_booking"/>
+        
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

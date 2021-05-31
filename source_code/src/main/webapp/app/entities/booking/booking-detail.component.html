@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="booking">
+            <h2><span jhiTranslate="homespaApp.booking.detail.title">Booking</span> {{booking.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.booking.startTime">Start Time</span></dt>
+                <dd>
+                    <span>{{booking.startTime}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.booking.finishTime">Finish Time</span></dt>
+                <dd>
+                    <span>{{booking.finishTime}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.booking.isFinished">Is Finished</span></dt>
+                <dd>
+                    <span>{{booking.isFinished}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.booking.isConfirmed">Is Confirmed</span></dt>
+                <dd>
+                    <span>{{booking.isConfirmed}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.booking.paymentMethod">Payment Method</span></dt>
+                <dd>
+                    <span>{{booking.paymentMethod}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.booking.treatment">Treatment</span></dt>
+                <dd>
+                    <span *ngFor="let treatment of booking.treatments; let last = last">
+                        <a [routerLink]="['/treatment', treatment?.id, 'view' ]">{{treatment.treatment}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.booking.customer">Customer</span></dt>
+                <dd>
+                    <div *ngIf="booking.customer">
+                        <a [routerLink]="['/customer', booking.customer?.id, 'view']">{{booking.customer?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/booking', booking.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

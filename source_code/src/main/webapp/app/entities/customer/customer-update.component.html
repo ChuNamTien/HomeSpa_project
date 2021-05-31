@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-customer-heading" jhiTranslate="homespaApp.customer.home.createOrEditLabel">Create or edit a Customer</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!customer.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="customer.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.customer.dob" for="field_dob">Dob</label>
+                    <div class="d-flex">
+                        <input id="field_dob" type="datetime-local" class="form-control" name="dob" [(ngModel)]="dob"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.customer.phone" for="field_phone">Phone</label>
+                    <input type="text" class="form-control" name="phone" id="field_phone"
+                        [(ngModel)]="customer.phone" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.customer.address" for="field_address">Address</label>
+                    <input type="text" class="form-control" name="address" id="field_address"
+                        [(ngModel)]="customer.address" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.customer.city" for="field_city">City</label>
+                    <input type="text" class="form-control" name="city" id="field_city"
+                        [(ngModel)]="customer.city" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.customer.zipcode" for="field_zipcode">Zipcode</label>
+                    <input type="text" class="form-control" name="zipcode" id="field_zipcode"
+                        [(ngModel)]="customer.zipcode" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.customer.status" for="field_status">Status</label>
+                    <input type="checkbox" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="customer.status" />
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

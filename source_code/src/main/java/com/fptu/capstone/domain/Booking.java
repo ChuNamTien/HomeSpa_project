@@ -59,8 +59,8 @@ public class Booking implements Serializable {
     @Column(name = "last_modified_date")
     private Instant lastModifiedDate;
     
-//    @ManyToOne
-//    private Customer customer;
+    @ManyToOne
+    private Customer customer;
     
     @OneToOne    
     @JoinColumn(unique = true)
@@ -69,13 +69,13 @@ public class Booking implements Serializable {
     @ManyToMany
     private Set<Voucher> vouchers = new HashSet<>();
 
-//    public Customer getCustomer() {
-//		return customer;
-//	}
-//
-//	public void setCustomer(Customer customer) {
-//		this.customer = customer;
-//	}
+    public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 	public Rating getRating() {
 		return rating;

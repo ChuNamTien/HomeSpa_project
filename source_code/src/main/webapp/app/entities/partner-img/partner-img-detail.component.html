@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="partnerImg">
+            <h2><span jhiTranslate="homespaApp.partnerImg.detail.title">Partner Img</span> {{partnerImg.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.partnerImg.imgUrl">Img Url</span></dt>
+                <dd>
+                    <span>{{partnerImg.imgUrl}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.partnerImg.isHiddent">Is Hiddent</span></dt>
+                <dd>
+                    <span>{{partnerImg.isHiddent}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.partnerImg.index">Index</span></dt>
+                <dd>
+                    <span>{{partnerImg.index}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.partnerImg.partner">Partner</span></dt>
+                <dd>
+                    <div *ngIf="partnerImg.partner">
+                        <a [routerLink]="['/partner', partnerImg.partner?.id, 'view']">{{partnerImg.partner?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/partner-img', partnerImg.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

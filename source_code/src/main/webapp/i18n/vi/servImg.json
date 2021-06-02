@@ -1,0 +1,25 @@
+
+{
+    "homespaApp": {
+        "servImg" : {
+            "home": {
+                "title": "Serv Imgs",
+                "createLabel": "Thêm mới một Serv Img",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Serv Img"
+            },
+            "created": "Một Serv Img mới được tạo với định danh {{ param }}",
+            "updated": "Một Serv Img cập nhật với định danh {{ param }}",
+            "deleted": "Một Serv Img đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Serv Img {{ id }}?"
+            },
+            "detail": {
+                "title": "Serv Img"
+            },
+            "imgUrl": "Img Url",
+            "status": "Status",
+            "index": "Index",
+            "serv": "Serv"
+        }
+    }
+}

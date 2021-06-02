@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="treatment">
+            <h2><span jhiTranslate="homespaApp.treatment.detail.title">Treatment</span> {{treatment.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.treatment.name">Name</span></dt>
+                <dd>
+                    <span>{{treatment.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.treatment.status">Status</span></dt>
+                <dd>
+                    <span>{{treatment.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.treatment.duration">Duration</span></dt>
+                <dd>
+                    <span>{{treatment.duration}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.treatment.price">Price</span></dt>
+                <dd>
+                    <span>{{treatment.price}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.treatment.discount">Discount</span></dt>
+                <dd>
+                    <span>{{treatment.discount}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.treatment.description">Description</span></dt>
+                <dd>
+                    <span>{{treatment.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.treatment.serv">Serv</span></dt>
+                <dd>
+                    <div *ngIf="treatment.serv">
+                        <a [routerLink]="['/serv', treatment.serv?.id, 'view']">{{treatment.serv?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/treatment', treatment.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

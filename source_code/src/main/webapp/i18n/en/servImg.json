@@ -1,0 +1,25 @@
+
+{
+    "homespaApp": {
+        "servImg" : {
+            "home": {
+                "title": "Serv Imgs",
+                "createLabel": "Create a new Serv Img",
+                "createOrEditLabel": "Create or edit a Serv Img"
+            },
+            "created": "A new Serv Img is created with identifier {{ param }}",
+            "updated": "A Serv Img is updated with identifier {{ param }}",
+            "deleted": "A Serv Img is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Serv Img {{ id }}?"
+            },
+            "detail": {
+                "title": "Serv Img"
+            },
+            "imgUrl": "Img Url",
+            "status": "Status",
+            "index": "Index",
+            "serv": "Serv"
+        }
+    }
+}

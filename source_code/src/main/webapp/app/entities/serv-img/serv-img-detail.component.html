@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="servImg">
+            <h2><span jhiTranslate="homespaApp.servImg.detail.title">Serv Img</span> {{servImg.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.servImg.imgUrl">Img Url</span></dt>
+                <dd>
+                    <span>{{servImg.imgUrl}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.servImg.status">Status</span></dt>
+                <dd>
+                    <span>{{servImg.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.servImg.index">Index</span></dt>
+                <dd>
+                    <span>{{servImg.index}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.servImg.serv">Serv</span></dt>
+                <dd>
+                    <div *ngIf="servImg.serv">
+                        <a [routerLink]="['/serv', servImg.serv?.id, 'view']">{{servImg.serv?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/serv-img', servImg.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

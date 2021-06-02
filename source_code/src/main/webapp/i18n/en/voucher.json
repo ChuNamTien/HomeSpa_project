@@ -1,0 +1,29 @@
+
+{
+    "homespaApp": {
+        "voucher" : {
+            "home": {
+                "title": "Vouchers",
+                "createLabel": "Create a new Voucher",
+                "createOrEditLabel": "Create or edit a Voucher"
+            },
+            "created": "A new Voucher is created with identifier {{ param }}",
+            "updated": "A Voucher is updated with identifier {{ param }}",
+            "deleted": "A Voucher is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Voucher {{ id }}?"
+            },
+            "detail": {
+                "title": "Voucher"
+            },
+            "name": "Name",
+            "type": "Type",
+            "discription": "Discription",
+            "discount": "Discount",
+            "customer": "Customer",
+            "serv": "Serv",
+            "booking": "Booking",
+            "partner": "Partner"
+        }
+    }
+}

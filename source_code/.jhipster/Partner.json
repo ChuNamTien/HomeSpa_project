@@ -1,0 +1,108 @@
+{
+    "name": "Partner",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "partnerType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "customerType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "longCoord",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "latCoord",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "openTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "closeTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "isWeekendOpen",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "timeConfirm",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bussinessLicenseUrl",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "partnerImg",
+            "otherEntityName": "partnerImg",
+            "otherEntityRelationshipName": "partner"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "staff",
+            "otherEntityName": "staff",
+            "otherEntityRelationshipName": "partner"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "serv",
+            "otherEntityName": "serv",
+            "otherEntityRelationshipName": "partner"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "voucher",
+            "otherEntityName": "voucher",
+            "otherEntityRelationshipName": "partner"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "partner",
+            "relationshipName": "category",
+            "otherEntityName": "category",
+            "otherEntityField": "category",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20210531022539",
+    "entityTableName": "partner",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

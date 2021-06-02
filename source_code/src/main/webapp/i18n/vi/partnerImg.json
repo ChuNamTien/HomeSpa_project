@@ -1,0 +1,25 @@
+
+{
+    "homespaApp": {
+        "partnerImg" : {
+            "home": {
+                "title": "Partner Imgs",
+                "createLabel": "Thêm mới một Partner Img",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Partner Img"
+            },
+            "created": "Một Partner Img mới được tạo với định danh {{ param }}",
+            "updated": "Một Partner Img cập nhật với định danh {{ param }}",
+            "deleted": "Một Partner Img đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Partner Img {{ id }}?"
+            },
+            "detail": {
+                "title": "Partner Img"
+            },
+            "imgUrl": "Img Url",
+            "isHiddent": "Is Hiddent",
+            "index": "Index",
+            "partner": "Partner"
+        }
+    }
+}

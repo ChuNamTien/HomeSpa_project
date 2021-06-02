@@ -1,0 +1,63 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-staff-heading" jhiTranslate="homespaApp.staff.home.createOrEditLabel">Create or edit a Staff</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!staff.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="staff.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.staff.type" for="field_type">Type</label>
+                    <input type="text" class="form-control" name="type" id="field_type"
+                        [(ngModel)]="staff.type" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.staff.status" for="field_status">Status</label>
+                    <input type="text" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="staff.status" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.staff.startTime" for="field_startTime">Start Time</label>
+                    <input type="checkbox" class="form-control" name="startTime" id="field_startTime"
+                        [(ngModel)]="staff.startTime" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.staff.endTime" for="field_endTime">End Time</label>
+                    <input type="checkbox" class="form-control" name="endTime" id="field_endTime"
+                        [(ngModel)]="staff.endTime" />
+                </div>
+
+                <div class="form-group">
+                    <label jhiTranslate="homespaApp.staff.category" for="field_category">Category</label>
+                    <select class="form-control" id="field_category" multiple name="category" [(ngModel)]="staff.categories">
+                        <option [ngValue]="getSelected(staff.categories, categoryOption)" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.category}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="homespaApp.staff.treatment" for="field_treatment">Treatment</label>
+                    <select class="form-control" id="field_treatment" multiple name="treatment" [(ngModel)]="staff.treatments">
+                        <option [ngValue]="getSelected(staff.treatments, treatmentOption)" *ngFor="let treatmentOption of treatments; trackBy: trackTreatmentById">{{treatmentOption.treatment}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.staff.partner" for="field_partner">Partner</label>
+                    <select class="form-control" id="field_partner" name="partner" [(ngModel)]="staff.partner" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="partnerOption.id === staff.partner?.id ? staff.partner : partnerOption" *ngFor="let partnerOption of partners; trackBy: trackPartnerById">{{partnerOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

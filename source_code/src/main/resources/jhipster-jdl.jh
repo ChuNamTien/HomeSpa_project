@@ -1,0 +1,120 @@
+entity Customer {
+    dob Instant,
+    phone String,
+    address String
+    city String,
+    zipcode String,
+    status Boolean,
+}
+
+entity Partner{
+	name String,
+    partnerType String,
+    customerType String,
+    description String,
+    city String,
+    address String,
+    phone String,
+    longCoord Float,
+    latCoord Float,
+    openTime Instant,
+    closeTime Instant,
+    isWeekendOpen Boolean,
+    status Boolean,
+    timeConfirm String,
+    bussinessLicenseUrl String
+}
+
+entity PartnerImg{
+	imgUrl String,
+    isHiddent Boolean,
+    index Long
+}
+
+entity Staff{
+	type String,
+    status String,
+    startTime Boolean,
+    endTime Boolean
+}
+
+entity Category{
+	name String,
+    imgUrl String,
+    status String
+}
+
+entity Serv{
+	name String,
+    customerType String,
+    description String,
+    
+}
+
+entity ServImg{
+	imgUrl String,
+    status String,
+    index Long
+}
+
+entity Treatment{
+	name String,
+    status String,
+    duration Float,
+    price Float,
+    discount Float,
+    description String
+}
+
+entity Booking{
+	startTime Instant,
+    finishTime Instant,
+    isFinished Boolean,
+    isConfirmed Boolean,
+    paymentMethod String
+}
+
+entity Voucher{
+	name String,
+    type String,
+    discription String,
+    discount Float
+}
+
+entity Timeline{
+	timeStart Instant,
+    content String,
+    createdBy Long,
+    createdDate Instant
+}
+
+relationship OneToMany {
+	Partner to PartnerImg{partner},
+    Partner to Staff{partner},
+    Partner to Serv{partner},
+    Partner to Voucher{partner},
+    Serv to ServImg{serv},
+    Serv to Treatment{serv},
+    Customer to Booking{customer}
+}
+
+relationship ManyToMany {
+	Partner{category(category)} to Category{partner},
+    Staff{category(category)} to Category{staff},
+    Staff{treatment(treatment)} to Treatment{staff},
+    Voucher{customer(customer)} to Customer{voucher},
+    Voucher{serv(serv)} to Serv{voucher},
+    Voucher{booking(booking)} to Booking{voucher},
+    Booking{treatment(treatment)} to Treatment{booking}
+}
+
+paginate all with infinite-scroll
+paginate all with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+

@@ -1,0 +1,28 @@
+
+{
+    "homespaApp": {
+        "serv" : {
+            "home": {
+                "title": "Servs",
+                "createLabel": "Create a new Serv",
+                "createOrEditLabel": "Create or edit a Serv"
+            },
+            "created": "A new Serv is created with identifier {{ param }}",
+            "updated": "A Serv is updated with identifier {{ param }}",
+            "deleted": "A Serv is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Serv {{ id }}?"
+            },
+            "detail": {
+                "title": "Serv"
+            },
+            "name": "Name",
+            "customerType": "Customer Type",
+            "description": "Description",
+            "servImg": "Serv Img",
+            "treatment": "Treatment",
+            "partner": "Partner",
+            "voucher": "Voucher"
+        }
+    }
+}

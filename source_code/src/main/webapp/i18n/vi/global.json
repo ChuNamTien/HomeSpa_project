@@ -7,6 +7,17 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Thực thể",
+                "customer": "Customer",
+                "partner": "Partner",
+                "partnerImg": "Partner Img",
+                "staff": "Staff",
+                "category": "Category",
+                "serv": "Serv",
+                "servImg": "Serv Img",
+                "treatment": "Treatment",
+                "booking": "Booking",
+                "voucher": "Voucher",
+                "timeline": "Timeline",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

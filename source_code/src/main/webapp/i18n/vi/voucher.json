@@ -1,0 +1,29 @@
+
+{
+    "homespaApp": {
+        "voucher" : {
+            "home": {
+                "title": "Vouchers",
+                "createLabel": "Thêm mới một Voucher",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Voucher"
+            },
+            "created": "Một Voucher mới được tạo với định danh {{ param }}",
+            "updated": "Một Voucher cập nhật với định danh {{ param }}",
+            "deleted": "Một Voucher đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Voucher {{ id }}?"
+            },
+            "detail": {
+                "title": "Voucher"
+            },
+            "name": "Name",
+            "type": "Type",
+            "discription": "Discription",
+            "discount": "Discount",
+            "customer": "Customer",
+            "serv": "Serv",
+            "booking": "Booking",
+            "partner": "Partner"
+        }
+    }
+}

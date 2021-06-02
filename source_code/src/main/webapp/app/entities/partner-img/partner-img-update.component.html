@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-partner-img-heading" jhiTranslate="homespaApp.partnerImg.home.createOrEditLabel">Create or edit a Partner Img</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!partnerImg.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="partnerImg.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.partnerImg.imgUrl" for="field_imgUrl">Img Url</label>
+                    <input type="text" class="form-control" name="imgUrl" id="field_imgUrl"
+                        [(ngModel)]="partnerImg.imgUrl" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.partnerImg.isHiddent" for="field_isHiddent">Is Hiddent</label>
+                    <input type="checkbox" class="form-control" name="isHiddent" id="field_isHiddent"
+                        [(ngModel)]="partnerImg.isHiddent" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.partnerImg.index" for="field_index">Index</label>
+                    <input type="number" class="form-control" name="index" id="field_index"
+                        [(ngModel)]="partnerImg.index" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.partnerImg.partner" for="field_partner">Partner</label>
+                    <select class="form-control" id="field_partner" name="partner" [(ngModel)]="partnerImg.partner" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="partnerOption.id === partnerImg.partner?.id ? partnerImg.partner : partnerOption" *ngFor="let partnerOption of partners; trackBy: trackPartnerById">{{partnerOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

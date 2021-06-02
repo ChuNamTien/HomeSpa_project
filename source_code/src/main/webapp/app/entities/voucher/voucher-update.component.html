@@ -1,0 +1,69 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-voucher-heading" jhiTranslate="homespaApp.voucher.home.createOrEditLabel">Create or edit a Voucher</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!voucher.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="voucher.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="voucher.name" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.type" for="field_type">Type</label>
+                    <input type="text" class="form-control" name="type" id="field_type"
+                        [(ngModel)]="voucher.type" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.discription" for="field_discription">Discription</label>
+                    <input type="text" class="form-control" name="discription" id="field_discription"
+                        [(ngModel)]="voucher.discription" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.discount" for="field_discount">Discount</label>
+                    <input type="number" class="form-control" name="discount" id="field_discount"
+                        [(ngModel)]="voucher.discount" />
+                </div>
+
+                <div class="form-group">
+                    <label jhiTranslate="homespaApp.voucher.customer" for="field_customer">Customer</label>
+                    <select class="form-control" id="field_customer" multiple name="customer" [(ngModel)]="voucher.customers">
+                        <option [ngValue]="getSelected(voucher.customers, customerOption)" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.customer}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="homespaApp.voucher.serv" for="field_serv">Serv</label>
+                    <select class="form-control" id="field_serv" multiple name="serv" [(ngModel)]="voucher.servs">
+                        <option [ngValue]="getSelected(voucher.servs, servOption)" *ngFor="let servOption of servs; trackBy: trackServById">{{servOption.serv}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="homespaApp.voucher.booking" for="field_booking">Booking</label>
+                    <select class="form-control" id="field_booking" multiple name="booking" [(ngModel)]="voucher.bookings">
+                        <option [ngValue]="getSelected(voucher.bookings, bookingOption)" *ngFor="let bookingOption of bookings; trackBy: trackBookingById">{{bookingOption.booking}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.partner" for="field_partner">Partner</label>
+                    <select class="form-control" id="field_partner" name="partner" [(ngModel)]="voucher.partner" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="partnerOption.id === voucher.partner?.id ? voucher.partner : partnerOption" *ngFor="let partnerOption of partners; trackBy: trackPartnerById">{{partnerOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

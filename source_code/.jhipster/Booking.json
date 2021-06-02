@@ -1,0 +1,57 @@
+{
+    "name": "Booking",
+    "fields": [
+        {
+            "fieldName": "startTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "finishTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "isFinished",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "isConfirmed",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "paymentMethod",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "booking",
+            "relationshipName": "treatment",
+            "otherEntityName": "treatment",
+            "otherEntityField": "treatment",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "customer",
+            "otherEntityName": "customer",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "voucher",
+            "otherEntityName": "voucher",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "booking"
+        }
+    ],
+    "changelogDate": "20210531022546",
+    "entityTableName": "booking",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

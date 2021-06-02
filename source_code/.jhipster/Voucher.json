@@ -1,0 +1,62 @@
+{
+    "name": "Voucher",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "discription",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "discount",
+            "fieldType": "Float"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "voucher",
+            "relationshipName": "customer",
+            "otherEntityName": "customer",
+            "otherEntityField": "customer",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "voucher",
+            "relationshipName": "serv",
+            "otherEntityName": "serv",
+            "otherEntityField": "serv",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "voucher",
+            "relationshipName": "booking",
+            "otherEntityName": "booking",
+            "otherEntityField": "booking",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "partner",
+            "otherEntityName": "partner",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20210531022547",
+    "entityTableName": "voucher",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

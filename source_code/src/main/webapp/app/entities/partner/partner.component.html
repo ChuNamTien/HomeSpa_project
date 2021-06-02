@@ -1,0 +1,90 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homespaApp.partner.home.title">Partners</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-partner" [routerLink]="['/partner/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="homespaApp.partner.home.createLabel">
+            Create new Partner
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="partners">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="name"><span jhiTranslate="homespaApp.partner.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="partnerType"><span jhiTranslate="homespaApp.partner.partnerType">Partner Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="customerType"><span jhiTranslate="homespaApp.partner.customerType">Customer Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="homespaApp.partner.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="city"><span jhiTranslate="homespaApp.partner.city">City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="address"><span jhiTranslate="homespaApp.partner.address">Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="phone"><span jhiTranslate="homespaApp.partner.phone">Phone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="longCoord"><span jhiTranslate="homespaApp.partner.longCoord">Long Coord</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="latCoord"><span jhiTranslate="homespaApp.partner.latCoord">Lat Coord</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="openTime"><span jhiTranslate="homespaApp.partner.openTime">Open Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="closeTime"><span jhiTranslate="homespaApp.partner.closeTime">Close Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="isWeekendOpen"><span jhiTranslate="homespaApp.partner.isWeekendOpen">Is Weekend Open</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="homespaApp.partner.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="timeConfirm"><span jhiTranslate="homespaApp.partner.timeConfirm">Time Confirm</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="bussinessLicenseUrl"><span jhiTranslate="homespaApp.partner.bussinessLicenseUrl">Bussiness License Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let partner of partners ;trackBy: trackId">
+                <td><a [routerLink]="['/partner', partner.id, 'view' ]">{{partner.id}}</a></td>
+                <td>{{partner.name}}</td>
+                <td>{{partner.partnerType}}</td>
+                <td>{{partner.customerType}}</td>
+                <td>{{partner.description}}</td>
+                <td>{{partner.city}}</td>
+                <td>{{partner.address}}</td>
+                <td>{{partner.phone}}</td>
+                <td>{{partner.longCoord}}</td>
+                <td>{{partner.latCoord}}</td>
+                <td>{{partner.openTime | date:'medium'}}</td>
+                <td>{{partner.closeTime | date:'medium'}}</td>
+                <td>{{partner.isWeekendOpen}}</td>
+                <td>{{partner.status}}</td>
+                <td>{{partner.timeConfirm}}</td>
+                <td>{{partner.bussinessLicenseUrl}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/partner', partner.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/partner', partner.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'partner/'+ partner.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="partners && partners.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

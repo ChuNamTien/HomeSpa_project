@@ -1,0 +1,53 @@
+{
+    "name": "Serv",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "customerType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "servImg",
+            "otherEntityName": "servImg",
+            "otherEntityRelationshipName": "serv"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "treatment",
+            "otherEntityName": "treatment",
+            "otherEntityRelationshipName": "serv"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "partner",
+            "otherEntityName": "partner",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "voucher",
+            "otherEntityName": "voucher",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "serv"
+        }
+    ],
+    "changelogDate": "20210531022543",
+    "entityTableName": "serv",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

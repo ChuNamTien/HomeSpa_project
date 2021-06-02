@@ -16,13 +16,12 @@
             "detail": {
                 "title": "Staff"
             },
+            "userId": "User Id",
+            "partnerId": "Partner Id",
             "type": "Type",
             "status": "Status",
             "startTime": "Start Time",
-            "endTime": "End Time",
-            "category": "Category",
-            "treatment": "Treatment",
-            "partner": "Partner"
+            "endTime": "End Time"
         }
     }
 }

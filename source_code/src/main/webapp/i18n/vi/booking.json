@@ -16,14 +16,18 @@
             "detail": {
                 "title": "Booking"
             },
+            "customerId": "Customer Id",
+            "partnerId": "Partner Id",
             "startTime": "Start Time",
             "finishTime": "Finish Time",
             "isFinished": "Is Finished",
             "isConfirmed": "Is Confirmed",
             "paymentMethod": "Payment Method",
-            "treatment": "Treatment",
-            "customer": "Customer",
-            "voucher": "Voucher"
+            "confirmTime": "Confirm Time",
+            "createdBy": "Created By",
+            "createdDate": "Created Date",
+            "lastModifiedBy": "Last Modified By",
+            "lastModifiedDate": "Last Modified Date"
         }
     }
 }

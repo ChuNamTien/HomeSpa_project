@@ -5,6 +5,14 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.booking.customerId">Customer Id</span></dt>
+                <dd>
+                    <span>{{booking.customerId}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.booking.partnerId">Partner Id</span></dt>
+                <dd>
+                    <span>{{booking.partnerId}}</span>
+                </dd>
                 <dt><span jhiTranslate="homespaApp.booking.startTime">Start Time</span></dt>
                 <dd>
                     <span>{{booking.startTime}}</span>
@@ -25,17 +33,25 @@
                 <dd>
                     <span>{{booking.paymentMethod}}</span>
                 </dd>
-                <dt><span jhiTranslate="homespaApp.booking.treatment">Treatment</span></dt>
+                <dt><span jhiTranslate="homespaApp.booking.confirmTime">Confirm Time</span></dt>
                 <dd>
-                    <span *ngFor="let treatment of booking.treatments; let last = last">
-                        <a [routerLink]="['/treatment', treatment?.id, 'view' ]">{{treatment.treatment}}</a>{{last ? '' : ', '}}
-                    </span>
+                    <span>{{booking.confirmTime}}</span>
                 </dd>
-                <dt><span jhiTranslate="homespaApp.booking.customer">Customer</span></dt>
+                <dt><span jhiTranslate="homespaApp.booking.createdBy">Created By</span></dt>
                 <dd>
-                    <div *ngIf="booking.customer">
-                        <a [routerLink]="['/customer', booking.customer?.id, 'view']">{{booking.customer?.id}}</a>
-                    </div>
+                    <span>{{booking.createdBy}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.booking.createdDate">Created Date</span></dt>
+                <dd>
+                    <span>{{booking.createdDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.booking.lastModifiedBy">Last Modified By</span></dt>
+                <dd>
+                    <span>{{booking.lastModifiedBy}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.booking.lastModifiedDate">Last Modified Date</span></dt>
+                <dd>
+                    <span>{{booking.lastModifiedDate}}</span>
                 </dd>
             </dl>
 

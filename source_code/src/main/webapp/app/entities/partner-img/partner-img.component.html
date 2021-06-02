@@ -15,24 +15,20 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="partnerId"><span jhiTranslate="homespaApp.partnerImg.partnerId">Partner Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="imgUrl"><span jhiTranslate="homespaApp.partnerImg.imgUrl">Img Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="isHiddent"><span jhiTranslate="homespaApp.partnerImg.isHiddent">Is Hiddent</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="index"><span jhiTranslate="homespaApp.partnerImg.index">Index</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="partner.id"><span jhiTranslate="homespaApp.partnerImg.partner">Partner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let partnerImg of partnerImgs ;trackBy: trackId">
                 <td><a [routerLink]="['/partner-img', partnerImg.id, 'view' ]">{{partnerImg.id}}</a></td>
+                <td>{{partnerImg.partnerId}}</td>
                 <td>{{partnerImg.imgUrl}}</td>
                 <td>{{partnerImg.isHiddent}}</td>
                 <td>{{partnerImg.index}}</td>
-                <td>
-                    <div *ngIf="partnerImg.partner">
-                        <a [routerLink]="['../partner', partnerImg.partner?.id, 'view' ]" >{{partnerImg.partner?.id}}</a>
-                    </div>
-                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

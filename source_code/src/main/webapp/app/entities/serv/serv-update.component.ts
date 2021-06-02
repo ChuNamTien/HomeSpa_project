@@ -2,14 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { JhiAlertService } from 'ng-jhipster';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IServ } from 'app/shared/model/serv.model';
 import { ServService } from './serv.service';
-import { IPartner } from 'app/shared/model/partner.model';
-import { PartnerService } from 'app/entities/partner';
-import { IVoucher } from 'app/shared/model/voucher.model';
-import { VoucherService } from 'app/entities/voucher';
 
 @Component({
     selector: 'jhi-serv-update',
@@ -18,36 +15,20 @@ import { VoucherService } from 'app/entities/voucher';
 export class ServUpdateComponent implements OnInit {
     serv: IServ;
     isSaving: boolean;
+    createdDate: string;
+    lastModifiedBy: string;
+    lastModifiedDate: string;
 
-    partners: IPartner[];
-
-    vouchers: IVoucher[];
-
-    constructor(
-        private jhiAlertService: JhiAlertService,
-        private servService: ServService,
-        private partnerService: PartnerService,
-        private voucherService: VoucherService,
-        private activatedRoute: ActivatedRoute
-    ) {}
+    constructor(private servService: ServService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ serv }) => {
             this.serv = serv;
+            this.createdDate = this.serv.createdDate != null ? this.serv.createdDate.format(DATE_TIME_FORMAT) : null;
+            this.lastModifiedBy = this.serv.lastModifiedBy != null ? this.serv.lastModifiedBy.format(DATE_TIME_FORMAT) : null;
+            this.lastModifiedDate = this.serv.lastModifiedDate != null ? this.serv.lastModifiedDate.format(DATE_TIME_FORMAT) : null;
         });
-        this.partnerService.query().subscribe(
-            (res: HttpResponse<IPartner[]>) => {
-                this.partners = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
-        this.voucherService.query().subscribe(
-            (res: HttpResponse<IVoucher[]>) => {
-                this.vouchers = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
     }
 
     previousState() {
@@ -56,6 +37,9 @@ export class ServUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        this.serv.createdDate = this.createdDate != null ? moment(this.createdDate, DATE_TIME_FORMAT) : null;
+        this.serv.lastModifiedBy = this.lastModifiedBy != null ? moment(this.lastModifiedBy, DATE_TIME_FORMAT) : null;
+        this.serv.lastModifiedDate = this.lastModifiedDate != null ? moment(this.lastModifiedDate, DATE_TIME_FORMAT) : null;
         if (this.serv.id !== undefined) {
             this.subscribeToSaveResponse(this.servService.update(this.serv));
         } else {
@@ -74,28 +58,5 @@ export class ServUpdateComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
-    }
-
-    private onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackPartnerById(index: number, item: IPartner) {
-        return item.id;
-    }
-
-    trackVoucherById(index: number, item: IVoucher) {
-        return item.id;
-    }
-
-    getSelected(selectedVals: Array<any>, option: any) {
-        if (selectedVals) {
-            for (let i = 0; i < selectedVals.length; i++) {
-                if (option.id === selectedVals[i].id) {
-                    return selectedVals[i];
-                }
-            }
-        }
-        return option;
     }
 }

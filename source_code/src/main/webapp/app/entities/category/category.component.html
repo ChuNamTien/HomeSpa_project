@@ -18,6 +18,10 @@
             <th jhiSortBy="name"><span jhiTranslate="homespaApp.category.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="imgUrl"><span jhiTranslate="homespaApp.category.imgUrl">Img Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="homespaApp.category.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdBy"><span jhiTranslate="homespaApp.category.createdBy">Created By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdDate"><span jhiTranslate="homespaApp.category.createdDate">Created Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedBy"><span jhiTranslate="homespaApp.category.lastModifiedBy">Last Modified By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedDate"><span jhiTranslate="homespaApp.category.lastModifiedDate">Last Modified Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -27,6 +31,10 @@
                 <td>{{category.name}}</td>
                 <td>{{category.imgUrl}}</td>
                 <td>{{category.status}}</td>
+                <td>{{category.createdBy}}</td>
+                <td>{{category.createdDate | date:'medium'}}</td>
+                <td>{{category.lastModifiedBy | date:'medium'}}</td>
+                <td>{{category.lastModifiedDate | date:'medium'}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

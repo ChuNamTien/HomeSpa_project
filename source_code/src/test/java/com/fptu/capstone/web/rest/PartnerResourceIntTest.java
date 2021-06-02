@@ -10,12 +10,9 @@ import com.fptu.capstone.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -25,16 +22,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 
 import static com.fptu.capstone.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -46,6 +39,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = HomespaApp.class)
 public class PartnerResourceIntTest {
+
+    private static final Long DEFAULT_USER_ID = 1L;
+    private static final Long UPDATED_USER_ID = 2L;
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
@@ -74,11 +70,11 @@ public class PartnerResourceIntTest {
     private static final Float DEFAULT_LAT_COORD = 1F;
     private static final Float UPDATED_LAT_COORD = 2F;
 
-    private static final Instant DEFAULT_OPEN_TIME = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_OPEN_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Float DEFAULT_OPEN_TIME = 1F;
+    private static final Float UPDATED_OPEN_TIME = 2F;
 
-    private static final Instant DEFAULT_CLOSE_TIME = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CLOSE_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Float DEFAULT_CLOSE_TIME = 1F;
+    private static final Float UPDATED_CLOSE_TIME = 2F;
 
     private static final Boolean DEFAULT_IS_WEEKEND_OPEN = false;
     private static final Boolean UPDATED_IS_WEEKEND_OPEN = true;
@@ -86,22 +82,15 @@ public class PartnerResourceIntTest {
     private static final Boolean DEFAULT_STATUS = false;
     private static final Boolean UPDATED_STATUS = true;
 
-    private static final String DEFAULT_TIME_CONFIRM = "AAAAAAAAAA";
-    private static final String UPDATED_TIME_CONFIRM = "BBBBBBBBBB";
+    private static final Float DEFAULT_CONFIRM_AFTER = 1F;
+    private static final Float UPDATED_CONFIRM_AFTER = 2F;
 
     private static final String DEFAULT_BUSSINESS_LICENSE_URL = "AAAAAAAAAA";
     private static final String UPDATED_BUSSINESS_LICENSE_URL = "BBBBBBBBBB";
 
     @Autowired
     private PartnerRepository partnerRepository;
-
-    @Mock
-    private PartnerRepository partnerRepositoryMock;
     
-
-    @Mock
-    private PartnerService partnerServiceMock;
-
     @Autowired
     private PartnerService partnerService;
 
@@ -140,6 +129,7 @@ public class PartnerResourceIntTest {
      */
     public static Partner createEntity(EntityManager em) {
         Partner partner = new Partner()
+            .userId(DEFAULT_USER_ID)
             .name(DEFAULT_NAME)
             .partnerType(DEFAULT_PARTNER_TYPE)
             .customerType(DEFAULT_CUSTOMER_TYPE)
@@ -153,7 +143,7 @@ public class PartnerResourceIntTest {
             .closeTime(DEFAULT_CLOSE_TIME)
             .isWeekendOpen(DEFAULT_IS_WEEKEND_OPEN)
             .status(DEFAULT_STATUS)
-            .timeConfirm(DEFAULT_TIME_CONFIRM)
+            .confirmAfter(DEFAULT_CONFIRM_AFTER)
             .bussinessLicenseUrl(DEFAULT_BUSSINESS_LICENSE_URL);
         return partner;
     }
@@ -178,6 +168,7 @@ public class PartnerResourceIntTest {
         List<Partner> partnerList = partnerRepository.findAll();
         assertThat(partnerList).hasSize(databaseSizeBeforeCreate + 1);
         Partner testPartner = partnerList.get(partnerList.size() - 1);
+        assertThat(testPartner.getUserId()).isEqualTo(DEFAULT_USER_ID);
         assertThat(testPartner.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testPartner.getPartnerType()).isEqualTo(DEFAULT_PARTNER_TYPE);
         assertThat(testPartner.getCustomerType()).isEqualTo(DEFAULT_CUSTOMER_TYPE);
@@ -191,7 +182,7 @@ public class PartnerResourceIntTest {
         assertThat(testPartner.getCloseTime()).isEqualTo(DEFAULT_CLOSE_TIME);
         assertThat(testPartner.isIsWeekendOpen()).isEqualTo(DEFAULT_IS_WEEKEND_OPEN);
         assertThat(testPartner.isStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testPartner.getTimeConfirm()).isEqualTo(DEFAULT_TIME_CONFIRM);
+        assertThat(testPartner.getConfirmAfter()).isEqualTo(DEFAULT_CONFIRM_AFTER);
         assertThat(testPartner.getBussinessLicenseUrl()).isEqualTo(DEFAULT_BUSSINESS_LICENSE_URL);
     }
 
@@ -225,6 +216,7 @@ public class PartnerResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(partner.getId().intValue())))
+            .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID.intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].partnerType").value(hasItem(DEFAULT_PARTNER_TYPE.toString())))
             .andExpect(jsonPath("$.[*].customerType").value(hasItem(DEFAULT_CUSTOMER_TYPE.toString())))
@@ -234,45 +226,14 @@ public class PartnerResourceIntTest {
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.toString())))
             .andExpect(jsonPath("$.[*].longCoord").value(hasItem(DEFAULT_LONG_COORD.doubleValue())))
             .andExpect(jsonPath("$.[*].latCoord").value(hasItem(DEFAULT_LAT_COORD.doubleValue())))
-            .andExpect(jsonPath("$.[*].openTime").value(hasItem(DEFAULT_OPEN_TIME.toString())))
-            .andExpect(jsonPath("$.[*].closeTime").value(hasItem(DEFAULT_CLOSE_TIME.toString())))
+            .andExpect(jsonPath("$.[*].openTime").value(hasItem(DEFAULT_OPEN_TIME.doubleValue())))
+            .andExpect(jsonPath("$.[*].closeTime").value(hasItem(DEFAULT_CLOSE_TIME.doubleValue())))
             .andExpect(jsonPath("$.[*].isWeekendOpen").value(hasItem(DEFAULT_IS_WEEKEND_OPEN.booleanValue())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.booleanValue())))
-            .andExpect(jsonPath("$.[*].timeConfirm").value(hasItem(DEFAULT_TIME_CONFIRM.toString())))
+            .andExpect(jsonPath("$.[*].confirmAfter").value(hasItem(DEFAULT_CONFIRM_AFTER.doubleValue())))
             .andExpect(jsonPath("$.[*].bussinessLicenseUrl").value(hasItem(DEFAULT_BUSSINESS_LICENSE_URL.toString())));
     }
     
-    public void getAllPartnersWithEagerRelationshipsIsEnabled() throws Exception {
-        PartnerResource partnerResource = new PartnerResource(partnerServiceMock);
-        when(partnerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        MockMvc restPartnerMockMvc = MockMvcBuilders.standaloneSetup(partnerResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restPartnerMockMvc.perform(get("/api/partners?eagerload=true"))
-        .andExpect(status().isOk());
-
-        verify(partnerServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    public void getAllPartnersWithEagerRelationshipsIsNotEnabled() throws Exception {
-        PartnerResource partnerResource = new PartnerResource(partnerServiceMock);
-            when(partnerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restPartnerMockMvc = MockMvcBuilders.standaloneSetup(partnerResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restPartnerMockMvc.perform(get("/api/partners?eagerload=true"))
-        .andExpect(status().isOk());
-
-            verify(partnerServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
     @Test
     @Transactional
     public void getPartner() throws Exception {
@@ -284,6 +245,7 @@ public class PartnerResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(partner.getId().intValue()))
+            .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID.intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.partnerType").value(DEFAULT_PARTNER_TYPE.toString()))
             .andExpect(jsonPath("$.customerType").value(DEFAULT_CUSTOMER_TYPE.toString()))
@@ -293,11 +255,11 @@ public class PartnerResourceIntTest {
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE.toString()))
             .andExpect(jsonPath("$.longCoord").value(DEFAULT_LONG_COORD.doubleValue()))
             .andExpect(jsonPath("$.latCoord").value(DEFAULT_LAT_COORD.doubleValue()))
-            .andExpect(jsonPath("$.openTime").value(DEFAULT_OPEN_TIME.toString()))
-            .andExpect(jsonPath("$.closeTime").value(DEFAULT_CLOSE_TIME.toString()))
+            .andExpect(jsonPath("$.openTime").value(DEFAULT_OPEN_TIME.doubleValue()))
+            .andExpect(jsonPath("$.closeTime").value(DEFAULT_CLOSE_TIME.doubleValue()))
             .andExpect(jsonPath("$.isWeekendOpen").value(DEFAULT_IS_WEEKEND_OPEN.booleanValue()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.booleanValue()))
-            .andExpect(jsonPath("$.timeConfirm").value(DEFAULT_TIME_CONFIRM.toString()))
+            .andExpect(jsonPath("$.confirmAfter").value(DEFAULT_CONFIRM_AFTER.doubleValue()))
             .andExpect(jsonPath("$.bussinessLicenseUrl").value(DEFAULT_BUSSINESS_LICENSE_URL.toString()));
     }
 
@@ -322,6 +284,7 @@ public class PartnerResourceIntTest {
         // Disconnect from session so that the updates on updatedPartner are not directly saved in db
         em.detach(updatedPartner);
         updatedPartner
+            .userId(UPDATED_USER_ID)
             .name(UPDATED_NAME)
             .partnerType(UPDATED_PARTNER_TYPE)
             .customerType(UPDATED_CUSTOMER_TYPE)
@@ -335,7 +298,7 @@ public class PartnerResourceIntTest {
             .closeTime(UPDATED_CLOSE_TIME)
             .isWeekendOpen(UPDATED_IS_WEEKEND_OPEN)
             .status(UPDATED_STATUS)
-            .timeConfirm(UPDATED_TIME_CONFIRM)
+            .confirmAfter(UPDATED_CONFIRM_AFTER)
             .bussinessLicenseUrl(UPDATED_BUSSINESS_LICENSE_URL);
 
         restPartnerMockMvc.perform(put("/api/partners")
@@ -347,6 +310,7 @@ public class PartnerResourceIntTest {
         List<Partner> partnerList = partnerRepository.findAll();
         assertThat(partnerList).hasSize(databaseSizeBeforeUpdate);
         Partner testPartner = partnerList.get(partnerList.size() - 1);
+        assertThat(testPartner.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testPartner.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testPartner.getPartnerType()).isEqualTo(UPDATED_PARTNER_TYPE);
         assertThat(testPartner.getCustomerType()).isEqualTo(UPDATED_CUSTOMER_TYPE);
@@ -360,7 +324,7 @@ public class PartnerResourceIntTest {
         assertThat(testPartner.getCloseTime()).isEqualTo(UPDATED_CLOSE_TIME);
         assertThat(testPartner.isIsWeekendOpen()).isEqualTo(UPDATED_IS_WEEKEND_OPEN);
         assertThat(testPartner.isStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testPartner.getTimeConfirm()).isEqualTo(UPDATED_TIME_CONFIRM);
+        assertThat(testPartner.getConfirmAfter()).isEqualTo(UPDATED_CONFIRM_AFTER);
         assertThat(testPartner.getBussinessLicenseUrl()).isEqualTo(UPDATED_BUSSINESS_LICENSE_URL);
     }
 

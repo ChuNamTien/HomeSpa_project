@@ -1,8 +1,9 @@
 package com.fptu.capstone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,6 +21,9 @@ public class PartnerImg implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "partner_id")
+    private Long partnerId;
+
     @Column(name = "img_url")
     private String imgUrl;
 
@@ -28,7 +32,7 @@ public class PartnerImg implements Serializable {
 
     @Column(name = "jhi_index")
     private Long index;
-
+    
     @ManyToOne
     @JsonIgnoreProperties("partnerImgs")
     private Partner partner;
@@ -38,8 +42,33 @@ public class PartnerImg implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public Partner getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+
+	public Boolean getIsHiddent() {
+		return isHiddent;
+	}
+
+	public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getPartnerId() {
+        return partnerId;
+    }
+
+    public PartnerImg partnerId(Long partnerId) {
+        this.partnerId = partnerId;
+        return this;
+    }
+
+    public void setPartnerId(Long partnerId) {
+        this.partnerId = partnerId;
     }
 
     public String getImgUrl() {
@@ -80,19 +109,6 @@ public class PartnerImg implements Serializable {
     public void setIndex(Long index) {
         this.index = index;
     }
-
-    public Partner getPartner() {
-        return partner;
-    }
-
-    public PartnerImg partner(Partner partner) {
-        this.partner = partner;
-        return this;
-    }
-
-    public void setPartner(Partner partner) {
-        this.partner = partner;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -119,6 +135,7 @@ public class PartnerImg implements Serializable {
     public String toString() {
         return "PartnerImg{" +
             "id=" + getId() +
+            ", partnerId=" + getPartnerId() +
             ", imgUrl='" + getImgUrl() + "'" +
             ", isHiddent='" + isIsHiddent() + "'" +
             ", index=" + getIndex() +

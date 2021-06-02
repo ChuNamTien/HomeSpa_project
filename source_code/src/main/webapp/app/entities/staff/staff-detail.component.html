@@ -5,6 +5,14 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.staff.userId">User Id</span></dt>
+                <dd>
+                    <span>{{staff.userId}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.staff.partnerId">Partner Id</span></dt>
+                <dd>
+                    <span>{{staff.partnerId}}</span>
+                </dd>
                 <dt><span jhiTranslate="homespaApp.staff.type">Type</span></dt>
                 <dd>
                     <span>{{staff.type}}</span>
@@ -20,24 +28,6 @@
                 <dt><span jhiTranslate="homespaApp.staff.endTime">End Time</span></dt>
                 <dd>
                     <span>{{staff.endTime}}</span>
-                </dd>
-                <dt><span jhiTranslate="homespaApp.staff.category">Category</span></dt>
-                <dd>
-                    <span *ngFor="let category of staff.categories; let last = last">
-                        <a [routerLink]="['/category', category?.id, 'view' ]">{{category.category}}</a>{{last ? '' : ', '}}
-                    </span>
-                </dd>
-                <dt><span jhiTranslate="homespaApp.staff.treatment">Treatment</span></dt>
-                <dd>
-                    <span *ngFor="let treatment of staff.treatments; let last = last">
-                        <a [routerLink]="['/treatment', treatment?.id, 'view' ]">{{treatment.treatment}}</a>{{last ? '' : ', '}}
-                    </span>
-                </dd>
-                <dt><span jhiTranslate="homespaApp.staff.partner">Partner</span></dt>
-                <dd>
-                    <div *ngIf="staff.partner">
-                        <a [routerLink]="['/partner', staff.partner?.id, 'view']">{{staff.partner?.id}}</a>
-                    </div>
                 </dd>
             </dl>
 

@@ -5,6 +5,10 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.treatment.serviceId">Service Id</span></dt>
+                <dd>
+                    <span>{{treatment.serviceId}}</span>
+                </dd>
                 <dt><span jhiTranslate="homespaApp.treatment.name">Name</span></dt>
                 <dd>
                     <span>{{treatment.name}}</span>
@@ -29,11 +33,21 @@
                 <dd>
                     <span>{{treatment.description}}</span>
                 </dd>
-                <dt><span jhiTranslate="homespaApp.treatment.serv">Serv</span></dt>
+                <dt><span jhiTranslate="homespaApp.treatment.createdBy">Created By</span></dt>
                 <dd>
-                    <div *ngIf="treatment.serv">
-                        <a [routerLink]="['/serv', treatment.serv?.id, 'view']">{{treatment.serv?.id}}</a>
-                    </div>
+                    <span>{{treatment.createdBy}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.treatment.createdDate">Created Date</span></dt>
+                <dd>
+                    <span>{{treatment.createdDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.treatment.lastModifiedBy">Last Modified By</span></dt>
+                <dd>
+                    <span>{{treatment.lastModifiedBy}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.treatment.lastModifiedDate">Last Modified Date</span></dt>
+                <dd>
+                    <span>{{treatment.lastModifiedDate}}</span>
                 </dd>
             </dl>
 

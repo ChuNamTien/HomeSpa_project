@@ -42,6 +42,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = HomespaApp.class)
 public class CustomerResourceIntTest {
 
+    private static final Long DEFAULT_USER_ID = 1L;
+    private static final Long UPDATED_USER_ID = 2L;
+
     private static final Instant DEFAULT_DOB = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DOB = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
@@ -101,6 +104,7 @@ public class CustomerResourceIntTest {
      */
     public static Customer createEntity(EntityManager em) {
         Customer customer = new Customer()
+            .userId(DEFAULT_USER_ID)
             .dob(DEFAULT_DOB)
             .phone(DEFAULT_PHONE)
             .address(DEFAULT_ADDRESS)
@@ -130,6 +134,7 @@ public class CustomerResourceIntTest {
         List<Customer> customerList = customerRepository.findAll();
         assertThat(customerList).hasSize(databaseSizeBeforeCreate + 1);
         Customer testCustomer = customerList.get(customerList.size() - 1);
+        assertThat(testCustomer.getUserId()).isEqualTo(DEFAULT_USER_ID);
         assertThat(testCustomer.getDob()).isEqualTo(DEFAULT_DOB);
         assertThat(testCustomer.getPhone()).isEqualTo(DEFAULT_PHONE);
         assertThat(testCustomer.getAddress()).isEqualTo(DEFAULT_ADDRESS);
@@ -168,6 +173,7 @@ public class CustomerResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(customer.getId().intValue())))
+            .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID.intValue())))
             .andExpect(jsonPath("$.[*].dob").value(hasItem(DEFAULT_DOB.toString())))
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.toString())))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
@@ -187,6 +193,7 @@ public class CustomerResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(customer.getId().intValue()))
+            .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID.intValue()))
             .andExpect(jsonPath("$.dob").value(DEFAULT_DOB.toString()))
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE.toString()))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
@@ -216,6 +223,7 @@ public class CustomerResourceIntTest {
         // Disconnect from session so that the updates on updatedCustomer are not directly saved in db
         em.detach(updatedCustomer);
         updatedCustomer
+            .userId(UPDATED_USER_ID)
             .dob(UPDATED_DOB)
             .phone(UPDATED_PHONE)
             .address(UPDATED_ADDRESS)
@@ -232,6 +240,7 @@ public class CustomerResourceIntTest {
         List<Customer> customerList = customerRepository.findAll();
         assertThat(customerList).hasSize(databaseSizeBeforeUpdate);
         Customer testCustomer = customerList.get(customerList.size() - 1);
+        assertThat(testCustomer.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testCustomer.getDob()).isEqualTo(UPDATED_DOB);
         assertThat(testCustomer.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testCustomer.getAddress()).isEqualTo(UPDATED_ADDRESS);

@@ -1,0 +1,27 @@
+{
+    "name": "BookingStaff",
+    "fields": [
+        {
+            "fieldName": "bookingId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "treatmentId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20210602133931",
+    "entityTableName": "booking_staff",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

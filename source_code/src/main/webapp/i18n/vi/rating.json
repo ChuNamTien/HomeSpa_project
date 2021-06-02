@@ -1,0 +1,24 @@
+
+{
+    "homespaApp": {
+        "rating" : {
+            "home": {
+                "title": "Ratings",
+                "createLabel": "Thêm mới một Rating",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Rating"
+            },
+            "created": "Một Rating mới được tạo với định danh {{ param }}",
+            "updated": "Một Rating cập nhật với định danh {{ param }}",
+            "deleted": "Một Rating đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Rating {{ id }}?"
+            },
+            "detail": {
+                "title": "Rating"
+            },
+            "bookingId": "Booking Id",
+            "star": "Star",
+            "comment": "Comment"
+        }
+    }
+}

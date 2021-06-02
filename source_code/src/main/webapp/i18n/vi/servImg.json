@@ -16,10 +16,10 @@
             "detail": {
                 "title": "Serv Img"
             },
+            "serviceId": "Service Id",
             "imgUrl": "Img Url",
             "status": "Status",
-            "index": "Index",
-            "serv": "Serv"
+            "index": "Index"
         }
     }
 }

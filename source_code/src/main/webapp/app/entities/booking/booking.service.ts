@@ -52,21 +52,28 @@ export class BookingService {
     private convertDateFromClient(booking: IBooking): IBooking {
         const copy: IBooking = Object.assign({}, booking, {
             startTime: booking.startTime != null && booking.startTime.isValid() ? booking.startTime.toJSON() : null,
-            finishTime: booking.finishTime != null && booking.finishTime.isValid() ? booking.finishTime.toJSON() : null
+            createdDate: booking.createdDate != null && booking.createdDate.isValid() ? booking.createdDate.toJSON() : null,
+            lastModifiedBy: booking.lastModifiedBy != null && booking.lastModifiedBy.isValid() ? booking.lastModifiedBy.toJSON() : null,
+            lastModifiedDate:
+                booking.lastModifiedDate != null && booking.lastModifiedDate.isValid() ? booking.lastModifiedDate.toJSON() : null
         });
         return copy;
     }
 
     private convertDateFromServer(res: EntityResponseType): EntityResponseType {
         res.body.startTime = res.body.startTime != null ? moment(res.body.startTime) : null;
-        res.body.finishTime = res.body.finishTime != null ? moment(res.body.finishTime) : null;
+        res.body.createdDate = res.body.createdDate != null ? moment(res.body.createdDate) : null;
+        res.body.lastModifiedBy = res.body.lastModifiedBy != null ? moment(res.body.lastModifiedBy) : null;
+        res.body.lastModifiedDate = res.body.lastModifiedDate != null ? moment(res.body.lastModifiedDate) : null;
         return res;
     }
 
     private convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
         res.body.forEach((booking: IBooking) => {
             booking.startTime = booking.startTime != null ? moment(booking.startTime) : null;
-            booking.finishTime = booking.finishTime != null ? moment(booking.finishTime) : null;
+            booking.createdDate = booking.createdDate != null ? moment(booking.createdDate) : null;
+            booking.lastModifiedBy = booking.lastModifiedBy != null ? moment(booking.lastModifiedBy) : null;
+            booking.lastModifiedDate = booking.lastModifiedDate != null ? moment(booking.lastModifiedDate) : null;
         });
         return res;
     }

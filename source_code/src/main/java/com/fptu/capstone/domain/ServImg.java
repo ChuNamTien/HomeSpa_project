@@ -1,8 +1,9 @@
 package com.fptu.capstone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,6 +21,9 @@ public class ServImg implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "service_id")
+    private Long serviceId;
+
     @Column(name = "img_url")
     private String imgUrl;
 
@@ -28,10 +32,10 @@ public class ServImg implements Serializable {
 
     @Column(name = "jhi_index")
     private Long index;
-
+    
     @ManyToOne
-    @JsonIgnoreProperties("servImgs")
-    private Serv serv;
+    @JsonIgnoreProperties("serv")
+    private Serv service;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -40,6 +44,19 @@ public class ServImg implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public ServImg serviceId(Long serviceId) {
+        this.serviceId = serviceId;
+        return this;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
     }
 
     public String getImgUrl() {
@@ -64,7 +81,15 @@ public class ServImg implements Serializable {
         return this;
     }
 
-    public void setStatus(String status) {
+    public Serv getService() {
+		return service;
+	}
+
+	public void setService(Serv service) {
+		this.service = service;
+	}
+
+	public void setStatus(String status) {
         this.status = status;
     }
 
@@ -79,19 +104,6 @@ public class ServImg implements Serializable {
 
     public void setIndex(Long index) {
         this.index = index;
-    }
-
-    public Serv getServ() {
-        return serv;
-    }
-
-    public ServImg serv(Serv serv) {
-        this.serv = serv;
-        return this;
-    }
-
-    public void setServ(Serv serv) {
-        this.serv = serv;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -119,6 +131,7 @@ public class ServImg implements Serializable {
     public String toString() {
         return "ServImg{" +
             "id=" + getId() +
+            ", serviceId=" + getServiceId() +
             ", imgUrl='" + getImgUrl() + "'" +
             ", status='" + getStatus() + "'" +
             ", index=" + getIndex() +

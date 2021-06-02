@@ -15,24 +15,28 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="categoryId"><span jhiTranslate="homespaApp.serv.categoryId">Category Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="name"><span jhiTranslate="homespaApp.serv.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="customerType"><span jhiTranslate="homespaApp.serv.customerType">Customer Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="description"><span jhiTranslate="homespaApp.serv.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="partner.id"><span jhiTranslate="homespaApp.serv.partner">Partner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdBy"><span jhiTranslate="homespaApp.serv.createdBy">Created By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdDate"><span jhiTranslate="homespaApp.serv.createdDate">Created Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedBy"><span jhiTranslate="homespaApp.serv.lastModifiedBy">Last Modified By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedDate"><span jhiTranslate="homespaApp.serv.lastModifiedDate">Last Modified Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let serv of servs ;trackBy: trackId">
                 <td><a [routerLink]="['/serv', serv.id, 'view' ]">{{serv.id}}</a></td>
+                <td>{{serv.categoryId}}</td>
                 <td>{{serv.name}}</td>
                 <td>{{serv.customerType}}</td>
                 <td>{{serv.description}}</td>
-                <td>
-                    <div *ngIf="serv.partner">
-                        <a [routerLink]="['../partner', serv.partner?.id, 'view' ]" >{{serv.partner?.id}}</a>
-                    </div>
-                </td>
+                <td>{{serv.createdBy}}</td>
+                <td>{{serv.createdDate | date:'medium'}}</td>
+                <td>{{serv.lastModifiedBy | date:'medium'}}</td>
+                <td>{{serv.lastModifiedDate | date:'medium'}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

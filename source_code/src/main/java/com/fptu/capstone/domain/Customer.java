@@ -1,14 +1,15 @@
 package com.fptu.capstone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Customer.
@@ -22,6 +23,9 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "dob")
     private Instant dob;
@@ -48,7 +52,7 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer")
     private Set<Booking> bookings = new HashSet<>();
     
-    @ManyToMany(mappedBy = "customers")
+    @ManyToMany
     @JsonIgnore
     private Set<Voucher> vouchers = new HashSet<>();
 
@@ -57,8 +61,49 @@ public class Customer implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
+	}
+
+	public Set<Voucher> getVouchers() {
+		return vouchers;
+	}
+
+	public void setVouchers(Set<Voucher> vouchers) {
+		this.vouchers = vouchers;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Customer userId(Long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Instant getDob() {
@@ -135,70 +180,8 @@ public class Customer implements Serializable {
         return this;
     }
 
-    public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(Boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    public Set<Booking> getBookings() {
-        return bookings;
-    }
-
-    public Customer bookings(Set<Booking> bookings) {
-        this.bookings = bookings;
-        return this;
-    }
-
-    public Customer addBooking(Booking booking) {
-        this.bookings.add(booking);
-        booking.setCustomer(this);
-        return this;
-    }
-
-    public Customer removeBooking(Booking booking) {
-        this.bookings.remove(booking);
-        booking.setCustomer(null);
-        return this;
-    }
-
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
-    public Set<Voucher> getVouchers() {
-        return vouchers;
-    }
-
-    public Customer vouchers(Set<Voucher> vouchers) {
-        this.vouchers = vouchers;
-        return this;
-    }
-
-    public Customer addVoucher(Voucher voucher) {
-        this.vouchers.add(voucher);
-        voucher.getCustomers().add(this);
-        return this;
-    }
-
-    public Customer removeVoucher(Voucher voucher) {
-        this.vouchers.remove(voucher);
-        voucher.getCustomers().remove(this);
-        return this;
-    }
-
-    public void setVouchers(Set<Voucher> vouchers) {
-        this.vouchers = vouchers;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -226,6 +209,7 @@ public class Customer implements Serializable {
     public String toString() {
         return "Customer{" +
             "id=" + getId() +
+            ", userId=" + getUserId() +
             ", dob='" + getDob() + "'" +
             ", phone='" + getPhone() + "'" +
             ", address='" + getAddress() + "'" +

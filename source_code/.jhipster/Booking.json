@@ -2,12 +2,20 @@
     "name": "Booking",
     "fields": [
         {
+            "fieldName": "customerId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "partnerId",
+            "fieldType": "Long"
+        },
+        {
             "fieldName": "startTime",
             "fieldType": "Instant"
         },
         {
             "fieldName": "finishTime",
-            "fieldType": "Instant"
+            "fieldType": "String"
         },
         {
             "fieldName": "isFinished",
@@ -20,31 +28,29 @@
         {
             "fieldName": "paymentMethod",
             "fieldType": "String"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "booking",
-            "relationshipName": "treatment",
-            "otherEntityName": "treatment",
-            "otherEntityField": "treatment",
-            "ownerSide": true
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "customer",
-            "otherEntityName": "customer",
-            "otherEntityField": "id"
+            "fieldName": "confirmTime",
+            "fieldType": "String"
         },
         {
-            "relationshipType": "many-to-many",
-            "relationshipName": "voucher",
-            "otherEntityName": "voucher",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "booking"
+            "fieldName": "createdBy",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createdDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "lastModifiedBy",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "lastModifiedDate",
+            "fieldType": "Instant"
         }
     ],
+    "relationships": [],
     "changelogDate": "20210531022546",
     "entityTableName": "booking",
     "dto": "no",

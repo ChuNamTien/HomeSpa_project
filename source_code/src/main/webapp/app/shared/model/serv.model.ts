@@ -1,28 +1,27 @@
-import { IServImg } from 'app/shared/model//serv-img.model';
-import { ITreatment } from 'app/shared/model//treatment.model';
-import { IPartner } from 'app/shared/model//partner.model';
-import { IVoucher } from 'app/shared/model//voucher.model';
+import { Moment } from 'moment';
 
 export interface IServ {
     id?: number;
+    categoryId?: number;
     name?: string;
     customerType?: string;
     description?: string;
-    servImgs?: IServImg[];
-    treatments?: ITreatment[];
-    partner?: IPartner;
-    vouchers?: IVoucher[];
+    createdBy?: string;
+    createdDate?: Moment;
+    lastModifiedBy?: Moment;
+    lastModifiedDate?: Moment;
 }
 
 export class Serv implements IServ {
     constructor(
         public id?: number,
+        public categoryId?: number,
         public name?: string,
         public customerType?: string,
         public description?: string,
-        public servImgs?: IServImg[],
-        public treatments?: ITreatment[],
-        public partner?: IPartner,
-        public vouchers?: IVoucher[]
+        public createdBy?: string,
+        public createdDate?: Moment,
+        public lastModifiedBy?: Moment,
+        public lastModifiedDate?: Moment
     ) {}
 }

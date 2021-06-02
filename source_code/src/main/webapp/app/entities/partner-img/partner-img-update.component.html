@@ -10,6 +10,11 @@
                         [(ngModel)]="partnerImg.id" readonly />
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.partnerImg.partnerId" for="field_partnerId">Partner Id</label>
+                    <input type="number" class="form-control" name="partnerId" id="field_partnerId"
+                        [(ngModel)]="partnerImg.partnerId" />
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="homespaApp.partnerImg.imgUrl" for="field_imgUrl">Img Url</label>
                     <input type="text" class="form-control" name="imgUrl" id="field_imgUrl"
                         [(ngModel)]="partnerImg.imgUrl" />
@@ -25,13 +30,6 @@
                         [(ngModel)]="partnerImg.index" />
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homespaApp.partnerImg.partner" for="field_partner">Partner</label>
-                    <select class="form-control" id="field_partner" name="partner" [(ngModel)]="partnerImg.partner" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="partnerOption.id === partnerImg.partner?.id ? partnerImg.partner : partnerOption" *ngFor="let partnerOption of partners; trackBy: trackPartnerById">{{partnerOption.id}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

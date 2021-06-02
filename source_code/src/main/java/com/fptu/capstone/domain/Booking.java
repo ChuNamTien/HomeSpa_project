@@ -1,22 +1,21 @@
 package com.fptu.capstone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Booking.
  */
 @Entity
 @Table(name = "booking")
-public class Booking extends AbstractAuditingEntity implements Serializable {
+public class Booking implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,11 +23,17 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "customer_id")
+    private Long customerId;
+
+    @Column(name = "partner_id")
+    private Long partnerId;
+
     @Column(name = "start_time")
     private Instant startTime;
 
     @Column(name = "finish_time")
-    private Instant finishTime;
+    private String finishTime;
 
     @Column(name = "is_finished")
     private Boolean isFinished;
@@ -39,27 +44,96 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
     @Column(name = "payment_method")
     private String paymentMethod;
 
+    @Column(name = "confirm_time")
+    private String confirmTime;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "created_date")
+    private Instant createdDate;
+
+    @Column(name = "last_modified_by")
+    private Instant lastModifiedBy;
+
+    @Column(name = "last_modified_date")
+    private Instant lastModifiedDate;
+    
+//    @ManyToOne
+//    private Customer customer;
+    
+    @OneToOne    
+    @JoinColumn(unique = true)
+    private Rating rating;
+
     @ManyToMany
-    @JoinTable(name = "booking_treatment",
-               joinColumns = @JoinColumn(name = "bookings_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "treatments_id", referencedColumnName = "id"))
-    private Set<Treatment> treatments = new HashSet<>();
-
-    @ManyToOne
-    @JsonIgnoreProperties("bookings")
-    private Customer customer;
-
-    @ManyToMany(mappedBy = "bookings")
-    @JsonIgnore
     private Set<Voucher> vouchers = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+//    public Customer getCustomer() {
+//		return customer;
+//	}
+//
+//	public void setCustomer(Customer customer) {
+//		this.customer = customer;
+//	}
+
+	public Rating getRating() {
+		return rating;
+	}
+
+	public void setRating(Rating rating) {
+		this.rating = rating;
+	}
+
+	public Set<Voucher> getVouchers() {
+		return vouchers;
+	}
+
+	public void setVouchers(Set<Voucher> vouchers) {
+		this.vouchers = vouchers;
+	}
+
+	public Boolean getIsFinished() {
+		return isFinished;
+	}
+
+	public Boolean getIsConfirmed() {
+		return isConfirmed;
+	}
+
+	// jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public Booking customerId(Long customerId) {
+        this.customerId = customerId;
+        return this;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public Long getPartnerId() {
+        return partnerId;
+    }
+
+    public Booking partnerId(Long partnerId) {
+        this.partnerId = partnerId;
+        return this;
+    }
+
+    public void setPartnerId(Long partnerId) {
+        this.partnerId = partnerId;
     }
 
     public Instant getStartTime() {
@@ -75,16 +149,16 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
         this.startTime = startTime;
     }
 
-    public Instant getFinishTime() {
+    public String getFinishTime() {
         return finishTime;
     }
 
-    public Booking finishTime(Instant finishTime) {
+    public Booking finishTime(String finishTime) {
         this.finishTime = finishTime;
         return this;
     }
 
-    public void setFinishTime(Instant finishTime) {
+    public void setFinishTime(String finishTime) {
         this.finishTime = finishTime;
     }
 
@@ -127,67 +201,69 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
         this.paymentMethod = paymentMethod;
     }
 
-    public Set<Treatment> getTreatments() {
-        return treatments;
+    public String getConfirmTime() {
+        return confirmTime;
     }
 
-    public Booking treatments(Set<Treatment> treatments) {
-        this.treatments = treatments;
+    public Booking confirmTime(String confirmTime) {
+        this.confirmTime = confirmTime;
         return this;
     }
 
-    public Booking addTreatment(Treatment treatment) {
-        this.treatments.add(treatment);
-        treatment.getBookings().add(this);
+    public void setConfirmTime(String confirmTime) {
+        this.confirmTime = confirmTime;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public Booking createdBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
     }
 
-    public Booking removeTreatment(Treatment treatment) {
-        this.treatments.remove(treatment);
-        treatment.getBookings().remove(this);
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public Booking createdDate(Instant createdDate) {
+        this.createdDate = createdDate;
         return this;
     }
 
-    public void setTreatments(Set<Treatment> treatments) {
-        this.treatments = treatments;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Instant getLastModifiedBy() {
+        return lastModifiedBy;
     }
 
-    public Booking customer(Customer customer) {
-        this.customer = customer;
+    public Booking lastModifiedBy(Instant lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
         return this;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setLastModifiedBy(Instant lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Set<Voucher> getVouchers() {
-        return vouchers;
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public Booking vouchers(Set<Voucher> vouchers) {
-        this.vouchers = vouchers;
+    public Booking lastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
         return this;
     }
 
-    public Booking addVoucher(Voucher voucher) {
-        this.vouchers.add(voucher);
-        voucher.getBookings().add(this);
-        return this;
-    }
-
-    public Booking removeVoucher(Voucher voucher) {
-        this.vouchers.remove(voucher);
-        voucher.getBookings().remove(this);
-        return this;
-    }
-
-    public void setVouchers(Set<Voucher> vouchers) {
-        this.vouchers = vouchers;
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -215,11 +291,18 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "Booking{" +
             "id=" + getId() +
+            ", customerId=" + getCustomerId() +
+            ", partnerId=" + getPartnerId() +
             ", startTime='" + getStartTime() + "'" +
             ", finishTime='" + getFinishTime() + "'" +
             ", isFinished='" + isIsFinished() + "'" +
             ", isConfirmed='" + isIsConfirmed() + "'" +
             ", paymentMethod='" + getPaymentMethod() + "'" +
+            ", confirmTime='" + getConfirmTime() + "'" +
+            ", createdBy='" + getCreatedBy() + "'" +
+            ", createdDate='" + getCreatedDate() + "'" +
+            ", lastModifiedBy='" + getLastModifiedBy() + "'" +
+            ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             "}";
     }
 }

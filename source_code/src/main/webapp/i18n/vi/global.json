@@ -18,6 +18,9 @@
                 "booking": "Booking",
                 "voucher": "Voucher",
                 "timeline": "Timeline",
+                "bookingStaff": "Booking Staff",
+                "rating": "Rating",
+                "transaction": "Transaction",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

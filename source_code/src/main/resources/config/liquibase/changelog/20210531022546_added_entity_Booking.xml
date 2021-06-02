@@ -22,11 +22,19 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="customer_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="partner_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="start_time" type="datetime">
                 <constraints nullable="true" />
             </column>
 
-            <column name="finish_time" type="datetime">
+            <column name="finish_time" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -42,25 +50,32 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="customer_id" type="bigint">
+            <column name="confirm_time" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="created_by" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="created_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="last_modified_by" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="last_modified_date" type="datetime">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="booking" columnName="start_time" columnDataType="datetime"/>
-        <dropDefaultValue tableName="booking" columnName="finish_time" columnDataType="datetime"/>
-        
-        <createTable tableName="booking_treatment">
-            <column name="treatments_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="bookings_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="bookings_id, treatments_id" tableName="booking_treatment"/>
+        <dropDefaultValue tableName="booking" columnName="created_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="booking" columnName="last_modified_by" columnDataType="datetime"/>
+        <dropDefaultValue tableName="booking" columnName="last_modified_date" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

@@ -2,6 +2,10 @@
     "name": "Treatment",
     "fields": [
         {
+            "fieldName": "serviceId",
+            "fieldType": "Long"
+        },
+        {
             "fieldName": "name",
             "fieldType": "String"
         },
@@ -24,30 +28,25 @@
         {
             "fieldName": "description",
             "fieldType": "String"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "serv",
-            "otherEntityName": "serv",
-            "otherEntityField": "id"
         },
         {
-            "relationshipType": "many-to-many",
-            "relationshipName": "staff",
-            "otherEntityName": "staff",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "treatment"
+            "fieldName": "createdBy",
+            "fieldType": "String"
         },
         {
-            "relationshipType": "many-to-many",
-            "relationshipName": "booking",
-            "otherEntityName": "booking",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "treatment"
+            "fieldName": "createdDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "lastModifiedBy",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "lastModifiedDate",
+            "fieldType": "Instant"
         }
     ],
+    "relationships": [],
     "changelogDate": "20210531022545",
     "entityTableName": "treatment",
     "dto": "no",

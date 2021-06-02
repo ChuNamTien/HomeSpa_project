@@ -1,0 +1,27 @@
+{
+    "name": "Rating",
+    "fields": [
+        {
+            "fieldName": "bookingId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "star",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "comment",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20210602133933",
+    "entityTableName": "rating",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

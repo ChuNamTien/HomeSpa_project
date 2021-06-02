@@ -2,6 +2,14 @@
     "name": "Staff",
     "fields": [
         {
+            "fieldName": "userId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "partnerId",
+            "fieldType": "Long"
+        },
+        {
             "fieldName": "type",
             "fieldType": "String"
         },
@@ -11,37 +19,14 @@
         },
         {
             "fieldName": "startTime",
-            "fieldType": "Boolean"
+            "fieldType": "Float"
         },
         {
             "fieldName": "endTime",
-            "fieldType": "Boolean"
+            "fieldType": "Float"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "staff",
-            "relationshipName": "category",
-            "otherEntityName": "category",
-            "otherEntityField": "category",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "staff",
-            "relationshipName": "treatment",
-            "otherEntityName": "treatment",
-            "otherEntityField": "treatment",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "partner",
-            "otherEntityName": "partner",
-            "otherEntityField": "id"
-        }
-    ],
+    "relationships": [],
     "changelogDate": "20210531022541",
     "entityTableName": "staff",
     "dto": "no",

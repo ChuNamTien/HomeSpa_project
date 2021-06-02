@@ -85,20 +85,14 @@ public class PartnerResource {
      * GET  /partners : get all the partners.
      *
      * @param pageable the pagination information
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of partners in body
      */
     @GetMapping("/partners")
     @Timed
-    public ResponseEntity<List<Partner>> getAllPartners(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public ResponseEntity<List<Partner>> getAllPartners(Pageable pageable) {
         log.debug("REST request to get a page of Partners");
-        Page<Partner> page;
-        if (eagerload) {
-            page = partnerService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = partnerService.findAll(pageable);
-        }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/partners?eagerload=%b", eagerload));
+        Page<Partner> page = partnerService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/partners");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

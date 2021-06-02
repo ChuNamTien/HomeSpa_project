@@ -2,6 +2,10 @@
     "name": "Customer",
     "fields": [
         {
+            "fieldName": "userId",
+            "fieldType": "Long"
+        },
+        {
             "fieldName": "dob",
             "fieldType": "Instant"
         },
@@ -26,21 +30,7 @@
             "fieldType": "Boolean"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "booking",
-            "otherEntityName": "booking",
-            "otherEntityRelationshipName": "customer"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "relationshipName": "voucher",
-            "otherEntityName": "voucher",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "customer"
-        }
-    ],
+    "relationships": [],
     "changelogDate": "20210531022537",
     "entityTableName": "customer",
     "dto": "no",

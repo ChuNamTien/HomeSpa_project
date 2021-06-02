@@ -10,12 +10,9 @@ import com.fptu.capstone.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -27,14 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 
 import static com.fptu.capstone.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -47,11 +42,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = HomespaApp.class)
 public class BookingResourceIntTest {
 
+    private static final Long DEFAULT_CUSTOMER_ID = 1L;
+    private static final Long UPDATED_CUSTOMER_ID = 2L;
+
+    private static final Long DEFAULT_PARTNER_ID = 1L;
+    private static final Long UPDATED_PARTNER_ID = 2L;
+
     private static final Instant DEFAULT_START_TIME = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_START_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Instant DEFAULT_FINISH_TIME = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_FINISH_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final String DEFAULT_FINISH_TIME = "AAAAAAAAAA";
+    private static final String UPDATED_FINISH_TIME = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_IS_FINISHED = false;
     private static final Boolean UPDATED_IS_FINISHED = true;
@@ -62,16 +63,24 @@ public class BookingResourceIntTest {
     private static final String DEFAULT_PAYMENT_METHOD = "AAAAAAAAAA";
     private static final String UPDATED_PAYMENT_METHOD = "BBBBBBBBBB";
 
+    private static final String DEFAULT_CONFIRM_TIME = "AAAAAAAAAA";
+    private static final String UPDATED_CONFIRM_TIME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
+
+    private static final Instant DEFAULT_CREATED_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Instant DEFAULT_LAST_MODIFIED_BY = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_LAST_MODIFIED_BY = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Instant DEFAULT_LAST_MODIFIED_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_LAST_MODIFIED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     @Autowired
     private BookingRepository bookingRepository;
-
-    @Mock
-    private BookingRepository bookingRepositoryMock;
     
-
-    @Mock
-    private BookingService bookingServiceMock;
-
     @Autowired
     private BookingService bookingService;
 
@@ -110,11 +119,18 @@ public class BookingResourceIntTest {
      */
     public static Booking createEntity(EntityManager em) {
         Booking booking = new Booking()
+            .customerId(DEFAULT_CUSTOMER_ID)
+            .partnerId(DEFAULT_PARTNER_ID)
             .startTime(DEFAULT_START_TIME)
             .finishTime(DEFAULT_FINISH_TIME)
             .isFinished(DEFAULT_IS_FINISHED)
             .isConfirmed(DEFAULT_IS_CONFIRMED)
-            .paymentMethod(DEFAULT_PAYMENT_METHOD);
+            .paymentMethod(DEFAULT_PAYMENT_METHOD)
+            .confirmTime(DEFAULT_CONFIRM_TIME)
+            .createdBy(DEFAULT_CREATED_BY)
+            .createdDate(DEFAULT_CREATED_DATE)
+            .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY)
+            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE);
         return booking;
     }
 
@@ -138,11 +154,18 @@ public class BookingResourceIntTest {
         List<Booking> bookingList = bookingRepository.findAll();
         assertThat(bookingList).hasSize(databaseSizeBeforeCreate + 1);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
+        assertThat(testBooking.getCustomerId()).isEqualTo(DEFAULT_CUSTOMER_ID);
+        assertThat(testBooking.getPartnerId()).isEqualTo(DEFAULT_PARTNER_ID);
         assertThat(testBooking.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testBooking.getFinishTime()).isEqualTo(DEFAULT_FINISH_TIME);
         assertThat(testBooking.isIsFinished()).isEqualTo(DEFAULT_IS_FINISHED);
         assertThat(testBooking.isIsConfirmed()).isEqualTo(DEFAULT_IS_CONFIRMED);
         assertThat(testBooking.getPaymentMethod()).isEqualTo(DEFAULT_PAYMENT_METHOD);
+        assertThat(testBooking.getConfirmTime()).isEqualTo(DEFAULT_CONFIRM_TIME);
+        assertThat(testBooking.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
+        assertThat(testBooking.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
+        assertThat(testBooking.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
+        assertThat(testBooking.getLastModifiedDate()).isEqualTo(DEFAULT_LAST_MODIFIED_DATE);
     }
 
     @Test
@@ -175,44 +198,20 @@ public class BookingResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(booking.getId().intValue())))
+            .andExpect(jsonPath("$.[*].customerId").value(hasItem(DEFAULT_CUSTOMER_ID.intValue())))
+            .andExpect(jsonPath("$.[*].partnerId").value(hasItem(DEFAULT_PARTNER_ID.intValue())))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
             .andExpect(jsonPath("$.[*].finishTime").value(hasItem(DEFAULT_FINISH_TIME.toString())))
             .andExpect(jsonPath("$.[*].isFinished").value(hasItem(DEFAULT_IS_FINISHED.booleanValue())))
             .andExpect(jsonPath("$.[*].isConfirmed").value(hasItem(DEFAULT_IS_CONFIRMED.booleanValue())))
-            .andExpect(jsonPath("$.[*].paymentMethod").value(hasItem(DEFAULT_PAYMENT_METHOD.toString())));
+            .andExpect(jsonPath("$.[*].paymentMethod").value(hasItem(DEFAULT_PAYMENT_METHOD.toString())))
+            .andExpect(jsonPath("$.[*].confirmTime").value(hasItem(DEFAULT_CONFIRM_TIME.toString())))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
+            .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY.toString())))
+            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())));
     }
     
-    public void getAllBookingsWithEagerRelationshipsIsEnabled() throws Exception {
-        BookingResource bookingResource = new BookingResource(bookingServiceMock);
-        when(bookingServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        MockMvc restBookingMockMvc = MockMvcBuilders.standaloneSetup(bookingResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restBookingMockMvc.perform(get("/api/bookings?eagerload=true"))
-        .andExpect(status().isOk());
-
-        verify(bookingServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    public void getAllBookingsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        BookingResource bookingResource = new BookingResource(bookingServiceMock);
-            when(bookingServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restBookingMockMvc = MockMvcBuilders.standaloneSetup(bookingResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restBookingMockMvc.perform(get("/api/bookings?eagerload=true"))
-        .andExpect(status().isOk());
-
-            verify(bookingServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
     @Test
     @Transactional
     public void getBooking() throws Exception {
@@ -224,11 +223,18 @@ public class BookingResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(booking.getId().intValue()))
+            .andExpect(jsonPath("$.customerId").value(DEFAULT_CUSTOMER_ID.intValue()))
+            .andExpect(jsonPath("$.partnerId").value(DEFAULT_PARTNER_ID.intValue()))
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
             .andExpect(jsonPath("$.finishTime").value(DEFAULT_FINISH_TIME.toString()))
             .andExpect(jsonPath("$.isFinished").value(DEFAULT_IS_FINISHED.booleanValue()))
             .andExpect(jsonPath("$.isConfirmed").value(DEFAULT_IS_CONFIRMED.booleanValue()))
-            .andExpect(jsonPath("$.paymentMethod").value(DEFAULT_PAYMENT_METHOD.toString()));
+            .andExpect(jsonPath("$.paymentMethod").value(DEFAULT_PAYMENT_METHOD.toString()))
+            .andExpect(jsonPath("$.confirmTime").value(DEFAULT_CONFIRM_TIME.toString()))
+            .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY.toString()))
+            .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
+            .andExpect(jsonPath("$.lastModifiedBy").value(DEFAULT_LAST_MODIFIED_BY.toString()))
+            .andExpect(jsonPath("$.lastModifiedDate").value(DEFAULT_LAST_MODIFIED_DATE.toString()));
     }
 
     @Test
@@ -252,11 +258,18 @@ public class BookingResourceIntTest {
         // Disconnect from session so that the updates on updatedBooking are not directly saved in db
         em.detach(updatedBooking);
         updatedBooking
+            .customerId(UPDATED_CUSTOMER_ID)
+            .partnerId(UPDATED_PARTNER_ID)
             .startTime(UPDATED_START_TIME)
             .finishTime(UPDATED_FINISH_TIME)
             .isFinished(UPDATED_IS_FINISHED)
             .isConfirmed(UPDATED_IS_CONFIRMED)
-            .paymentMethod(UPDATED_PAYMENT_METHOD);
+            .paymentMethod(UPDATED_PAYMENT_METHOD)
+            .confirmTime(UPDATED_CONFIRM_TIME)
+            .createdBy(UPDATED_CREATED_BY)
+            .createdDate(UPDATED_CREATED_DATE)
+            .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
 
         restBookingMockMvc.perform(put("/api/bookings")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -267,11 +280,18 @@ public class BookingResourceIntTest {
         List<Booking> bookingList = bookingRepository.findAll();
         assertThat(bookingList).hasSize(databaseSizeBeforeUpdate);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
+        assertThat(testBooking.getCustomerId()).isEqualTo(UPDATED_CUSTOMER_ID);
+        assertThat(testBooking.getPartnerId()).isEqualTo(UPDATED_PARTNER_ID);
         assertThat(testBooking.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testBooking.getFinishTime()).isEqualTo(UPDATED_FINISH_TIME);
         assertThat(testBooking.isIsFinished()).isEqualTo(UPDATED_IS_FINISHED);
         assertThat(testBooking.isIsConfirmed()).isEqualTo(UPDATED_IS_CONFIRMED);
         assertThat(testBooking.getPaymentMethod()).isEqualTo(UPDATED_PAYMENT_METHOD);
+        assertThat(testBooking.getConfirmTime()).isEqualTo(UPDATED_CONFIRM_TIME);
+        assertThat(testBooking.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
+        assertThat(testBooking.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
+        assertThat(testBooking.getLastModifiedBy()).isEqualTo(UPDATED_LAST_MODIFIED_BY);
+        assertThat(testBooking.getLastModifiedDate()).isEqualTo(UPDATED_LAST_MODIFIED_DATE);
     }
 
     @Test

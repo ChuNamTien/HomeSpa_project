@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { JhiAlertService } from 'ng-jhipster';
 
 import { IServImg } from 'app/shared/model/serv-img.model';
 import { ServImgService } from './serv-img.service';
-import { IServ } from 'app/shared/model/serv.model';
-import { ServService } from 'app/entities/serv';
 
 @Component({
     selector: 'jhi-serv-img-update',
@@ -17,26 +14,13 @@ export class ServImgUpdateComponent implements OnInit {
     servImg: IServImg;
     isSaving: boolean;
 
-    servs: IServ[];
-
-    constructor(
-        private jhiAlertService: JhiAlertService,
-        private servImgService: ServImgService,
-        private servService: ServService,
-        private activatedRoute: ActivatedRoute
-    ) {}
+    constructor(private servImgService: ServImgService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ servImg }) => {
             this.servImg = servImg;
         });
-        this.servService.query().subscribe(
-            (res: HttpResponse<IServ[]>) => {
-                this.servs = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
     }
 
     previousState() {
@@ -63,13 +47,5 @@ export class ServImgUpdateComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
-    }
-
-    private onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackServById(index: number, item: IServ) {
-        return item.id;
     }
 }

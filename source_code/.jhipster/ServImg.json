@@ -2,6 +2,10 @@
     "name": "ServImg",
     "fields": [
         {
+            "fieldName": "serviceId",
+            "fieldType": "Long"
+        },
+        {
             "fieldName": "imgUrl",
             "fieldType": "String"
         },
@@ -14,14 +18,7 @@
             "fieldType": "Long"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "serv",
-            "otherEntityName": "serv",
-            "otherEntityField": "id"
-        }
-    ],
+    "relationships": [],
     "changelogDate": "20210531022544",
     "entityTableName": "serv_img",
     "dto": "no",

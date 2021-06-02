@@ -19,8 +19,10 @@
             "name": "Name",
             "imgUrl": "Img Url",
             "status": "Status",
-            "partner": "Partner",
-            "staff": "Staff"
+            "createdBy": "Created By",
+            "createdDate": "Created Date",
+            "lastModifiedBy": "Last Modified By",
+            "lastModifiedDate": "Last Modified Date"
         }
     }
 }

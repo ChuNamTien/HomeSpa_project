@@ -88,6 +88,15 @@ public class User extends AbstractAuditingEntity implements Serializable {
         name = "jhi_user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
+    
+    @OneToOne
+    private Customer customer;
+    
+    @OneToOne
+    private Partner partner;
+    
+    @OneToOne
+    private Staff staff;
 
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();

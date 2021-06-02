@@ -10,6 +10,16 @@
                         [(ngModel)]="booking.id" readonly />
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.booking.customerId" for="field_customerId">Customer Id</label>
+                    <input type="number" class="form-control" name="customerId" id="field_customerId"
+                        [(ngModel)]="booking.customerId" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.booking.partnerId" for="field_partnerId">Partner Id</label>
+                    <input type="number" class="form-control" name="partnerId" id="field_partnerId"
+                        [(ngModel)]="booking.partnerId" />
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="homespaApp.booking.startTime" for="field_startTime">Start Time</label>
                     <div class="d-flex">
                         <input id="field_startTime" type="datetime-local" class="form-control" name="startTime" [(ngModel)]="startTime"
@@ -18,10 +28,8 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="homespaApp.booking.finishTime" for="field_finishTime">Finish Time</label>
-                    <div class="d-flex">
-                        <input id="field_finishTime" type="datetime-local" class="form-control" name="finishTime" [(ngModel)]="finishTime"
-                        />
-                    </div>
+                    <input type="text" class="form-control" name="finishTime" id="field_finishTime"
+                        [(ngModel)]="booking.finishTime" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="homespaApp.booking.isFinished" for="field_isFinished">Is Finished</label>
@@ -38,20 +46,38 @@
                     <input type="text" class="form-control" name="paymentMethod" id="field_paymentMethod"
                         [(ngModel)]="booking.paymentMethod" />
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.booking.confirmTime" for="field_confirmTime">Confirm Time</label>
+                    <input type="text" class="form-control" name="confirmTime" id="field_confirmTime"
+                        [(ngModel)]="booking.confirmTime" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.booking.createdBy" for="field_createdBy">Created By</label>
+                    <input type="text" class="form-control" name="createdBy" id="field_createdBy"
+                        [(ngModel)]="booking.createdBy" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.booking.createdDate" for="field_createdDate">Created Date</label>
+                    <div class="d-flex">
+                        <input id="field_createdDate" type="datetime-local" class="form-control" name="createdDate" [(ngModel)]="createdDate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.booking.lastModifiedBy" for="field_lastModifiedBy">Last Modified By</label>
+                    <div class="d-flex">
+                        <input id="field_lastModifiedBy" type="datetime-local" class="form-control" name="lastModifiedBy" [(ngModel)]="lastModifiedBy"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.booking.lastModifiedDate" for="field_lastModifiedDate">Last Modified Date</label>
+                    <div class="d-flex">
+                        <input id="field_lastModifiedDate" type="datetime-local" class="form-control" name="lastModifiedDate" [(ngModel)]="lastModifiedDate"
+                        />
+                    </div>
+                </div>
 
-                <div class="form-group">
-                    <label jhiTranslate="homespaApp.booking.treatment" for="field_treatment">Treatment</label>
-                    <select class="form-control" id="field_treatment" multiple name="treatment" [(ngModel)]="booking.treatments">
-                        <option [ngValue]="getSelected(booking.treatments, treatmentOption)" *ngFor="let treatmentOption of treatments; trackBy: trackTreatmentById">{{treatmentOption.treatment}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homespaApp.booking.customer" for="field_customer">Customer</label>
-                    <select class="form-control" id="field_customer" name="customer" [(ngModel)]="booking.customer" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="customerOption.id === booking.customer?.id ? booking.customer : customerOption" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.id}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

@@ -34,8 +34,27 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="created_by" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="created_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="last_modified_by" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="last_modified_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="category" columnName="created_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="category" columnName="last_modified_by" columnDataType="datetime"/>
+        <dropDefaultValue tableName="category" columnName="last_modified_date" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

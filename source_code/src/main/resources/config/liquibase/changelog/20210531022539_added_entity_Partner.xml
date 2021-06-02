@@ -22,6 +22,10 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -58,11 +62,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="open_time" type="datetime">
+            <column name="open_time" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 
-            <column name="close_time" type="datetime">
+            <column name="close_time" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 
@@ -74,7 +78,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="time_confirm" type="varchar(255)">
+            <column name="confirm_after" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 
@@ -84,19 +88,6 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="partner" columnName="open_time" columnDataType="datetime"/>
-        <dropDefaultValue tableName="partner" columnName="close_time" columnDataType="datetime"/>
-        
-        <createTable tableName="partner_category">
-            <column name="categories_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="partners_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="partners_id, categories_id" tableName="partner_category"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

@@ -5,9 +5,9 @@ import { JhiEventManager } from 'ng-jhipster';
 import { LoginModalService, Principal, Account } from 'app/core';
 
 @Component({
-    selector: 'jhi-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['home.css']
+    selector: 'customer-index',
+    templateUrl: './customer-index.component.html',
+    styleUrls: ['customer-index.css']
 })
 export class HomeComponent implements OnInit {
     account: Account;

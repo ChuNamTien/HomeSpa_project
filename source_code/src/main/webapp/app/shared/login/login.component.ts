@@ -5,6 +5,8 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { Principal } from 'app/core';
+import { CommonRole } from '../util/common-constant';
 
 @Component({
     selector: 'jhi-login-modal',
@@ -16,7 +18,9 @@ export class JhiLoginModalComponent implements AfterViewInit {
     rememberMe: boolean;
     username: string;
     credentials: any;
-
+    adminIndexURL = '/admin/index';
+    partnerIndexURL = '/partner/index';
+    customerIndexURL = '/';
     constructor(
         private eventManager: JhiEventManager,
         private loginService: LoginService,
@@ -24,6 +28,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
         private elementRef: ElementRef,
         private renderer: Renderer,
         private router: Router,
+        private principal: Principal,
         public activeModal: NgbActiveModal
     ) {
         this.credentials = {};
@@ -61,14 +66,32 @@ export class JhiLoginModalComponent implements AfterViewInit {
                     name: 'authenticationSuccess',
                     content: 'Sending Authentication Success'
                 });
+                this.principal.identity().then(account => {
+                    const firstPriorRole = account.authorities[0];
+                    switch (firstPriorRole) {
+                        case CommonRole.ADMIN:
+                        case CommonRole.MODERATOR:
+                            this.router.navigate([this.adminIndexURL]);
+                            break;
+                        case CommonRole.PARTNER:
+                        case CommonRole.PARTNER_STAFF:
+                            this.router.navigate([this.partnerIndexURL]);
+                            break;
+                        case CommonRole.CUSTOMER:
+                        default:
+                            this.router.navigate([this.customerIndexURL]);
+                            break;
+                    }
+                });
 
                 // previousState was set in the authExpiredInterceptor before being redirected to login modal.
                 // since login is succesful, go to stored previousState and clear previousState
-                const redirect = this.stateStorageService.getUrl();
-                if (redirect) {
-                    this.stateStorageService.storeUrl(null);
-                    this.router.navigate([redirect]);
-                }
+
+                // const redirect = this.stateStorageService.getUrl();
+                // if (redirect) {
+                //     this.stateStorageService.storeUrl(null);
+                //     this.router.navigate([redirect]);
+                // }
             })
             .catch(() => {
                 this.authenticationError = true;

@@ -14,12 +14,14 @@ import { NotificationInterceptor } from './blocks/interceptor/notification.inter
 import { HomespaSharedModule } from 'app/shared';
 import { HomespaCoreModule } from 'app/core';
 import { HomespaAppRoutingModule } from './app-routing.module';
-import { HomespaHomeModule } from './home/home.module';
+import { HomespaHomeModule } from './permit-role-actor/customer-index/customer-index.module';
 import { HomespaAccountModule } from './account/account.module';
 import { HomespaEntityModule } from './entities/entity.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
+import { AdminIndexModule } from './permit-role-actor/admin-index/index';
+import { PartnerIndexModule } from './permit-role-actor/partner-index/index';
 
 @NgModule({
     imports: [
@@ -30,6 +32,8 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         HomespaCoreModule,
         HomespaHomeModule,
         HomespaAccountModule,
+        AdminIndexModule,
+        PartnerIndexModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         HomespaEntityModule
     ],

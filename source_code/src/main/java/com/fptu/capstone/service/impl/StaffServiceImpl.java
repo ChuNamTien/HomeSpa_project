@@ -1,6 +1,7 @@
 package com.fptu.capstone.service.impl;
 
 import com.fptu.capstone.service.StaffService;
+import com.fptu.capstone.service.dto.StaffDTO;
 import com.fptu.capstone.domain.Staff;
 import com.fptu.capstone.repository.StaffRepository;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -86,4 +88,9 @@ public class StaffServiceImpl implements StaffService {
         log.debug("Request to delete Staff : {}", id);
         staffRepository.deleteById(id);
     }
+
+	@Override
+	public List<StaffDTO> getAllStaffByPartnerId(Long partnerId) {
+		return staffRepository.getAllStaffByPartnerId(partnerId);
+	}
 }

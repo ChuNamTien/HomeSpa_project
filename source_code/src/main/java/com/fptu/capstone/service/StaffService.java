@@ -1,10 +1,12 @@
 package com.fptu.capstone.service;
 
 import com.fptu.capstone.domain.Staff;
+import com.fptu.capstone.service.dto.StaffDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -49,4 +51,6 @@ public interface StaffService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+	List<StaffDTO> getAllStaffByPartnerId(Long partnerId);
 }

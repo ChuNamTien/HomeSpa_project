@@ -3,6 +3,7 @@ package com.fptu.capstone.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.fptu.capstone.domain.Staff;
 import com.fptu.capstone.service.StaffService;
+import com.fptu.capstone.service.dto.StaffDTO;
 import com.fptu.capstone.web.rest.errors.BadRequestAlertException;
 import com.fptu.capstone.web.rest.util.HeaderUtil;
 import com.fptu.capstone.web.rest.util.PaginationUtil;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -129,4 +130,13 @@ public class StaffResource {
         staffService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+    
+    // LamDT9 Start
+    @GetMapping("/staff/get-all-staff-by-partner-id")
+    public ResponseEntity<List<StaffDTO>> getAllStaffByPartnerId(@RequestParam("partnerId") Long partnerId) {
+    	List<StaffDTO> lstObj = new ArrayList();
+    	lstObj = staffService.getAllStaffByPartnerId(partnerId);
+        return new ResponseEntity<>(lstObj, HttpStatus.OK);
+    }
+    // LamDT9 End
 }

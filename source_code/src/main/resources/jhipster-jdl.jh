@@ -34,7 +34,7 @@ entity PartnerImg{
 entity Staff{
 	type String,
     status String,
-    startTime Boolean,
+    startTime Instant,
     endTime Boolean
 }
 

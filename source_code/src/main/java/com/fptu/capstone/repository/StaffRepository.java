@@ -1,6 +1,8 @@
 package com.fptu.capstone.repository;
 
 import com.fptu.capstone.domain.Staff;
+import com.fptu.capstone.service.dto.StaffDTO;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -26,5 +28,8 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
 
     @Query("select staff from Staff staff left join fetch staff.categories left join fetch staff.treatments where staff.id =:id")
     Optional<Staff> findOneWithEagerRelationships(@Param("id") Long id);
+
+    @Query(name = "getAllStaffByPartnerId", nativeQuery = true)
+	List<StaffDTO> getAllStaffByPartnerId(@Param("partnerId")Long partnerId);
 
 }

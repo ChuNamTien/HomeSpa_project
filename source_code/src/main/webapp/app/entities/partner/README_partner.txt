@@ -1,0 +1,1 @@
+Các component chỉ có PARTNER dùng sẽ move vào folder cha này

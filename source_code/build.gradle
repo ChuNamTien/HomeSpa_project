@@ -130,7 +130,8 @@ liquibase {
             username 'homespa_master'
             password 'a12345'
             changeLogFile 'src/main/resources/config/liquibase/master.xml'
-            defaultSchemaName 'homespa'
+            defaultSchemaName 'homespa_dev'
+            referenceUrl 'hibernate:spring:com.fptu.capstone.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy'
             logLevel 'debug'
             classpath 'src/main/resources/'
         }
@@ -141,7 +142,7 @@ liquibase {
             password 'a12345'
             changeLogFile project.ext.diffChangelogFile
             referenceUrl 'hibernate:spring:com.fptu.capstone.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy'
-            defaultSchemaName 'homespa_migrate'
+            defaultSchemaName 'homespa_dev'
             logLevel 'debug'
             classpath 'src/main/resources/'
         }

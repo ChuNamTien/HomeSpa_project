@@ -19,8 +19,8 @@ public class ServImg implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "service_id")
-    private Long serviceId;
+//    @Column(name = "service_id", nullable = false)
+//    private Long serviceId;
 
     @Column(name = "img_url")
     private String imgUrl;
@@ -30,27 +30,25 @@ public class ServImg implements Serializable {
 
     @Column(name = "jhi_index")
     private Long index;
+    
+    @ManyToOne
+    @JoinColumn(name = "serv_id")
+    private Serv serv;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    public Serv getServ() {
+		return serv;
+	}
+
+	public void setServ(Serv serv) {
+		this.serv = serv;
+	}
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getServiceId() {
-        return serviceId;
-    }
-
-    public ServImg serviceId(Long serviceId) {
-        this.serviceId = serviceId;
-        return this;
-    }
-
-    public void setServiceId(Long serviceId) {
-        this.serviceId = serviceId;
     }
 
     public String getImgUrl() {
@@ -117,7 +115,7 @@ public class ServImg implements Serializable {
     public String toString() {
         return "ServImg{" +
             "id=" + getId() +
-            ", serviceId=" + getServiceId() +
+//            ", serviceId=" + getServiceId() +
             ", imgUrl='" + getImgUrl() + "'" +
             ", status='" + getStatus() + "'" +
             ", index=" + getIndex() +

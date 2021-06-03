@@ -3,6 +3,8 @@ package com.fptu.capstone.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -20,14 +22,14 @@ public class BookingActivity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "booking_id")
-    private Long bookingId;
-
-    @Column(name = "staff_id")
-    private Long staffId;
-
-    @Column(name = "treatment_id")
-    private Long treatmentId;
+//    @Column(name = "booking_id")
+//    private Long bookingId;
+//
+//    @Column(name = "staff_id")
+//    private Long staffId;
+//
+//    @Column(name = "treatment_id")
+//    private Long treatmentId;
 
     @Column(name = "start_date")
     private Instant startDate;
@@ -37,6 +39,21 @@ public class BookingActivity implements Serializable {
 
     @Column(name = "status")
     private Long status;
+    
+    @ManyToOne
+    @JoinColumn(name = "staff_id")
+    @JsonIgnore
+    private Staff staff;
+    
+    @ManyToOne
+    @JoinColumn(name = "booking_id")
+    @JsonIgnore
+    private Booking booking;
+    
+    @ManyToOne
+    @JoinColumn(name = "treatment_id")
+    @JsonIgnore
+    private Treatment treatment;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -47,44 +64,60 @@ public class BookingActivity implements Serializable {
         this.id = id;
     }
 
-    public Long getBookingId() {
-        return bookingId;
-    }
+//    public Long getBookingId() {
+//        return bookingId;
+//    }
+//
+//    public BookingActivity bookingId(Long bookingId) {
+//        this.bookingId = bookingId;
+//        return this;
+//    }
+//
+//    public void setBookingId(Long bookingId) {
+//        this.bookingId = bookingId;
+//    }
 
-    public BookingActivity bookingId(Long bookingId) {
-        this.bookingId = bookingId;
-        return this;
-    }
+	public Staff getStaff() {
+		return staff;
+	}
 
-    public void setBookingId(Long bookingId) {
-        this.bookingId = bookingId;
-    }
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+	}
 
-    public Long getStaffId() {
-        return staffId;
-    }
+	public Treatment getTreatment() {
+		return treatment;
+	}
 
-    public BookingActivity staffId(Long staffId) {
-        this.staffId = staffId;
-        return this;
-    }
+	public void setTreatment(Treatment treatment) {
+		this.treatment = treatment;
+	}
 
-    public void setStaffId(Long staffId) {
-        this.staffId = staffId;
-    }
-
-    public Long getTreatmentId() {
-        return treatmentId;
-    }
-
-    public BookingActivity treatmentId(Long treatmentId) {
-        this.treatmentId = treatmentId;
-        return this;
-    }
-
-    public void setTreatmentId(Long treatmentId) {
-        this.treatmentId = treatmentId;
-    }
+//	public Long getStaffId() {
+//        return staffId;
+//    }
+//
+//    public BookingActivity staffId(Long staffId) {
+//        this.staffId = staffId;
+//        return this;
+//    }
+//
+//    public void setStaffId(Long staffId) {
+//        this.staffId = staffId;
+//    }
+//
+//    public Long getTreatmentId() {
+//        return treatmentId;
+//    }
+//
+//    public BookingActivity treatmentId(Long treatmentId) {
+//        this.treatmentId = treatmentId;
+//        return this;
+//    }
+//
+//    public void setTreatmentId(Long treatmentId) {
+//        this.treatmentId = treatmentId;
+//    }
 
     public Instant getStartDate() {
         return startDate;
@@ -150,9 +183,9 @@ public class BookingActivity implements Serializable {
     public String toString() {
         return "BookingActivity{" +
             "id=" + getId() +
-            ", bookingId=" + getBookingId() +
-            ", staffId=" + getStaffId() +
-            ", treatmentId=" + getTreatmentId() +
+//            ", bookingId=" + getBookingId() +
+//            ", staffId=" + getStaffId() +
+//            ", treatmentId=" + getTreatmentId() +
             ", startDate='" + getStartDate() + "'" +
             ", finishDate='" + getFinishDate() + "'" +
             ", status=" + getStatus() +

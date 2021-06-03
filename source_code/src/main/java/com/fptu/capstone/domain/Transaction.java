@@ -3,6 +3,8 @@ package com.fptu.capstone.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -19,8 +21,8 @@ public class Transaction implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "booking_id")
-    private Long bookingId;
+//    @Column(name = "booking_id")
+//    private Long bookingId;
 
     @Column(name = "code")
     private String code;
@@ -46,18 +48,18 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public Long getBookingId() {
-        return bookingId;
-    }
-
-    public Transaction bookingId(Long bookingId) {
-        this.bookingId = bookingId;
-        return this;
-    }
-
-    public void setBookingId(Long bookingId) {
-        this.bookingId = bookingId;
-    }
+//	public Long getBookingId() {
+//        return bookingId;
+//    }
+//
+//    public Transaction bookingId(Long bookingId) {
+//        this.bookingId = bookingId;
+//        return this;
+//    }
+//
+//    public void setBookingId(Long bookingId) {
+//        this.bookingId = bookingId;
+//    }
 
     public String getCode() {
         return code;
@@ -149,7 +151,7 @@ public class Transaction implements Serializable {
     public String toString() {
         return "Transaction{" +
             "id=" + getId() +
-            ", bookingId=" + getBookingId() +
+//            ", bookingId=" + getBookingId() +
             ", code='" + getCode() + "'" +
             ", amount=" + getAmount() +
             ", ipAddress='" + getIpAddress() + "'" +

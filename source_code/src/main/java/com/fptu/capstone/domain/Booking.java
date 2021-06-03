@@ -3,9 +3,13 @@ package com.fptu.capstone.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Booking.
@@ -20,11 +24,11 @@ public class Booking implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "customer_id")
-    private Long customerId;
-
-    @Column(name = "partner_id")
-    private Long partnerId;
+//    @Column(name = "customer_id")
+//    private Long customerId;
+//
+//    @Column(name = "partner_id")
+//    private Long partnerId;
 
     @Column(name = "start_time")
     private Instant startTime;
@@ -46,8 +50,47 @@ public class Booking implements Serializable {
 
     @Column(name = "confirm_time")
     private Instant confirmTime;
+    
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    @JsonIgnore
+    private Customer customer;
+    
+    @ManyToOne
+    @JoinColumn(name = "partner_id")
+    @JsonIgnore
+    private Partner partner;
+    
+    @ManyToOne
+    @JoinColumn(name = "serv_id")
+    @JsonIgnore
+    private Serv serv;
+    
+    @ManyToOne
+    @JoinColumn(name = "voucher_id")
+    @JsonIgnore
+    private Voucher voucher;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    @OneToMany(mappedBy = "booking")
+    private Set<BookingActivity> bookingActivities = new HashSet<>();
+    
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Rating rating ;
+    
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Transaction transaction ;
+    
+    public Set<BookingActivity> getBookingActivities() {
+		return bookingActivities;
+	}
+
+	public void setBookingActivities(Set<BookingActivity> bookingActivities) {
+		this.bookingActivities = bookingActivities;
+	}
+
+	// jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -56,37 +99,93 @@ public class Booking implements Serializable {
         this.id = id;
     }
 
-    public Long getCustomerId() {
-        return customerId;
-    }
+//    public Long getCustomerId() {
+//        return customerId;
+//    }
+//
+//    public Booking customerId(Long customerId) {
+//        this.customerId = customerId;
+//        return this;
+//    }
+//
+//    public void setCustomerId(Long customerId) {
+//        this.customerId = customerId;
+//    }
+//
+//    public Long getPartnerId() {
+//        return partnerId;
+//    }
+//
+//	public Booking partnerId(Long partnerId) {
+//        this.partnerId = partnerId;
+//        return this;
+//    }
 
-    public Booking customerId(Long customerId) {
-        this.customerId = customerId;
-        return this;
-    }
+    public Rating getRating() {
+		return rating;
+	}
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
+	public void setRating(Rating rating) {
+		this.rating = rating;
+	}
 
-    public Long getPartnerId() {
-        return partnerId;
-    }
+	public Transaction getTransaction() {
+		return transaction;
+	}
 
-    public Booking partnerId(Long partnerId) {
-        this.partnerId = partnerId;
-        return this;
-    }
-
-    public void setPartnerId(Long partnerId) {
-        this.partnerId = partnerId;
-    }
+	public void setTransaction(Transaction transaction) {
+		this.transaction = transaction;
+	}
+//
+//	public void setPartnerId(Long partnerId) {
+//        this.partnerId = partnerId;
+//    }
 
     public Instant getStartTime() {
         return startTime;
     }
 
-    public Booking startTime(Instant startTime) {
+    public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Partner getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+
+	public Serv getServ() {
+		return serv;
+	}
+
+	public void setServ(Serv serv) {
+		this.serv = serv;
+	}
+
+	public Voucher getVoucher() {
+		return voucher;
+	}
+
+	public void setVoucher(Voucher voucher) {
+		this.voucher = voucher;
+	}
+
+	public Boolean getIsFinished() {
+		return isFinished;
+	}
+
+	public Boolean getIsConfirmed() {
+		return isConfirmed;
+	}
+
+	public Booking startTime(Instant startTime) {
         this.startTime = startTime;
         return this;
     }
@@ -198,8 +297,8 @@ public class Booking implements Serializable {
     public String toString() {
         return "Booking{" +
             "id=" + getId() +
-            ", customerId=" + getCustomerId() +
-            ", partnerId=" + getPartnerId() +
+//            ", customerId=" + getCustomerId() +
+//            ", partnerId=" + getPartnerId() +
             ", startTime='" + getStartTime() + "'" +
             ", finishTime='" + getFinishTime() + "'" +
             ", isFinished='" + isIsFinished() + "'" +

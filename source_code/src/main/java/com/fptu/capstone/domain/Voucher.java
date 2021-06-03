@@ -5,14 +5,16 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Voucher.
  */
 @Entity
 @Table(name = "voucher")
-public class Voucher implements Serializable {
+public class Voucher extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,8 +22,8 @@ public class Voucher implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "partner_id")
-    private Long partnerId;
+//    @Column(name = "partner_id")
+//    private Long partnerId;
 
     @Column(name = "name")
     private String name;
@@ -43,20 +45,50 @@ public class Voucher implements Serializable {
 
     @Column(name = "status")
     private String status;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "customer_voucher",
+        joinColumns = {@JoinColumn(name = "customer_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "voucher_id", referencedColumnName = "id")})
+    private Set<Customer> customers = new HashSet<>();
+    
+    @ManyToMany
+    @JoinTable(
+        name = "voucher_serv",
+        joinColumns = {@JoinColumn(name = "voucher_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "serv_id", referencedColumnName = "id")})
+    private Set<Serv> servs = new HashSet<>();
+    
+    @ManyToOne
+    @JoinColumn(name = "partner_id")
+    private Partner partner;
 
-    @Column(name = "created_by")
-    private String createdBy;
+    public Set<Customer> getCustomers() {
+		return customers;
+	}
 
-    @Column(name = "created_date")
-    private Instant createdDate;
+	public void setCustomers(Set<Customer> customers) {
+		this.customers = customers;
+	}
 
-    @Column(name = "last_modified_by")
-    private String lastModifiedBy;
+	public Set<Serv> getServs() {
+		return servs;
+	}
 
-    @Column(name = "last_modified_date")
-    private Instant lastModifiedDate;
+	public void setServs(Set<Serv> servs) {
+		this.servs = servs;
+	}
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+	public Partner getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+
+	// jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -65,18 +97,18 @@ public class Voucher implements Serializable {
         this.id = id;
     }
 
-    public Long getPartnerId() {
-        return partnerId;
-    }
-
-    public Voucher partnerId(Long partnerId) {
-        this.partnerId = partnerId;
-        return this;
-    }
-
-    public void setPartnerId(Long partnerId) {
-        this.partnerId = partnerId;
-    }
+	//    public Long getPartnerId() {
+	//        return partnerId;
+	//    }
+	//
+	//    public Voucher partnerId(Long partnerId) {
+	//        this.partnerId = partnerId;
+	//        return this;
+	//    }
+	//
+	//    public void setPartnerId(Long partnerId) {
+	//        this.partnerId = partnerId;
+	//    }
 
     public String getName() {
         return name;
@@ -168,58 +200,6 @@ public class Voucher implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public Voucher createdBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public Voucher createdDate(Instant createdDate) {
-        this.createdDate = createdDate;
-        return this;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public Voucher lastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-        return this;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public Voucher lastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-        return this;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -246,7 +226,7 @@ public class Voucher implements Serializable {
     public String toString() {
         return "Voucher{" +
             "id=" + getId() +
-            ", partnerId=" + getPartnerId() +
+//            ", partnerId=" + getPartnerId() +
             ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
             ", discription='" + getDiscription() + "'" +

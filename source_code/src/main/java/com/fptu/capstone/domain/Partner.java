@@ -3,8 +3,13 @@ package com.fptu.capstone.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Partner.
@@ -19,8 +24,8 @@ public class Partner implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+//    @Column(name = "user_id", nullable = false)
+//    private Long userId;
 
     @Column(name = "name")
     private String name;
@@ -66,6 +71,45 @@ public class Partner implements Serializable {
 
     @Column(name = "bussiness_license_url")
     private String bussinessLicenseUrl;
+    
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    
+    @ManyToMany(mappedBy = "likedPartners")
+    @JsonIgnore
+    private Set<Customer> likedCustomers = new HashSet<>();
+    
+    @OneToMany(mappedBy="partner")
+    @JsonIgnore
+    private Set<Report> report = new HashSet<>();
+    
+    @OneToMany(mappedBy="partner")
+    private Set<PartnerImg> partnerImgs = new HashSet<>();
+    
+    @ManyToMany
+    @JoinTable(
+        name = "partner_category",
+        joinColumns = {@JoinColumn(name = "partner_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
+    @JsonIgnoreProperties("partners")
+    private Set<Category> categories = new HashSet<>();
+    
+    @OneToMany(mappedBy="partner")
+    @JsonIgnore
+    private Set<Voucher> vouchers = new HashSet<>();
+    
+    @OneToMany(mappedBy="partner")
+    @JsonIgnore
+    private Set<Booking> bookings = new HashSet<>();
+    
+    @OneToMany(mappedBy="partner")
+    @JsonIgnore
+    private Set<Serv> servs = new HashSet<>();
+    
+    @OneToMany(mappedBy="partner")
+    @JsonIgnore
+    private Set<Staff> staffs = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -76,18 +120,14 @@ public class Partner implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public Partner userId(Long userId) {
-        this.userId = userId;
-        return this;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+//    public Long getUserId() {
+//        return userId;
+//    }
+//
+//    public Partner userId(Long userId) {
+//        this.userId = userId;
+//        return this;
+//    }
 
     public String getName() {
         return name;
@@ -106,7 +146,17 @@ public class Partner implements Serializable {
         return partnerType;
     }
 
-    public Partner partnerType(String partnerType) {
+    
+    
+    public Set<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
+	}
+
+	public Partner partnerType(String partnerType) {
         this.partnerType = partnerType;
         return this;
     }
@@ -283,9 +333,50 @@ public class Partner implements Serializable {
     public void setBussinessLicenseUrl(String bussinessLicenseUrl) {
         this.bussinessLicenseUrl = bussinessLicenseUrl;
     }
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<Customer> getLikedCustomers() {
+		return likedCustomers;
+	}
+
+	public void setLikedCustomers(Set<Customer> likedCustomers) {
+		this.likedCustomers = likedCustomers;
+	}
+
+	public Set<Report> getReport() {
+		return report;
+	}
+
+	public void setReport(Set<Report> report) {
+		this.report = report;
+	}
+
+	public Set<PartnerImg> getPartnerImgs() {
+		return partnerImgs;
+	}
+
+	public void setPartnerImgs(Set<PartnerImg> partnerImgs) {
+		this.partnerImgs = partnerImgs;
+	}
+
+	public Boolean getIsWeekendOpen() {
+		return isWeekendOpen;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -309,7 +400,7 @@ public class Partner implements Serializable {
     public String toString() {
         return "Partner{" +
             "id=" + getId() +
-            ", userId=" + getUserId() +
+//            ", userId=" + getUserId() +
             ", name='" + getName() + "'" +
             ", partnerType='" + getPartnerType() + "'" +
             ", customerType='" + getCustomerType() + "'" +

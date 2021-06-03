@@ -25,7 +25,7 @@ describe('Service Tests', () => {
             httpMock = injector.get(HttpTestingController);
             currentDate = moment();
 
-            elemDefault = new Booking(0, currentDate, currentDate, false, false, 'AAAAAAA');
+            elemDefault = new Booking(0, 0, 0, currentDate, currentDate, false, false, 0, 'AAAAAAA', currentDate);
         });
 
         describe('Service methods', async () => {
@@ -33,7 +33,8 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         startTime: currentDate.format(DATE_TIME_FORMAT),
-                        finishTime: currentDate.format(DATE_TIME_FORMAT)
+                        finishTime: currentDate.format(DATE_TIME_FORMAT),
+                        confirmTime: currentDate.format(DATE_TIME_FORMAT)
                     },
                     elemDefault
                 );
@@ -51,14 +52,16 @@ describe('Service Tests', () => {
                     {
                         id: 0,
                         startTime: currentDate.format(DATE_TIME_FORMAT),
-                        finishTime: currentDate.format(DATE_TIME_FORMAT)
+                        finishTime: currentDate.format(DATE_TIME_FORMAT),
+                        confirmTime: currentDate.format(DATE_TIME_FORMAT)
                     },
                     elemDefault
                 );
                 const expected = Object.assign(
                     {
                         startTime: currentDate,
-                        finishTime: currentDate
+                        finishTime: currentDate,
+                        confirmTime: currentDate
                     },
                     returnedFromService
                 );
@@ -73,11 +76,15 @@ describe('Service Tests', () => {
             it('should update a Booking', async () => {
                 const returnedFromService = Object.assign(
                     {
+                        customerId: 1,
+                        partnerId: 1,
                         startTime: currentDate.format(DATE_TIME_FORMAT),
                         finishTime: currentDate.format(DATE_TIME_FORMAT),
                         isFinished: true,
                         isConfirmed: true,
-                        paymentMethod: 'BBBBBB'
+                        duration: 1,
+                        paymentMethod: 'BBBBBB',
+                        confirmTime: currentDate.format(DATE_TIME_FORMAT)
                     },
                     elemDefault
                 );
@@ -85,7 +92,8 @@ describe('Service Tests', () => {
                 const expected = Object.assign(
                     {
                         startTime: currentDate,
-                        finishTime: currentDate
+                        finishTime: currentDate,
+                        confirmTime: currentDate
                     },
                     returnedFromService
                 );
@@ -100,18 +108,23 @@ describe('Service Tests', () => {
             it('should return a list of Booking', async () => {
                 const returnedFromService = Object.assign(
                     {
+                        customerId: 1,
+                        partnerId: 1,
                         startTime: currentDate.format(DATE_TIME_FORMAT),
                         finishTime: currentDate.format(DATE_TIME_FORMAT),
                         isFinished: true,
                         isConfirmed: true,
-                        paymentMethod: 'BBBBBB'
+                        duration: 1,
+                        paymentMethod: 'BBBBBB',
+                        confirmTime: currentDate.format(DATE_TIME_FORMAT)
                     },
                     elemDefault
                 );
                 const expected = Object.assign(
                     {
                         startTime: currentDate,
-                        finishTime: currentDate
+                        finishTime: currentDate,
+                        confirmTime: currentDate
                     },
                     returnedFromService
                 );

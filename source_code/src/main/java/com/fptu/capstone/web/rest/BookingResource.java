@@ -85,20 +85,14 @@ public class BookingResource {
      * GET  /bookings : get all the bookings.
      *
      * @param pageable the pagination information
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of bookings in body
      */
     @GetMapping("/bookings")
     @Timed
-    public ResponseEntity<List<Booking>> getAllBookings(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public ResponseEntity<List<Booking>> getAllBookings(Pageable pageable) {
         log.debug("REST request to get a page of Bookings");
-        Page<Booking> page;
-        if (eagerload) {
-            page = bookingService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = bookingService.findAll(pageable);
-        }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/bookings?eagerload=%b", eagerload));
+        Page<Booking> page = bookingService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/bookings");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

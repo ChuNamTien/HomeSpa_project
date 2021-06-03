@@ -16,14 +16,13 @@
             "detail": {
                 "title": "Customer"
             },
+            "userId": "User Id",
             "dob": "Dob",
             "phone": "Phone",
             "address": "Address",
             "city": "City",
             "zipcode": "Zipcode",
-            "status": "Status",
-            "booking": "Booking",
-            "voucher": "Voucher"
+            "status": "Status"
         }
     }
 }

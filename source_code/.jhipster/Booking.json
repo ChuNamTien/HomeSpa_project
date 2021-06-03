@@ -2,6 +2,14 @@
     "name": "Booking",
     "fields": [
         {
+            "fieldName": "customerId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "partnerId",
+            "fieldType": "Long"
+        },
+        {
             "fieldName": "startTime",
             "fieldType": "Instant"
         },
@@ -18,33 +26,19 @@
             "fieldType": "Boolean"
         },
         {
+            "fieldName": "duration",
+            "fieldType": "Float"
+        },
+        {
             "fieldName": "paymentMethod",
             "fieldType": "String"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "booking",
-            "relationshipName": "treatment",
-            "otherEntityName": "treatment",
-            "otherEntityField": "treatment",
-            "ownerSide": true
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "customer",
-            "otherEntityName": "customer",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "relationshipName": "voucher",
-            "otherEntityName": "voucher",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "booking"
+            "fieldName": "confirmTime",
+            "fieldType": "Instant"
         }
     ],
+    "relationships": [],
     "changelogDate": "20210531022546",
     "entityTableName": "booking",
     "dto": "no",

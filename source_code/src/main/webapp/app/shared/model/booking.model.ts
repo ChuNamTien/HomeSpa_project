@@ -1,31 +1,30 @@
 import { Moment } from 'moment';
-import { ITreatment } from 'app/shared/model//treatment.model';
-import { ICustomer } from 'app/shared/model//customer.model';
-import { IVoucher } from 'app/shared/model//voucher.model';
 
 export interface IBooking {
     id?: number;
+    customerId?: number;
+    partnerId?: number;
     startTime?: Moment;
     finishTime?: Moment;
     isFinished?: boolean;
     isConfirmed?: boolean;
+    duration?: number;
     paymentMethod?: string;
-    treatments?: ITreatment[];
-    customer?: ICustomer;
-    vouchers?: IVoucher[];
+    confirmTime?: Moment;
 }
 
 export class Booking implements IBooking {
     constructor(
         public id?: number,
+        public customerId?: number,
+        public partnerId?: number,
         public startTime?: Moment,
         public finishTime?: Moment,
         public isFinished?: boolean,
         public isConfirmed?: boolean,
+        public duration?: number,
         public paymentMethod?: string,
-        public treatments?: ITreatment[],
-        public customer?: ICustomer,
-        public vouchers?: IVoucher[]
+        public confirmTime?: Moment
     ) {
         this.isFinished = this.isFinished || false;
         this.isConfirmed = this.isConfirmed || false;

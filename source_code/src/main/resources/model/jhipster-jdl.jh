@@ -1,0 +1,152 @@
+  entity Customer {
+      userId Long,
+      dob Instant,
+      phone String,
+      address String
+      city String,
+      zipcode String,
+      status Boolean,
+  }
+
+  entity Partner{
+      userId Long,
+      name String,
+      partnerType String,
+      customerType String,
+      description String,
+      city String,
+      address String,
+      phone String,
+      longCoord Float,
+      latCoord Float,
+      openTime Float,
+      closeTime Float,
+      isWeekendOpen Boolean,
+      status Boolean,
+      confirmAfter Float,
+      bussinessLicenseUrl String
+  }
+
+  entity PartnerImg{
+      partnerId Long,
+      imgUrl String,
+      isHiddent Boolean,
+      index Long
+  }
+
+  entity Staff{
+      userId Long,
+      partnerId Long,
+      type String,
+      status String,
+      startTime Float,
+      endTime Float
+  }
+
+  entity Category{
+      name String,
+      imgUrl String,
+      status String,
+      createdBy String,
+      createdDate Instant,
+      lastModifiedBy String,
+      lastModifiedDate Instant
+  }
+
+  entity Serv{
+      categoryId Long,
+      name String,
+      customerType String,
+      description String,
+      createdBy String,
+      createdDate Instant,
+      lastModifiedBy String,
+      lastModifiedDate Instant
+  }
+
+  entity ServImg{
+      serviceId Long,
+      imgUrl String,
+      status String,
+      index Long
+  }
+
+  entity Treatment{
+      serviceId Long,
+      name String,
+      status String,
+      duration Float,
+      price Float,
+      discount Float,
+      description String,
+      createdBy String,
+      createdDate Instant,
+      lastModifiedBy Instant,
+      lastModifiedDate Instant
+  }
+
+  entity BookingActivity{
+      bookingId Long,
+      staffId Long,
+      treatmentId Long,
+      startDate Instant,
+      finishDate Instant,
+      status Long
+  }
+
+  entity Booking{
+      customerId Long,
+      partnerId Long,
+      startTime Instant,
+      finishTime Instant,
+      isFinished Boolean,
+      isConfirmed Boolean,
+      duration Float,
+      paymentMethod String,
+      confirmTime Instant,
+      finishTime Instant
+  }
+
+  entity Rating{
+      bookingId Long,
+      star Float,
+      comment String
+  }
+
+  entity Transaction{
+      bookingId Long,
+      code String,
+      amount Float,
+      ipAddress String,
+      message String,
+      status String
+  }
+
+  entity Voucher{
+      partnerId Long,
+      name String,
+      type String,
+      discription String,
+      discount Float,
+      priceAbove Float,
+      maxDiscount Float,
+      status String,
+      createdBy String,
+      createdDate Instant,
+      lastModifiedBy String,
+      lastModifiedDate Instant
+  }
+
+  entity Timeline{
+      timeStart Instant,
+      content String,
+      createdBy Long,
+      createdDate Instant
+  }
+
+paginate all with pagination
+service all with serviceImpl
+
+
+
+

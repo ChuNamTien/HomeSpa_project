@@ -1,14 +1,10 @@
 package com.fptu.capstone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -16,13 +12,19 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "booking")
-public class Booking extends AbstractAuditingEntity implements Serializable {
+public class Booking implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "customer_id")
+    private Long customerId;
+
+    @Column(name = "partner_id")
+    private Long partnerId;
 
     @Column(name = "start_time")
     private Instant startTime;
@@ -36,22 +38,14 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
     @Column(name = "is_confirmed")
     private Boolean isConfirmed;
 
+    @Column(name = "duration")
+    private Float duration;
+
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    @ManyToMany
-    @JoinTable(name = "booking_treatment",
-               joinColumns = @JoinColumn(name = "bookings_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "treatments_id", referencedColumnName = "id"))
-    private Set<Treatment> treatments = new HashSet<>();
-
-    @ManyToOne
-    @JsonIgnoreProperties("bookings")
-    private Customer customer;
-
-    @ManyToMany(mappedBy = "bookings")
-    @JsonIgnore
-    private Set<Voucher> vouchers = new HashSet<>();
+    @Column(name = "confirm_time")
+    private Instant confirmTime;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -60,6 +54,32 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public Booking customerId(Long customerId) {
+        this.customerId = customerId;
+        return this;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public Long getPartnerId() {
+        return partnerId;
+    }
+
+    public Booking partnerId(Long partnerId) {
+        this.partnerId = partnerId;
+        return this;
+    }
+
+    public void setPartnerId(Long partnerId) {
+        this.partnerId = partnerId;
     }
 
     public Instant getStartTime() {
@@ -114,6 +134,19 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
         this.isConfirmed = isConfirmed;
     }
 
+    public Float getDuration() {
+        return duration;
+    }
+
+    public Booking duration(Float duration) {
+        this.duration = duration;
+        return this;
+    }
+
+    public void setDuration(Float duration) {
+        this.duration = duration;
+    }
+
     public String getPaymentMethod() {
         return paymentMethod;
     }
@@ -127,67 +160,17 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
         this.paymentMethod = paymentMethod;
     }
 
-    public Set<Treatment> getTreatments() {
-        return treatments;
+    public Instant getConfirmTime() {
+        return confirmTime;
     }
 
-    public Booking treatments(Set<Treatment> treatments) {
-        this.treatments = treatments;
+    public Booking confirmTime(Instant confirmTime) {
+        this.confirmTime = confirmTime;
         return this;
     }
 
-    public Booking addTreatment(Treatment treatment) {
-        this.treatments.add(treatment);
-        treatment.getBookings().add(this);
-        return this;
-    }
-
-    public Booking removeTreatment(Treatment treatment) {
-        this.treatments.remove(treatment);
-        treatment.getBookings().remove(this);
-        return this;
-    }
-
-    public void setTreatments(Set<Treatment> treatments) {
-        this.treatments = treatments;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public Booking customer(Customer customer) {
-        this.customer = customer;
-        return this;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Set<Voucher> getVouchers() {
-        return vouchers;
-    }
-
-    public Booking vouchers(Set<Voucher> vouchers) {
-        this.vouchers = vouchers;
-        return this;
-    }
-
-    public Booking addVoucher(Voucher voucher) {
-        this.vouchers.add(voucher);
-        voucher.getBookings().add(this);
-        return this;
-    }
-
-    public Booking removeVoucher(Voucher voucher) {
-        this.vouchers.remove(voucher);
-        voucher.getBookings().remove(this);
-        return this;
-    }
-
-    public void setVouchers(Set<Voucher> vouchers) {
-        this.vouchers = vouchers;
+    public void setConfirmTime(Instant confirmTime) {
+        this.confirmTime = confirmTime;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -215,11 +198,15 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "Booking{" +
             "id=" + getId() +
+            ", customerId=" + getCustomerId() +
+            ", partnerId=" + getPartnerId() +
             ", startTime='" + getStartTime() + "'" +
             ", finishTime='" + getFinishTime() + "'" +
             ", isFinished='" + isIsFinished() + "'" +
             ", isConfirmed='" + isIsConfirmed() + "'" +
+            ", duration=" + getDuration() +
             ", paymentMethod='" + getPaymentMethod() + "'" +
+            ", confirmTime='" + getConfirmTime() + "'" +
             "}";
     }
 }

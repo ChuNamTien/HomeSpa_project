@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(PartnerImgService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new PartnerImg(0, 'AAAAAAA', false, 0);
+            elemDefault = new PartnerImg(0, 0, 'AAAAAAA', false, 0);
         });
 
         describe('Service methods', async () => {
@@ -55,6 +55,7 @@ describe('Service Tests', () => {
             it('should update a PartnerImg', async () => {
                 const returnedFromService = Object.assign(
                     {
+                        partnerId: 1,
                         imgUrl: 'BBBBBB',
                         isHiddent: true,
                         index: 1
@@ -74,6 +75,7 @@ describe('Service Tests', () => {
             it('should return a list of PartnerImg', async () => {
                 const returnedFromService = Object.assign(
                     {
+                        partnerId: 1,
                         imgUrl: 'BBBBBB',
                         isHiddent: true,
                         index: 1

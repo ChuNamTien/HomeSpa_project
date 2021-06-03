@@ -1,12 +1,9 @@
 package com.fptu.capstone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -22,6 +19,12 @@ public class Staff implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "partner_id")
+    private Long partnerId;
+
     @Column(name = "jhi_type")
     private String type;
 
@@ -29,29 +32,10 @@ public class Staff implements Serializable {
     private String status;
 
     @Column(name = "start_time")
-    private Boolean startTime;
+    private Float startTime;
 
     @Column(name = "end_time")
-    private Boolean endTime;
-
-    @ManyToMany
-    @JoinTable(name = "staff_category",
-               joinColumns = @JoinColumn(name = "staff_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "categories_id", referencedColumnName = "id"))
-    private Set<Category> categories = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "staff_treatment",
-               joinColumns = @JoinColumn(name = "staff_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "treatments_id", referencedColumnName = "id"))
-    private Set<Treatment> treatments = new HashSet<>();
-
-    @ManyToOne
-    @JsonIgnoreProperties("staff")
-    private Partner partner;
-    
-    @OneToOne    @JoinColumn(unique = true)
-    private User user;
+    private Float endTime;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -62,27 +46,37 @@ public class Staff implements Serializable {
         this.id = id;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Staff userId(Long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getPartnerId() {
+        return partnerId;
+    }
+
+    public Staff partnerId(Long partnerId) {
+        this.partnerId = partnerId;
+        return this;
+    }
+
+    public void setPartnerId(Long partnerId) {
+        this.partnerId = partnerId;
+    }
+
     public String getType() {
         return type;
     }
 
-    public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Boolean getStartTime() {
-		return startTime;
-	}
-
-	public Boolean getEndTime() {
-		return endTime;
-	}
-
-	public Staff type(String type) {
+    public Staff type(String type) {
         this.type = type;
         return this;
     }
@@ -104,93 +98,30 @@ public class Staff implements Serializable {
         this.status = status;
     }
 
-    public Boolean isStartTime() {
+    public Float getStartTime() {
         return startTime;
     }
 
-    public Staff startTime(Boolean startTime) {
+    public Staff startTime(Float startTime) {
         this.startTime = startTime;
         return this;
     }
 
-    public void setStartTime(Boolean startTime) {
+    public void setStartTime(Float startTime) {
         this.startTime = startTime;
     }
 
-    public Boolean isEndTime() {
+    public Float getEndTime() {
         return endTime;
     }
 
-    public Staff endTime(Boolean endTime) {
+    public Staff endTime(Float endTime) {
         this.endTime = endTime;
         return this;
     }
 
-    public void setEndTime(Boolean endTime) {
+    public void setEndTime(Float endTime) {
         this.endTime = endTime;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public Staff categories(Set<Category> categories) {
-        this.categories = categories;
-        return this;
-    }
-
-    public Staff addCategory(Category category) {
-        this.categories.add(category);
-        category.getStaff().add(this);
-        return this;
-    }
-
-    public Staff removeCategory(Category category) {
-        this.categories.remove(category);
-        category.getStaff().remove(this);
-        return this;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
-    public Set<Treatment> getTreatments() {
-        return treatments;
-    }
-
-    public Staff treatments(Set<Treatment> treatments) {
-        this.treatments = treatments;
-        return this;
-    }
-
-    public Staff addTreatment(Treatment treatment) {
-        this.treatments.add(treatment);
-        treatment.getStaff().add(this);
-        return this;
-    }
-
-    public Staff removeTreatment(Treatment treatment) {
-        this.treatments.remove(treatment);
-        treatment.getStaff().remove(this);
-        return this;
-    }
-
-    public void setTreatments(Set<Treatment> treatments) {
-        this.treatments = treatments;
-    }
-
-    public Partner getPartner() {
-        return partner;
-    }
-
-    public Staff partner(Partner partner) {
-        this.partner = partner;
-        return this;
-    }
-
-    public void setPartner(Partner partner) {
-        this.partner = partner;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -218,10 +149,12 @@ public class Staff implements Serializable {
     public String toString() {
         return "Staff{" +
             "id=" + getId() +
+            ", userId=" + getUserId() +
+            ", partnerId=" + getPartnerId() +
             ", type='" + getType() + "'" +
             ", status='" + getStatus() + "'" +
-            ", startTime='" + isStartTime() + "'" +
-            ", endTime='" + isEndTime() + "'" +
+            ", startTime=" + getStartTime() +
+            ", endTime=" + getEndTime() +
             "}";
     }
 }

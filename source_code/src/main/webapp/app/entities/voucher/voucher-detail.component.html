@@ -5,6 +5,10 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.voucher.partnerId">Partner Id</span></dt>
+                <dd>
+                    <span>{{voucher.partnerId}}</span>
+                </dd>
                 <dt><span jhiTranslate="homespaApp.voucher.name">Name</span></dt>
                 <dd>
                     <span>{{voucher.name}}</span>
@@ -21,29 +25,33 @@
                 <dd>
                     <span>{{voucher.discount}}</span>
                 </dd>
-                <dt><span jhiTranslate="homespaApp.voucher.customer">Customer</span></dt>
+                <dt><span jhiTranslate="homespaApp.voucher.priceAbove">Price Above</span></dt>
                 <dd>
-                    <span *ngFor="let customer of voucher.customers; let last = last">
-                        <a [routerLink]="['/customer', customer?.id, 'view' ]">{{customer.customer}}</a>{{last ? '' : ', '}}
-                    </span>
+                    <span>{{voucher.priceAbove}}</span>
                 </dd>
-                <dt><span jhiTranslate="homespaApp.voucher.serv">Serv</span></dt>
+                <dt><span jhiTranslate="homespaApp.voucher.maxDiscount">Max Discount</span></dt>
                 <dd>
-                    <span *ngFor="let serv of voucher.servs; let last = last">
-                        <a [routerLink]="['/serv', serv?.id, 'view' ]">{{serv.serv}}</a>{{last ? '' : ', '}}
-                    </span>
+                    <span>{{voucher.maxDiscount}}</span>
                 </dd>
-                <dt><span jhiTranslate="homespaApp.voucher.booking">Booking</span></dt>
+                <dt><span jhiTranslate="homespaApp.voucher.status">Status</span></dt>
                 <dd>
-                    <span *ngFor="let booking of voucher.bookings; let last = last">
-                        <a [routerLink]="['/booking', booking?.id, 'view' ]">{{booking.booking}}</a>{{last ? '' : ', '}}
-                    </span>
+                    <span>{{voucher.status}}</span>
                 </dd>
-                <dt><span jhiTranslate="homespaApp.voucher.partner">Partner</span></dt>
+                <dt><span jhiTranslate="homespaApp.voucher.createdBy">Created By</span></dt>
                 <dd>
-                    <div *ngIf="voucher.partner">
-                        <a [routerLink]="['/partner', voucher.partner?.id, 'view']">{{voucher.partner?.id}}</a>
-                    </div>
+                    <span>{{voucher.createdBy}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.voucher.createdDate">Created Date</span></dt>
+                <dd>
+                    <span>{{voucher.createdDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.voucher.lastModifiedBy">Last Modified By</span></dt>
+                <dd>
+                    <span>{{voucher.lastModifiedBy}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.voucher.lastModifiedDate">Last Modified Date</span></dt>
+                <dd>
+                    <span>{{voucher.lastModifiedDate}}</span>
                 </dd>
             </dl>
 

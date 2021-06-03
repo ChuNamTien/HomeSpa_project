@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { JhiAlertService } from 'ng-jhipster';
 
 import { IPartnerImg } from 'app/shared/model/partner-img.model';
 import { PartnerImgService } from './partner-img.service';
-import { IPartner } from 'app/shared/model/partner.model';
-import { PartnerService } from 'app/entities/partner';
 
 @Component({
     selector: 'jhi-partner-img-update',
@@ -17,26 +14,13 @@ export class PartnerImgUpdateComponent implements OnInit {
     partnerImg: IPartnerImg;
     isSaving: boolean;
 
-    partners: IPartner[];
-
-    constructor(
-        private jhiAlertService: JhiAlertService,
-        private partnerImgService: PartnerImgService,
-        private partnerService: PartnerService,
-        private activatedRoute: ActivatedRoute
-    ) {}
+    constructor(private partnerImgService: PartnerImgService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ partnerImg }) => {
             this.partnerImg = partnerImg;
         });
-        this.partnerService.query().subscribe(
-            (res: HttpResponse<IPartner[]>) => {
-                this.partners = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
     }
 
     previousState() {
@@ -63,13 +47,5 @@ export class PartnerImgUpdateComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
-    }
-
-    private onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackPartnerById(index: number, item: IPartner) {
-        return item.id;
     }
 }

@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-booking-activity-heading" jhiTranslate="homespaApp.bookingActivity.home.createOrEditLabel">Create or edit a Booking Activity</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!bookingActivity.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="bookingActivity.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.bookingActivity.bookingId" for="field_bookingId">Booking Id</label>
+                    <input type="number" class="form-control" name="bookingId" id="field_bookingId"
+                        [(ngModel)]="bookingActivity.bookingId" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.bookingActivity.staffId" for="field_staffId">Staff Id</label>
+                    <input type="number" class="form-control" name="staffId" id="field_staffId"
+                        [(ngModel)]="bookingActivity.staffId" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.bookingActivity.treatmentId" for="field_treatmentId">Treatment Id</label>
+                    <input type="number" class="form-control" name="treatmentId" id="field_treatmentId"
+                        [(ngModel)]="bookingActivity.treatmentId" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.bookingActivity.startDate" for="field_startDate">Start Date</label>
+                    <div class="d-flex">
+                        <input id="field_startDate" type="datetime-local" class="form-control" name="startDate" [(ngModel)]="startDate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.bookingActivity.finishDate" for="field_finishDate">Finish Date</label>
+                    <div class="d-flex">
+                        <input id="field_finishDate" type="datetime-local" class="form-control" name="finishDate" [(ngModel)]="finishDate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.bookingActivity.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="bookingActivity.status" />
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

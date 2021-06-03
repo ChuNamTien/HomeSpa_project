@@ -85,20 +85,14 @@ public class VoucherResource {
      * GET  /vouchers : get all the vouchers.
      *
      * @param pageable the pagination information
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of vouchers in body
      */
     @GetMapping("/vouchers")
     @Timed
-    public ResponseEntity<List<Voucher>> getAllVouchers(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public ResponseEntity<List<Voucher>> getAllVouchers(Pageable pageable) {
         log.debug("REST request to get a page of Vouchers");
-        Page<Voucher> page;
-        if (eagerload) {
-            page = voucherService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = voucherService.findAll(pageable);
-        }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/vouchers?eagerload=%b", eagerload));
+        Page<Voucher> page = voucherService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/vouchers");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

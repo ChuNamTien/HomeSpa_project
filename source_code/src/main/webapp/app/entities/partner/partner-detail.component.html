@@ -5,6 +5,10 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.partner.userId">User Id</span></dt>
+                <dd>
+                    <span>{{partner.userId}}</span>
+                </dd>
                 <dt><span jhiTranslate="homespaApp.partner.name">Name</span></dt>
                 <dd>
                     <span>{{partner.name}}</span>
@@ -57,19 +61,13 @@
                 <dd>
                     <span>{{partner.status}}</span>
                 </dd>
-                <dt><span jhiTranslate="homespaApp.partner.timeConfirm">Time Confirm</span></dt>
+                <dt><span jhiTranslate="homespaApp.partner.confirmAfter">Confirm After</span></dt>
                 <dd>
-                    <span>{{partner.timeConfirm}}</span>
+                    <span>{{partner.confirmAfter}}</span>
                 </dd>
                 <dt><span jhiTranslate="homespaApp.partner.bussinessLicenseUrl">Bussiness License Url</span></dt>
                 <dd>
                     <span>{{partner.bussinessLicenseUrl}}</span>
-                </dd>
-                <dt><span jhiTranslate="homespaApp.partner.category">Category</span></dt>
-                <dd>
-                    <span *ngFor="let category of partner.categories; let last = last">
-                        <a [routerLink]="['/category', category?.id, 'view' ]">{{category.category}}</a>{{last ? '' : ', '}}
-                    </span>
                 </dd>
             </dl>
 

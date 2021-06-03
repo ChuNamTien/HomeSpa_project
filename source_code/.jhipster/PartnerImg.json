@@ -2,6 +2,10 @@
     "name": "PartnerImg",
     "fields": [
         {
+            "fieldName": "partnerId",
+            "fieldType": "Long"
+        },
+        {
             "fieldName": "imgUrl",
             "fieldType": "String"
         },
@@ -14,14 +18,7 @@
             "fieldType": "Long"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "partner",
-            "otherEntityName": "partner",
-            "otherEntityField": "id"
-        }
-    ],
+    "relationships": [],
     "changelogDate": "20210531022540",
     "entityTableName": "partner_img",
     "dto": "no",

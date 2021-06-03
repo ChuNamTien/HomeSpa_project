@@ -1,7 +1,6 @@
 package com.fptu.capstone.service.impl;
 
 import com.fptu.capstone.service.StaffService;
-import com.fptu.capstone.service.dto.StaffDTO;
 import com.fptu.capstone.domain.Staff;
 import com.fptu.capstone.repository.StaffRepository;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -55,15 +53,6 @@ public class StaffServiceImpl implements StaffService {
         return staffRepository.findAll(pageable);
     }
 
-    /**
-     * Get all the Staff with eager load of many-to-many relationships.
-     *
-     * @return the list of entities
-     */
-    public Page<Staff> findAllWithEagerRelationships(Pageable pageable) {
-        return staffRepository.findAllWithEagerRelationships(pageable);
-    }
-    
 
     /**
      * Get one staff by id.
@@ -75,7 +64,7 @@ public class StaffServiceImpl implements StaffService {
     @Transactional(readOnly = true)
     public Optional<Staff> findOne(Long id) {
         log.debug("Request to get Staff : {}", id);
-        return staffRepository.findOneWithEagerRelationships(id);
+        return staffRepository.findById(id);
     }
 
     /**
@@ -88,9 +77,4 @@ public class StaffServiceImpl implements StaffService {
         log.debug("Request to delete Staff : {}", id);
         staffRepository.deleteById(id);
     }
-
-	@Override
-	public List<StaffDTO> getAllStaffByPartnerId(Long partnerId) {
-		return staffRepository.getAllStaffByPartnerId(partnerId);
-	}
 }

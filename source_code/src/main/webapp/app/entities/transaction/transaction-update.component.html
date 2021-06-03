@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-transaction-heading" jhiTranslate="homespaApp.transaction.home.createOrEditLabel">Create or edit a Transaction</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!transaction.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="transaction.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.transaction.bookingId" for="field_bookingId">Booking Id</label>
+                    <input type="number" class="form-control" name="bookingId" id="field_bookingId"
+                        [(ngModel)]="transaction.bookingId" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.transaction.code" for="field_code">Code</label>
+                    <input type="text" class="form-control" name="code" id="field_code"
+                        [(ngModel)]="transaction.code" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.transaction.amount" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                        [(ngModel)]="transaction.amount" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.transaction.ipAddress" for="field_ipAddress">Ip Address</label>
+                    <input type="text" class="form-control" name="ipAddress" id="field_ipAddress"
+                        [(ngModel)]="transaction.ipAddress" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.transaction.message" for="field_message">Message</label>
+                    <input type="text" class="form-control" name="message" id="field_message"
+                        [(ngModel)]="transaction.message" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.transaction.status" for="field_status">Status</label>
+                    <input type="text" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="transaction.status" />
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

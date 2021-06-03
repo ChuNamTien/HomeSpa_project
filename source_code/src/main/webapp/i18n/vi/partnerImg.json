@@ -16,10 +16,10 @@
             "detail": {
                 "title": "Partner Img"
             },
+            "partnerId": "Partner Id",
             "imgUrl": "Img Url",
             "isHiddent": "Is Hiddent",
-            "index": "Index",
-            "partner": "Partner"
+            "index": "Index"
         }
     }
 }

@@ -1,13 +1,9 @@
 package com.fptu.capstone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -22,6 +18,9 @@ public class Partner implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "name")
     private String name;
@@ -51,10 +50,10 @@ public class Partner implements Serializable {
     private Float latCoord;
 
     @Column(name = "open_time")
-    private Instant openTime;
+    private Float openTime;
 
     @Column(name = "close_time")
-    private Instant closeTime;
+    private Float closeTime;
 
     @Column(name = "is_weekend_open")
     private Boolean isWeekendOpen;
@@ -62,52 +61,32 @@ public class Partner implements Serializable {
     @Column(name = "status")
     private Boolean status;
 
-    @Column(name = "time_confirm")
-    private String timeConfirm;
+    @Column(name = "confirm_after")
+    private Float confirmAfter;
 
     @Column(name = "bussiness_license_url")
     private String bussinessLicenseUrl;
 
-    @OneToMany(mappedBy = "partner")
-    private Set<PartnerImg> partnerImgs = new HashSet<>();
-    @OneToMany(mappedBy = "partner")
-    private Set<Staff> staff = new HashSet<>();
-    @OneToMany(mappedBy = "partner")
-    private Set<Serv> servs = new HashSet<>();
-    @OneToMany(mappedBy = "partner")
-    private Set<Voucher> vouchers = new HashSet<>();
-    @ManyToMany
-    @JoinTable(name = "partner_category",
-               joinColumns = @JoinColumn(name = "partners_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "categories_id", referencedColumnName = "id"))
-    private Set<Category> categories = new HashSet<>();
-
-    @OneToOne    @JoinColumn(unique = true)
-    private User user;
-    
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
-    
-    public User getUser() {
-		return user;
-	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Boolean getIsWeekendOpen() {
-		return isWeekendOpen;
-	}
-
-	public Boolean getStatus() {
-		return status;
-	}
-
-	public void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Partner userId(Long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -227,29 +206,29 @@ public class Partner implements Serializable {
         this.latCoord = latCoord;
     }
 
-    public Instant getOpenTime() {
+    public Float getOpenTime() {
         return openTime;
     }
 
-    public Partner openTime(Instant openTime) {
+    public Partner openTime(Float openTime) {
         this.openTime = openTime;
         return this;
     }
 
-    public void setOpenTime(Instant openTime) {
+    public void setOpenTime(Float openTime) {
         this.openTime = openTime;
     }
 
-    public Instant getCloseTime() {
+    public Float getCloseTime() {
         return closeTime;
     }
 
-    public Partner closeTime(Instant closeTime) {
+    public Partner closeTime(Float closeTime) {
         this.closeTime = closeTime;
         return this;
     }
 
-    public void setCloseTime(Instant closeTime) {
+    public void setCloseTime(Float closeTime) {
         this.closeTime = closeTime;
     }
 
@@ -279,17 +258,17 @@ public class Partner implements Serializable {
         this.status = status;
     }
 
-    public String getTimeConfirm() {
-        return timeConfirm;
+    public Float getConfirmAfter() {
+        return confirmAfter;
     }
 
-    public Partner timeConfirm(String timeConfirm) {
-        this.timeConfirm = timeConfirm;
+    public Partner confirmAfter(Float confirmAfter) {
+        this.confirmAfter = confirmAfter;
         return this;
     }
 
-    public void setTimeConfirm(String timeConfirm) {
-        this.timeConfirm = timeConfirm;
+    public void setConfirmAfter(Float confirmAfter) {
+        this.confirmAfter = confirmAfter;
     }
 
     public String getBussinessLicenseUrl() {
@@ -303,131 +282,6 @@ public class Partner implements Serializable {
 
     public void setBussinessLicenseUrl(String bussinessLicenseUrl) {
         this.bussinessLicenseUrl = bussinessLicenseUrl;
-    }
-
-    public Set<PartnerImg> getPartnerImgs() {
-        return partnerImgs;
-    }
-
-    public Partner partnerImgs(Set<PartnerImg> partnerImgs) {
-        this.partnerImgs = partnerImgs;
-        return this;
-    }
-
-    public Partner addPartnerImg(PartnerImg partnerImg) {
-        this.partnerImgs.add(partnerImg);
-        partnerImg.setPartner(this);
-        return this;
-    }
-
-    public Partner removePartnerImg(PartnerImg partnerImg) {
-        this.partnerImgs.remove(partnerImg);
-        partnerImg.setPartner(null);
-        return this;
-    }
-
-    public void setPartnerImgs(Set<PartnerImg> partnerImgs) {
-        this.partnerImgs = partnerImgs;
-    }
-
-    public Set<Staff> getStaff() {
-        return staff;
-    }
-
-    public Partner staff(Set<Staff> staff) {
-        this.staff = staff;
-        return this;
-    }
-
-    public Partner addStaff(Staff staff) {
-        this.staff.add(staff);
-        staff.setPartner(this);
-        return this;
-    }
-
-    public Partner removeStaff(Staff staff) {
-        this.staff.remove(staff);
-        staff.setPartner(null);
-        return this;
-    }
-
-    public void setStaff(Set<Staff> staff) {
-        this.staff = staff;
-    }
-
-    public Set<Serv> getServs() {
-        return servs;
-    }
-
-    public Partner servs(Set<Serv> servs) {
-        this.servs = servs;
-        return this;
-    }
-
-    public Partner addServ(Serv serv) {
-        this.servs.add(serv);
-        serv.setPartner(this);
-        return this;
-    }
-
-    public Partner removeServ(Serv serv) {
-        this.servs.remove(serv);
-        serv.setPartner(null);
-        return this;
-    }
-
-    public void setServs(Set<Serv> servs) {
-        this.servs = servs;
-    }
-
-    public Set<Voucher> getVouchers() {
-        return vouchers;
-    }
-
-    public Partner vouchers(Set<Voucher> vouchers) {
-        this.vouchers = vouchers;
-        return this;
-    }
-
-    public Partner addVoucher(Voucher voucher) {
-        this.vouchers.add(voucher);
-        voucher.setPartner(this);
-        return this;
-    }
-
-    public Partner removeVoucher(Voucher voucher) {
-        this.vouchers.remove(voucher);
-        voucher.setPartner(null);
-        return this;
-    }
-
-    public void setVouchers(Set<Voucher> vouchers) {
-        this.vouchers = vouchers;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public Partner categories(Set<Category> categories) {
-        this.categories = categories;
-        return this;
-    }
-
-    public Partner addCategory(Category category) {
-        this.categories.add(category);
-        category.getPartners().add(this);
-        return this;
-    }
-
-    public Partner removeCategory(Category category) {
-        this.categories.remove(category);
-        category.getPartners().remove(this);
-        return this;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -455,6 +309,7 @@ public class Partner implements Serializable {
     public String toString() {
         return "Partner{" +
             "id=" + getId() +
+            ", userId=" + getUserId() +
             ", name='" + getName() + "'" +
             ", partnerType='" + getPartnerType() + "'" +
             ", customerType='" + getCustomerType() + "'" +
@@ -464,11 +319,11 @@ public class Partner implements Serializable {
             ", phone='" + getPhone() + "'" +
             ", longCoord=" + getLongCoord() +
             ", latCoord=" + getLatCoord() +
-            ", openTime='" + getOpenTime() + "'" +
-            ", closeTime='" + getCloseTime() + "'" +
+            ", openTime=" + getOpenTime() +
+            ", closeTime=" + getCloseTime() +
             ", isWeekendOpen='" + isIsWeekendOpen() + "'" +
             ", status='" + isStatus() + "'" +
-            ", timeConfirm='" + getTimeConfirm() + "'" +
+            ", confirmAfter=" + getConfirmAfter() +
             ", bussinessLicenseUrl='" + getBussinessLicenseUrl() + "'" +
             "}";
     }

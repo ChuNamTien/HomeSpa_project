@@ -10,6 +10,11 @@
                         [(ngModel)]="voucher.id" readonly />
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.partnerId" for="field_partnerId">Partner Id</label>
+                    <input type="number" class="form-control" name="partnerId" id="field_partnerId"
+                        [(ngModel)]="voucher.partnerId" />
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="homespaApp.voucher.name" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                         [(ngModel)]="voucher.name" />
@@ -29,32 +34,46 @@
                     <input type="number" class="form-control" name="discount" id="field_discount"
                         [(ngModel)]="voucher.discount" />
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.priceAbove" for="field_priceAbove">Price Above</label>
+                    <input type="number" class="form-control" name="priceAbove" id="field_priceAbove"
+                        [(ngModel)]="voucher.priceAbove" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.maxDiscount" for="field_maxDiscount">Max Discount</label>
+                    <input type="number" class="form-control" name="maxDiscount" id="field_maxDiscount"
+                        [(ngModel)]="voucher.maxDiscount" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.status" for="field_status">Status</label>
+                    <input type="text" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="voucher.status" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.createdBy" for="field_createdBy">Created By</label>
+                    <input type="text" class="form-control" name="createdBy" id="field_createdBy"
+                        [(ngModel)]="voucher.createdBy" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.createdDate" for="field_createdDate">Created Date</label>
+                    <div class="d-flex">
+                        <input id="field_createdDate" type="datetime-local" class="form-control" name="createdDate" [(ngModel)]="createdDate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.lastModifiedBy" for="field_lastModifiedBy">Last Modified By</label>
+                    <input type="text" class="form-control" name="lastModifiedBy" id="field_lastModifiedBy"
+                        [(ngModel)]="voucher.lastModifiedBy" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.lastModifiedDate" for="field_lastModifiedDate">Last Modified Date</label>
+                    <div class="d-flex">
+                        <input id="field_lastModifiedDate" type="datetime-local" class="form-control" name="lastModifiedDate" [(ngModel)]="lastModifiedDate"
+                        />
+                    </div>
+                </div>
 
-                <div class="form-group">
-                    <label jhiTranslate="homespaApp.voucher.customer" for="field_customer">Customer</label>
-                    <select class="form-control" id="field_customer" multiple name="customer" [(ngModel)]="voucher.customers">
-                        <option [ngValue]="getSelected(voucher.customers, customerOption)" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.customer}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label jhiTranslate="homespaApp.voucher.serv" for="field_serv">Serv</label>
-                    <select class="form-control" id="field_serv" multiple name="serv" [(ngModel)]="voucher.servs">
-                        <option [ngValue]="getSelected(voucher.servs, servOption)" *ngFor="let servOption of servs; trackBy: trackServById">{{servOption.serv}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label jhiTranslate="homespaApp.voucher.booking" for="field_booking">Booking</label>
-                    <select class="form-control" id="field_booking" multiple name="booking" [(ngModel)]="voucher.bookings">
-                        <option [ngValue]="getSelected(voucher.bookings, bookingOption)" *ngFor="let bookingOption of bookings; trackBy: trackBookingById">{{bookingOption.booking}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homespaApp.voucher.partner" for="field_partner">Partner</label>
-                    <select class="form-control" id="field_partner" name="partner" [(ngModel)]="voucher.partner" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="partnerOption.id === voucher.partner?.id ? voucher.partner : partnerOption" *ngFor="let partnerOption of partners; trackBy: trackPartnerById">{{partnerOption.id}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

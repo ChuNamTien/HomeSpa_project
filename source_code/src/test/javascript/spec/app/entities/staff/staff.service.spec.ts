@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(StaffService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new Staff(0, 'AAAAAAA', 'AAAAAAA', false, false);
+            elemDefault = new Staff(0, 0, 0, 'AAAAAAA', 'AAAAAAA', 0, 0);
         });
 
         describe('Service methods', async () => {
@@ -55,10 +55,12 @@ describe('Service Tests', () => {
             it('should update a Staff', async () => {
                 const returnedFromService = Object.assign(
                     {
+                        userId: 1,
+                        partnerId: 1,
                         type: 'BBBBBB',
                         status: 'BBBBBB',
-                        startTime: true,
-                        endTime: true
+                        startTime: 1,
+                        endTime: 1
                     },
                     elemDefault
                 );
@@ -75,10 +77,12 @@ describe('Service Tests', () => {
             it('should return a list of Staff', async () => {
                 const returnedFromService = Object.assign(
                     {
+                        userId: 1,
+                        partnerId: 1,
                         type: 'BBBBBB',
                         status: 'BBBBBB',
-                        startTime: true,
-                        endTime: true
+                        startTime: 1,
+                        endTime: 1
                     },
                     elemDefault
                 );

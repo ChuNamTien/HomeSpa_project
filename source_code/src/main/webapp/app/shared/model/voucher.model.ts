@@ -1,30 +1,35 @@
-import { ICustomer } from 'app/shared/model//customer.model';
-import { IServ } from 'app/shared/model//serv.model';
-import { IBooking } from 'app/shared/model//booking.model';
-import { IPartner } from 'app/shared/model//partner.model';
+import { Moment } from 'moment';
 
 export interface IVoucher {
     id?: number;
+    partnerId?: number;
     name?: string;
     type?: string;
     discription?: string;
     discount?: number;
-    customers?: ICustomer[];
-    servs?: IServ[];
-    bookings?: IBooking[];
-    partner?: IPartner;
+    priceAbove?: number;
+    maxDiscount?: number;
+    status?: string;
+    createdBy?: string;
+    createdDate?: Moment;
+    lastModifiedBy?: string;
+    lastModifiedDate?: Moment;
 }
 
 export class Voucher implements IVoucher {
     constructor(
         public id?: number,
+        public partnerId?: number,
         public name?: string,
         public type?: string,
         public discription?: string,
         public discount?: number,
-        public customers?: ICustomer[],
-        public servs?: IServ[],
-        public bookings?: IBooking[],
-        public partner?: IPartner
+        public priceAbove?: number,
+        public maxDiscount?: number,
+        public status?: string,
+        public createdBy?: string,
+        public createdDate?: Moment,
+        public lastModifiedBy?: string,
+        public lastModifiedDate?: Moment
     ) {}
 }

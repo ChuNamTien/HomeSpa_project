@@ -15,24 +15,20 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="serviceId"><span jhiTranslate="homespaApp.servImg.serviceId">Service Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="imgUrl"><span jhiTranslate="homespaApp.servImg.imgUrl">Img Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="homespaApp.servImg.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="index"><span jhiTranslate="homespaApp.servImg.index">Index</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="serv.id"><span jhiTranslate="homespaApp.servImg.serv">Serv</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let servImg of servImgs ;trackBy: trackId">
                 <td><a [routerLink]="['/serv-img', servImg.id, 'view' ]">{{servImg.id}}</a></td>
+                <td>{{servImg.serviceId}}</td>
                 <td>{{servImg.imgUrl}}</td>
                 <td>{{servImg.status}}</td>
                 <td>{{servImg.index}}</td>
-                <td>
-                    <div *ngIf="servImg.serv">
-                        <a [routerLink]="['../serv', servImg.serv?.id, 'view' ]" >{{servImg.serv?.id}}</a>
-                    </div>
-                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

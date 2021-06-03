@@ -16,14 +16,18 @@
             "detail": {
                 "title": "Voucher"
             },
+            "partnerId": "Partner Id",
             "name": "Name",
             "type": "Type",
             "discription": "Discription",
             "discount": "Discount",
-            "customer": "Customer",
-            "serv": "Serv",
-            "booking": "Booking",
-            "partner": "Partner"
+            "priceAbove": "Price Above",
+            "maxDiscount": "Max Discount",
+            "status": "Status",
+            "createdBy": "Created By",
+            "createdDate": "Created Date",
+            "lastModifiedBy": "Last Modified By",
+            "lastModifiedDate": "Last Modified Date"
         }
     }
 }

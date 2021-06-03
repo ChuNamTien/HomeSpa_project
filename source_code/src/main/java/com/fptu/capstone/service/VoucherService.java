@@ -28,13 +28,7 @@ public interface VoucherService {
      */
     Page<Voucher> findAll(Pageable pageable);
 
-    /**
-     * Get all the Voucher with eager load of many-to-many relationships.
-     *
-     * @return the list of entities
-     */
-    Page<Voucher> findAllWithEagerRelationships(Pageable pageable);
-    
+
     /**
      * Get the "id" voucher.
      *

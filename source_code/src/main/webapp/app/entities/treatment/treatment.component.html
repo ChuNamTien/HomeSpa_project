@@ -15,30 +15,34 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="serviceId"><span jhiTranslate="homespaApp.treatment.serviceId">Service Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="name"><span jhiTranslate="homespaApp.treatment.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="homespaApp.treatment.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="duration"><span jhiTranslate="homespaApp.treatment.duration">Duration</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="price"><span jhiTranslate="homespaApp.treatment.price">Price</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="discount"><span jhiTranslate="homespaApp.treatment.discount">Discount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="description"><span jhiTranslate="homespaApp.treatment.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="serv.id"><span jhiTranslate="homespaApp.treatment.serv">Serv</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdBy"><span jhiTranslate="homespaApp.treatment.createdBy">Created By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdDate"><span jhiTranslate="homespaApp.treatment.createdDate">Created Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedBy"><span jhiTranslate="homespaApp.treatment.lastModifiedBy">Last Modified By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedDate"><span jhiTranslate="homespaApp.treatment.lastModifiedDate">Last Modified Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let treatment of treatments ;trackBy: trackId">
                 <td><a [routerLink]="['/treatment', treatment.id, 'view' ]">{{treatment.id}}</a></td>
+                <td>{{treatment.serviceId}}</td>
                 <td>{{treatment.name}}</td>
                 <td>{{treatment.status}}</td>
                 <td>{{treatment.duration}}</td>
                 <td>{{treatment.price}}</td>
                 <td>{{treatment.discount}}</td>
                 <td>{{treatment.description}}</td>
-                <td>
-                    <div *ngIf="treatment.serv">
-                        <a [routerLink]="['../serv', treatment.serv?.id, 'view' ]" >{{treatment.serv?.id}}</a>
-                    </div>
-                </td>
+                <td>{{treatment.createdBy}}</td>
+                <td>{{treatment.createdDate | date:'medium'}}</td>
+                <td>{{treatment.lastModifiedBy | date:'medium'}}</td>
+                <td>{{treatment.lastModifiedDate | date:'medium'}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

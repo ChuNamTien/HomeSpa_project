@@ -15,28 +15,30 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="customerId"><span jhiTranslate="homespaApp.booking.customerId">Customer Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="partnerId"><span jhiTranslate="homespaApp.booking.partnerId">Partner Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="startTime"><span jhiTranslate="homespaApp.booking.startTime">Start Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="finishTime"><span jhiTranslate="homespaApp.booking.finishTime">Finish Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="isFinished"><span jhiTranslate="homespaApp.booking.isFinished">Is Finished</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="isConfirmed"><span jhiTranslate="homespaApp.booking.isConfirmed">Is Confirmed</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="duration"><span jhiTranslate="homespaApp.booking.duration">Duration</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="paymentMethod"><span jhiTranslate="homespaApp.booking.paymentMethod">Payment Method</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="customer.id"><span jhiTranslate="homespaApp.booking.customer">Customer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="confirmTime"><span jhiTranslate="homespaApp.booking.confirmTime">Confirm Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let booking of bookings ;trackBy: trackId">
                 <td><a [routerLink]="['/booking', booking.id, 'view' ]">{{booking.id}}</a></td>
+                <td>{{booking.customerId}}</td>
+                <td>{{booking.partnerId}}</td>
                 <td>{{booking.startTime | date:'medium'}}</td>
                 <td>{{booking.finishTime | date:'medium'}}</td>
                 <td>{{booking.isFinished}}</td>
                 <td>{{booking.isConfirmed}}</td>
+                <td>{{booking.duration}}</td>
                 <td>{{booking.paymentMethod}}</td>
-                <td>
-                    <div *ngIf="booking.customer">
-                        <a [routerLink]="['../customer', booking.customer?.id, 'view' ]" >{{booking.customer?.id}}</a>
-                    </div>
-                </td>
+                <td>{{booking.confirmTime | date:'medium'}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

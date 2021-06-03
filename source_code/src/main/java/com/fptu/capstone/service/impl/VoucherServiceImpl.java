@@ -53,15 +53,6 @@ public class VoucherServiceImpl implements VoucherService {
         return voucherRepository.findAll(pageable);
     }
 
-    /**
-     * Get all the Voucher with eager load of many-to-many relationships.
-     *
-     * @return the list of entities
-     */
-    public Page<Voucher> findAllWithEagerRelationships(Pageable pageable) {
-        return voucherRepository.findAllWithEagerRelationships(pageable);
-    }
-    
 
     /**
      * Get one voucher by id.
@@ -73,7 +64,7 @@ public class VoucherServiceImpl implements VoucherService {
     @Transactional(readOnly = true)
     public Optional<Voucher> findOne(Long id) {
         log.debug("Request to get Voucher : {}", id);
-        return voucherRepository.findOneWithEagerRelationships(id);
+        return voucherRepository.findById(id);
     }
 
     /**

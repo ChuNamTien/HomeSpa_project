@@ -1,13 +1,10 @@
 package com.fptu.capstone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -15,13 +12,16 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "treatment")
-public class Treatment extends AbstractAuditingEntity implements Serializable {
+public class Treatment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "service_id")
+    private Long serviceId;
 
     @Column(name = "name")
     private String name;
@@ -41,17 +41,17 @@ public class Treatment extends AbstractAuditingEntity implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JsonIgnoreProperties("treatments")
-    private Serv serv;
+    @Column(name = "created_by")
+    private String createdBy;
 
-    @ManyToMany(mappedBy = "treatments")
-    @JsonIgnore
-    private Set<Staff> staff = new HashSet<>();
+    @Column(name = "created_date")
+    private Instant createdDate;
 
-    @ManyToMany(mappedBy = "treatments")
-    @JsonIgnore
-    private Set<Booking> bookings = new HashSet<>();
+    @Column(name = "last_modified_by")
+    private Instant lastModifiedBy;
+
+    @Column(name = "last_modified_date")
+    private Instant lastModifiedDate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -60,6 +60,19 @@ public class Treatment extends AbstractAuditingEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public Treatment serviceId(Long serviceId) {
+        this.serviceId = serviceId;
+        return this;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
     }
 
     public String getName() {
@@ -140,67 +153,56 @@ public class Treatment extends AbstractAuditingEntity implements Serializable {
         this.description = description;
     }
 
-    public Serv getServ() {
-        return serv;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public Treatment serv(Serv serv) {
-        this.serv = serv;
+    public Treatment createdBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
     }
 
-    public void setServ(Serv serv) {
-        this.serv = serv;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public Set<Staff> getStaff() {
-        return staff;
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
-    public Treatment staff(Set<Staff> staff) {
-        this.staff = staff;
+    public Treatment createdDate(Instant createdDate) {
+        this.createdDate = createdDate;
         return this;
     }
 
-    public Treatment addStaff(Staff staff) {
-        this.staff.add(staff);
-        staff.getTreatments().add(this);
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Instant getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public Treatment lastModifiedBy(Instant lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
         return this;
     }
 
-    public Treatment removeStaff(Staff staff) {
-        this.staff.remove(staff);
-        staff.getTreatments().remove(this);
+    public void setLastModifiedBy(Instant lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public Treatment lastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
         return this;
     }
 
-    public void setStaff(Set<Staff> staff) {
-        this.staff = staff;
-    }
-
-    public Set<Booking> getBookings() {
-        return bookings;
-    }
-
-    public Treatment bookings(Set<Booking> bookings) {
-        this.bookings = bookings;
-        return this;
-    }
-
-    public Treatment addBooking(Booking booking) {
-        this.bookings.add(booking);
-        booking.getTreatments().add(this);
-        return this;
-    }
-
-    public Treatment removeBooking(Booking booking) {
-        this.bookings.remove(booking);
-        booking.getTreatments().remove(this);
-        return this;
-    }
-
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -228,12 +230,17 @@ public class Treatment extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "Treatment{" +
             "id=" + getId() +
+            ", serviceId=" + getServiceId() +
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             ", duration=" + getDuration() +
             ", price=" + getPrice() +
             ", discount=" + getDiscount() +
             ", description='" + getDescription() + "'" +
+            ", createdBy='" + getCreatedBy() + "'" +
+            ", createdDate='" + getCreatedDate() + "'" +
+            ", lastModifiedBy='" + getLastModifiedBy() + "'" +
+            ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             "}";
     }
 }

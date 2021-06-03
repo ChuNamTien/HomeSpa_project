@@ -10,12 +10,9 @@ import com.fptu.capstone.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -25,14 +22,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 
 
 import static com.fptu.capstone.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,28 +40,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = HomespaApp.class)
 public class StaffResourceIntTest {
 
+    private static final Long DEFAULT_USER_ID = 1L;
+    private static final Long UPDATED_USER_ID = 2L;
+
+    private static final Long DEFAULT_PARTNER_ID = 1L;
+    private static final Long UPDATED_PARTNER_ID = 2L;
+
     private static final String DEFAULT_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_TYPE = "BBBBBBBBBB";
 
     private static final String DEFAULT_STATUS = "AAAAAAAAAA";
     private static final String UPDATED_STATUS = "BBBBBBBBBB";
 
-    private static final Boolean DEFAULT_START_TIME = false;
-    private static final Boolean UPDATED_START_TIME = true;
+    private static final Float DEFAULT_START_TIME = 1F;
+    private static final Float UPDATED_START_TIME = 2F;
 
-    private static final Boolean DEFAULT_END_TIME = false;
-    private static final Boolean UPDATED_END_TIME = true;
+    private static final Float DEFAULT_END_TIME = 1F;
+    private static final Float UPDATED_END_TIME = 2F;
 
     @Autowired
     private StaffRepository staffRepository;
-
-    @Mock
-    private StaffRepository staffRepositoryMock;
     
-
-    @Mock
-    private StaffService staffServiceMock;
-
     @Autowired
     private StaffService staffService;
 
@@ -105,6 +99,8 @@ public class StaffResourceIntTest {
      */
     public static Staff createEntity(EntityManager em) {
         Staff staff = new Staff()
+            .userId(DEFAULT_USER_ID)
+            .partnerId(DEFAULT_PARTNER_ID)
             .type(DEFAULT_TYPE)
             .status(DEFAULT_STATUS)
             .startTime(DEFAULT_START_TIME)
@@ -132,10 +128,12 @@ public class StaffResourceIntTest {
         List<Staff> staffList = staffRepository.findAll();
         assertThat(staffList).hasSize(databaseSizeBeforeCreate + 1);
         Staff testStaff = staffList.get(staffList.size() - 1);
+        assertThat(testStaff.getUserId()).isEqualTo(DEFAULT_USER_ID);
+        assertThat(testStaff.getPartnerId()).isEqualTo(DEFAULT_PARTNER_ID);
         assertThat(testStaff.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testStaff.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testStaff.isStartTime()).isEqualTo(DEFAULT_START_TIME);
-        assertThat(testStaff.isEndTime()).isEqualTo(DEFAULT_END_TIME);
+        assertThat(testStaff.getStartTime()).isEqualTo(DEFAULT_START_TIME);
+        assertThat(testStaff.getEndTime()).isEqualTo(DEFAULT_END_TIME);
     }
 
     @Test
@@ -168,43 +166,14 @@ public class StaffResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(staff.getId().intValue())))
+            .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID.intValue())))
+            .andExpect(jsonPath("$.[*].partnerId").value(hasItem(DEFAULT_PARTNER_ID.intValue())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.booleanValue())))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.booleanValue())));
+            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.doubleValue())))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.doubleValue())));
     }
     
-    public void getAllStaffWithEagerRelationshipsIsEnabled() throws Exception {
-        StaffResource staffResource = new StaffResource(staffServiceMock);
-        when(staffServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        MockMvc restStaffMockMvc = MockMvcBuilders.standaloneSetup(staffResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restStaffMockMvc.perform(get("/api/staff?eagerload=true"))
-        .andExpect(status().isOk());
-
-        verify(staffServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    public void getAllStaffWithEagerRelationshipsIsNotEnabled() throws Exception {
-        StaffResource staffResource = new StaffResource(staffServiceMock);
-            when(staffServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restStaffMockMvc = MockMvcBuilders.standaloneSetup(staffResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restStaffMockMvc.perform(get("/api/staff?eagerload=true"))
-        .andExpect(status().isOk());
-
-            verify(staffServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
     @Test
     @Transactional
     public void getStaff() throws Exception {
@@ -216,10 +185,12 @@ public class StaffResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(staff.getId().intValue()))
+            .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID.intValue()))
+            .andExpect(jsonPath("$.partnerId").value(DEFAULT_PARTNER_ID.intValue()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.booleanValue()))
-            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.booleanValue()));
+            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.doubleValue()))
+            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.doubleValue()));
     }
 
     @Test
@@ -243,6 +214,8 @@ public class StaffResourceIntTest {
         // Disconnect from session so that the updates on updatedStaff are not directly saved in db
         em.detach(updatedStaff);
         updatedStaff
+            .userId(UPDATED_USER_ID)
+            .partnerId(UPDATED_PARTNER_ID)
             .type(UPDATED_TYPE)
             .status(UPDATED_STATUS)
             .startTime(UPDATED_START_TIME)
@@ -257,10 +230,12 @@ public class StaffResourceIntTest {
         List<Staff> staffList = staffRepository.findAll();
         assertThat(staffList).hasSize(databaseSizeBeforeUpdate);
         Staff testStaff = staffList.get(staffList.size() - 1);
+        assertThat(testStaff.getUserId()).isEqualTo(UPDATED_USER_ID);
+        assertThat(testStaff.getPartnerId()).isEqualTo(UPDATED_PARTNER_ID);
         assertThat(testStaff.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testStaff.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testStaff.isStartTime()).isEqualTo(UPDATED_START_TIME);
-        assertThat(testStaff.isEndTime()).isEqualTo(UPDATED_END_TIME);
+        assertThat(testStaff.getStartTime()).isEqualTo(UPDATED_START_TIME);
+        assertThat(testStaff.getEndTime()).isEqualTo(UPDATED_END_TIME);
     }
 
     @Test

@@ -1,0 +1,27 @@
+
+{
+    "homespaApp": {
+        "bookingActivity" : {
+            "home": {
+                "title": "Booking Activities",
+                "createLabel": "Thêm mới một Booking Activity",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Booking Activity"
+            },
+            "created": "Một Booking Activity mới được tạo với định danh {{ param }}",
+            "updated": "Một Booking Activity cập nhật với định danh {{ param }}",
+            "deleted": "Một Booking Activity đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Booking Activity {{ id }}?"
+            },
+            "detail": {
+                "title": "Booking Activity"
+            },
+            "bookingId": "Booking Id",
+            "staffId": "Staff Id",
+            "treatmentId": "Treatment Id",
+            "startDate": "Start Date",
+            "finishDate": "Finish Date",
+            "status": "Status"
+        }
+    }
+}

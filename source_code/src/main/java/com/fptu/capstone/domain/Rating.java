@@ -3,6 +3,8 @@ package com.fptu.capstone.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -19,8 +21,8 @@ public class Rating implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "booking_id")
-    private Long bookingId;
+//    @Column(name = "booking_id")
+//    private Long bookingId;
 
     @Column(name = "star")
     private Float star;
@@ -37,18 +39,18 @@ public class Rating implements Serializable {
         this.id = id;
     }
 
-    public Long getBookingId() {
-        return bookingId;
-    }
-
-    public Rating bookingId(Long bookingId) {
-        this.bookingId = bookingId;
-        return this;
-    }
-
-    public void setBookingId(Long bookingId) {
-        this.bookingId = bookingId;
-    }
+//    public Long getBookingId() {
+//        return bookingId;
+//    }
+//
+//	public Rating bookingId(Long bookingId) {
+//        this.bookingId = bookingId;
+//        return this;
+//    }
+//
+//    public void setBookingId(Long bookingId) {
+//        this.bookingId = bookingId;
+//    }
 
     public Float getStar() {
         return star;
@@ -101,7 +103,7 @@ public class Rating implements Serializable {
     public String toString() {
         return "Rating{" +
             "id=" + getId() +
-            ", bookingId=" + getBookingId() +
+//            ", bookingId=" + getBookingId() +
             ", star=" + getStar() +
             ", comment='" + getComment() + "'" +
             "}";

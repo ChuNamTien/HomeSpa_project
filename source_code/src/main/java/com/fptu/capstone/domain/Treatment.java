@@ -3,16 +3,21 @@ package com.fptu.capstone.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Treatment.
  */
 @Entity
 @Table(name = "treatment")
-public class Treatment implements Serializable {
+public class Treatment extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,8 +25,8 @@ public class Treatment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "service_id")
-    private Long serviceId;
+//    @Column(name = "service_id")
+//    private Long serviceId;
 
     @Column(name = "name")
     private String name;
@@ -40,20 +45,48 @@ public class Treatment implements Serializable {
 
     @Column(name = "description")
     private String description;
+    
+    @ManyToOne
+    @JoinColumn(name = "serv_id")
+    @JsonIgnore
+    private Serv serv;
 
-    @Column(name = "created_by")
-    private String createdBy;
+    @ManyToMany
+    @JoinTable(
+        name = "staff_treatment",
+        joinColumns = {@JoinColumn(name = "staff_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "treatment_id", referencedColumnName = "id")})
+    private Set<Staff> staffs;
+    
+    @OneToMany(mappedBy = "treatment")
+    @JsonIgnore
+    private Set<BookingActivity> bookingActivities = new HashSet<>();
+    
+    public Serv getServ() {
+		return serv;
+	}
 
-    @Column(name = "created_date")
-    private Instant createdDate;
+	public void setServ(Serv serv) {
+		this.serv = serv;
+	}
 
-    @Column(name = "last_modified_by")
-    private Instant lastModifiedBy;
+	public Set<Staff> getStaffs() {
+		return staffs;
+	}
 
-    @Column(name = "last_modified_date")
-    private Instant lastModifiedDate;
+	public void setStaffs(Set<Staff> staffs) {
+		this.staffs = staffs;
+	}
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+	public Set<BookingActivity> getBookingActivities() {
+		return bookingActivities;
+	}
+
+	public void setBookingActivities(Set<BookingActivity> bookingActivities) {
+		this.bookingActivities = bookingActivities;
+	}
+
+	// jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -62,18 +95,18 @@ public class Treatment implements Serializable {
         this.id = id;
     }
 
-    public Long getServiceId() {
-        return serviceId;
-    }
-
-    public Treatment serviceId(Long serviceId) {
-        this.serviceId = serviceId;
-        return this;
-    }
-
-    public void setServiceId(Long serviceId) {
-        this.serviceId = serviceId;
-    }
+//    public Long getServiceId() {
+//        return serviceId;
+//    }
+//
+//    public Treatment serviceId(Long serviceId) {
+//        this.serviceId = serviceId;
+//        return this;
+//    }
+//
+//    public void setServiceId(Long serviceId) {
+//        this.serviceId = serviceId;
+//    }
 
     public String getName() {
         return name;
@@ -152,58 +185,6 @@ public class Treatment implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public Treatment createdBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public Treatment createdDate(Instant createdDate) {
-        this.createdDate = createdDate;
-        return this;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Instant getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public Treatment lastModifiedBy(Instant lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-        return this;
-    }
-
-    public void setLastModifiedBy(Instant lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public Treatment lastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-        return this;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -230,7 +211,7 @@ public class Treatment implements Serializable {
     public String toString() {
         return "Treatment{" +
             "id=" + getId() +
-            ", serviceId=" + getServiceId() +
+//            ", serviceId=" + getServiceId() +
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             ", duration=" + getDuration() +

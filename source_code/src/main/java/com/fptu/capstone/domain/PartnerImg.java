@@ -3,8 +3,12 @@ package com.fptu.capstone.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A PartnerImg.
@@ -19,10 +23,10 @@ public class PartnerImg implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "partner_id")
-    private Long partnerId;
+//    @Column(name = "partner_id", nullable = false)
+//    private Long partnerId;
 
-    @Column(name = "img_url")
+    @Column(name = "img_url", nullable = false)
     private String imgUrl;
 
     @Column(name = "is_hiddent")
@@ -30,7 +34,12 @@ public class PartnerImg implements Serializable {
 
     @Column(name = "jhi_index")
     private Long index;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "partner_id")
+    @JsonIgnore
+    private Partner partner;
+    
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -40,18 +49,18 @@ public class PartnerImg implements Serializable {
         this.id = id;
     }
 
-    public Long getPartnerId() {
-        return partnerId;
-    }
-
-    public PartnerImg partnerId(Long partnerId) {
-        this.partnerId = partnerId;
-        return this;
-    }
-
-    public void setPartnerId(Long partnerId) {
-        this.partnerId = partnerId;
-    }
+//    public Long getPartnerId() {
+//        return partnerId;
+//    }
+//
+//    public PartnerImg partnerId(Long partnerId) {
+//        this.partnerId = partnerId;
+//        return this;
+//    }
+//
+//    public void setPartnerId(Long partnerId) {
+//        this.partnerId = partnerId;
+//    }
 
     public String getImgUrl() {
         return imgUrl;
@@ -91,9 +100,23 @@ public class PartnerImg implements Serializable {
     public void setIndex(Long index) {
         this.index = index;
     }
+    
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
+	public Partner getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+
+	public Boolean getIsHiddent() {
+		return isHiddent;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -117,7 +140,7 @@ public class PartnerImg implements Serializable {
     public String toString() {
         return "PartnerImg{" +
             "id=" + getId() +
-            ", partnerId=" + getPartnerId() +
+//            ", partnerId=" + getPartnerId() +
             ", imgUrl='" + getImgUrl() + "'" +
             ", isHiddent='" + isIsHiddent() + "'" +
             ", index=" + getIndex() +

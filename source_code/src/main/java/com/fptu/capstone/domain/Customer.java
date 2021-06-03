@@ -3,9 +3,14 @@ package com.fptu.capstone.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Customer.
@@ -20,8 +25,8 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+//    @Column(name = "user_id", nullable = false)
+//    private Long userId;
 
     @Column(name = "dob")
     private Instant dob;
@@ -40,7 +45,30 @@ public class Customer implements Serializable {
 
     @Column(name = "status")
     private Boolean status;
-
+      
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "customer_like_partner",
+        joinColumns = {@JoinColumn(name = "customer_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "partner_id", referencedColumnName = "id")})
+    private Set<Partner> likedPartners = new HashSet<>();
+    
+    @ManyToMany(mappedBy = "customers")
+    @JsonIgnore
+    private Set<Voucher> vouchers = new HashSet<>();
+    
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private Set<Report> reports = new HashSet<>();
+    
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnoreProperties("bookings")
+    private Set<Booking> bookings = new HashSet<>(); 
+    
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -50,18 +78,28 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
+//    public Long getUserId() {
+//        return userId;
+//    }
+    
+    
 
-    public Customer userId(Long userId) {
-        this.userId = userId;
-        return this;
-    }
+    public Set<Voucher> getVouchers() {
+		return vouchers;
+	}
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public void setVouchers(Set<Voucher> vouchers) {
+		this.vouchers = vouchers;
+	}
+
+//	public Customer userId(Long userId) {
+//        this.userId = userId;
+//        return this;
+//    }
+//
+//    public void setUserId(Long userId) {
+//        this.userId = userId;
+//    }
 
     public Instant getDob() {
         return dob;
@@ -76,7 +114,15 @@ public class Customer implements Serializable {
         this.dob = dob;
     }
 
-    public String getPhone() {
+    public Set<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
+	}
+
+	public String getPhone() {
         return phone;
     }
 
@@ -140,9 +186,38 @@ public class Customer implements Serializable {
     public void setStatus(Boolean status) {
         this.status = status;
     }
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<Partner> getLikedPartners() {
+		return likedPartners;
+	}
+
+	public void setLikedPartners(Set<Partner> likedPartners) {
+		this.likedPartners = likedPartners;
+	}
+
+	public Set<Report> getReports() {
+		return reports;
+	}
+
+	public void setReports(Set<Report> reports) {
+		this.reports = reports;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -166,7 +241,7 @@ public class Customer implements Serializable {
     public String toString() {
         return "Customer{" +
             "id=" + getId() +
-            ", userId=" + getUserId() +
+//            ", userId=" + getUserId() +
             ", dob='" + getDob() + "'" +
             ", phone='" + getPhone() + "'" +
             ", address='" + getAddress() + "'" +

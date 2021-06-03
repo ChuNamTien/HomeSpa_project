@@ -107,10 +107,10 @@ public class CategoryResourceIntTest {
             .name(DEFAULT_NAME)
             .imgUrl(DEFAULT_IMG_URL)
             .status(DEFAULT_STATUS)
-            .createdBy(DEFAULT_CREATED_BY)
-            .createdDate(DEFAULT_CREATED_DATE)
-            .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY)
-            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE);
+//            .createdBy(DEFAULT_CREATED_BY)
+//            .createdDate(DEFAULT_CREATED_DATE)
+//            .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY)
+//            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE);
         return category;
     }
 

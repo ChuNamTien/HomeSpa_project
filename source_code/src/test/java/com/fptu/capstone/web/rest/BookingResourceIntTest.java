@@ -110,8 +110,8 @@ public class BookingResourceIntTest {
      */
     public static Booking createEntity(EntityManager em) {
         Booking booking = new Booking()
-            .customerId(DEFAULT_CUSTOMER_ID)
-            .partnerId(DEFAULT_PARTNER_ID)
+//            .customerId(DEFAULT_CUSTOMER_ID)
+//            .partnerId(DEFAULT_PARTNER_ID)
             .startTime(DEFAULT_START_TIME)
             .finishTime(DEFAULT_FINISH_TIME)
             .isFinished(DEFAULT_IS_FINISHED)
@@ -142,8 +142,8 @@ public class BookingResourceIntTest {
         List<Booking> bookingList = bookingRepository.findAll();
         assertThat(bookingList).hasSize(databaseSizeBeforeCreate + 1);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
-        assertThat(testBooking.getCustomerId()).isEqualTo(DEFAULT_CUSTOMER_ID);
-        assertThat(testBooking.getPartnerId()).isEqualTo(DEFAULT_PARTNER_ID);
+//        assertThat(testBooking.getCustomerId()).isEqualTo(DEFAULT_CUSTOMER_ID);
+//        assertThat(testBooking.getPartnerId()).isEqualTo(DEFAULT_PARTNER_ID);
         assertThat(testBooking.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testBooking.getFinishTime()).isEqualTo(DEFAULT_FINISH_TIME);
         assertThat(testBooking.isIsFinished()).isEqualTo(DEFAULT_IS_FINISHED);
@@ -237,8 +237,8 @@ public class BookingResourceIntTest {
         // Disconnect from session so that the updates on updatedBooking are not directly saved in db
         em.detach(updatedBooking);
         updatedBooking
-            .customerId(UPDATED_CUSTOMER_ID)
-            .partnerId(UPDATED_PARTNER_ID)
+//            .customerId(UPDATED_CUSTOMER_ID)
+//            .partnerId(UPDATED_PARTNER_ID)
             .startTime(UPDATED_START_TIME)
             .finishTime(UPDATED_FINISH_TIME)
             .isFinished(UPDATED_IS_FINISHED)
@@ -256,8 +256,8 @@ public class BookingResourceIntTest {
         List<Booking> bookingList = bookingRepository.findAll();
         assertThat(bookingList).hasSize(databaseSizeBeforeUpdate);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
-        assertThat(testBooking.getCustomerId()).isEqualTo(UPDATED_CUSTOMER_ID);
-        assertThat(testBooking.getPartnerId()).isEqualTo(UPDATED_PARTNER_ID);
+//        assertThat(testBooking.getCustomerId()).isEqualTo(UPDATED_CUSTOMER_ID);
+//        assertThat(testBooking.getPartnerId()).isEqualTo(UPDATED_PARTNER_ID);
         assertThat(testBooking.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testBooking.getFinishTime()).isEqualTo(UPDATED_FINISH_TIME);
         assertThat(testBooking.isIsFinished()).isEqualTo(UPDATED_IS_FINISHED);

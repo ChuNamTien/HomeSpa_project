@@ -3,16 +3,21 @@ package com.fptu.capstone.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Serv.
  */
 @Entity
 @Table(name = "serv")
-public class Serv implements Serializable {
+public class Serv extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,8 +25,11 @@ public class Serv implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "category_id")
-    private Long categoryId;
+//    @Column(name = "category_id")
+//    private Long categoryId;
+    
+//    @Column(name = "partner_id")
+//    private Long partnerId;
 
     @Column(name = "name")
     private String name;
@@ -31,20 +39,87 @@ public class Serv implements Serializable {
 
     @Column(name = "description")
     private String description;
+    
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
+    
+    @ManyToOne
+    @JoinColumn(name="partner_id")
+    private Partner partner;
+    
+    @OneToMany(mappedBy="serv")
+    @JsonIgnore
+    private Set<Treatment> treatments = new HashSet<>();
+    
+    @OneToMany(mappedBy="serv")
+    @JsonIgnore
+    private Set<Booking> bookings = new HashSet<>();
+    
+    @ManyToMany(mappedBy = "servs")
+    @JsonIgnoreProperties("servs")
+    private Set<Voucher> vouchers = new HashSet<>();
 
-    @Column(name = "created_by")
-    private String createdBy;
+    @OneToMany(mappedBy="serv")
+    private Set<Booking> servImgs = new HashSet<>();
+    
+//    public Long getPartnerId() {
+//		return partnerId;
+//	}
+//
+//	public void setPartnerId(Long partnerId) {
+//		this.partnerId = partnerId;
+//	}
 
-    @Column(name = "created_date")
-    private Instant createdDate;
+	public Set<Voucher> getVouchers() {
+		return vouchers;
+	}
 
-    @Column(name = "last_modified_by")
-    private String lastModifiedBy;
+	public void setVouchers(Set<Voucher> vouchers) {
+		this.vouchers = vouchers;
+	}
 
-    @Column(name = "last_modified_date")
-    private Instant lastModifiedDate;
+	public Set<Booking> getServImgs() {
+		return servImgs;
+	}
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+	public void setServImgs(Set<Booking> servImgs) {
+		this.servImgs = servImgs;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Partner getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+
+	public Set<Treatment> getTreatments() {
+		return treatments;
+	}
+
+	public void setTreatments(Set<Treatment> treatments) {
+		this.treatments = treatments;
+	}
+
+	public Set<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
+	}
+
+	// jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -53,18 +128,18 @@ public class Serv implements Serializable {
         this.id = id;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public Serv categoryId(Long categoryId) {
-        this.categoryId = categoryId;
-        return this;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
+//    public Long getCategoryId() {
+//        return categoryId;
+//    }
+//
+//    public Serv categoryId(Long categoryId) {
+//        this.categoryId = categoryId;
+//        return this;
+//    }
+//
+//    public void setCategoryId(Long categoryId) {
+//        this.categoryId = categoryId;
+//    }
 
     public String getName() {
         return name;
@@ -104,58 +179,7 @@ public class Serv implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public Serv createdBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public Serv createdDate(Instant createdDate) {
-        this.createdDate = createdDate;
-        return this;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public Serv lastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-        return this;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public Serv lastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-        return this;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -182,7 +206,7 @@ public class Serv implements Serializable {
     public String toString() {
         return "Serv{" +
             "id=" + getId() +
-            ", categoryId=" + getCategoryId() +
+//            ", categoryId=" + getCategoryId() +
             ", name='" + getName() + "'" +
             ", customerType='" + getCustomerType() + "'" +
             ", description='" + getDescription() + "'" +

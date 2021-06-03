@@ -4,7 +4,9 @@ package com.fptu.capstone.domain;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Staff.
@@ -19,11 +21,11 @@ public class Staff implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
-
-    @Column(name = "partner_id")
-    private Long partnerId;
+//    @Column(name = "user_id", nullable = false)
+//    private Long userId;
+//
+//    @Column(name = "partner_id", nullable = false)
+//    private Long partnerId;
 
     @Column(name = "jhi_type")
     private String type;
@@ -37,6 +39,20 @@ public class Staff implements Serializable {
     @Column(name = "end_time")
     private Float endTime;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    
+    @ManyToOne
+    @JoinColumn(name = "partner_id")
+    private Partner partner;
+    
+    @ManyToMany(mappedBy = "staffs")
+    private Set<Treatment> treatments = new HashSet<>();
+    
+    @OneToMany(mappedBy = "staff")
+    private Set<BookingActivity> bookingActivities = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -46,31 +62,31 @@ public class Staff implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public Staff userId(Long userId) {
-        this.userId = userId;
-        return this;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getPartnerId() {
-        return partnerId;
-    }
-
-    public Staff partnerId(Long partnerId) {
-        this.partnerId = partnerId;
-        return this;
-    }
-
-    public void setPartnerId(Long partnerId) {
-        this.partnerId = partnerId;
-    }
+//    public Long getUserId() {
+//        return userId;
+//    }
+//
+//    public Staff userId(Long userId) {
+//        this.userId = userId;
+//        return this;
+//    }
+//
+//    public void setUserId(Long userId) {
+//        this.userId = userId;
+//    }
+//
+//    public Long getPartnerId() {
+//        return partnerId;
+//    }
+//
+//    public Staff partnerId(Long partnerId) {
+//        this.partnerId = partnerId;
+//        return this;
+//    }
+//
+//    public void setPartnerId(Long partnerId) {
+//        this.partnerId = partnerId;
+//    }
 
     public String getType() {
         return type;
@@ -123,9 +139,43 @@ public class Staff implements Serializable {
     public void setEndTime(Float endTime) {
         this.endTime = endTime;
     }
+    
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
+    public Partner getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+
+	public Set<Treatment> getTreatments() {
+		return treatments;
+	}
+
+	public void setTreatments(Set<Treatment> treatments) {
+		this.treatments = treatments;
+	}
+
+	public Set<BookingActivity> getBookingActivities() {
+		return bookingActivities;
+	}
+
+	public void setBookingActivities(Set<BookingActivity> bookingActivities) {
+		this.bookingActivities = bookingActivities;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -149,8 +199,8 @@ public class Staff implements Serializable {
     public String toString() {
         return "Staff{" +
             "id=" + getId() +
-            ", userId=" + getUserId() +
-            ", partnerId=" + getPartnerId() +
+//            ", userId=" + getUserId() +
+//            ", partnerId=" + getPartnerId() +
             ", type='" + getType() + "'" +
             ", status='" + getStatus() + "'" +
             ", startTime=" + getStartTime() +

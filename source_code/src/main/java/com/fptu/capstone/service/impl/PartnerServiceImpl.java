@@ -53,15 +53,6 @@ public class PartnerServiceImpl implements PartnerService {
         return partnerRepository.findAll(pageable);
     }
 
-    /**
-     * Get all the Partner with eager load of many-to-many relationships.
-     *
-     * @return the list of entities
-     */
-    public Page<Partner> findAllWithEagerRelationships(Pageable pageable) {
-        return partnerRepository.findAllWithEagerRelationships(pageable);
-    }
-    
 
     /**
      * Get one partner by id.
@@ -73,7 +64,7 @@ public class PartnerServiceImpl implements PartnerService {
     @Transactional(readOnly = true)
     public Optional<Partner> findOne(Long id) {
         log.debug("Request to get Partner : {}", id);
-        return partnerRepository.findOneWithEagerRelationships(id);
+        return partnerRepository.findById(id);
     }
 
     /**

@@ -2,6 +2,10 @@
     "name": "Partner",
     "fields": [
         {
+            "fieldName": "userId",
+            "fieldType": "Long"
+        },
+        {
             "fieldName": "name",
             "fieldType": "String"
         },
@@ -39,11 +43,11 @@
         },
         {
             "fieldName": "openTime",
-            "fieldType": "Instant"
+            "fieldType": "Float"
         },
         {
             "fieldName": "closeTime",
-            "fieldType": "Instant"
+            "fieldType": "Float"
         },
         {
             "fieldName": "isWeekendOpen",
@@ -54,48 +58,15 @@
             "fieldType": "Boolean"
         },
         {
-            "fieldName": "timeConfirm",
-            "fieldType": "String"
+            "fieldName": "confirmAfter",
+            "fieldType": "Float"
         },
         {
             "fieldName": "bussinessLicenseUrl",
             "fieldType": "String"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "partnerImg",
-            "otherEntityName": "partnerImg",
-            "otherEntityRelationshipName": "partner"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "staff",
-            "otherEntityName": "staff",
-            "otherEntityRelationshipName": "partner"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "serv",
-            "otherEntityName": "serv",
-            "otherEntityRelationshipName": "partner"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "voucher",
-            "otherEntityName": "voucher",
-            "otherEntityRelationshipName": "partner"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "partner",
-            "relationshipName": "category",
-            "otherEntityName": "category",
-            "otherEntityField": "category",
-            "ownerSide": true
-        }
-    ],
+    "relationships": [],
     "changelogDate": "20210531022539",
     "entityTableName": "partner",
     "dto": "no",

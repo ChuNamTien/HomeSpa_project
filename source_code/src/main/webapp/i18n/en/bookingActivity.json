@@ -1,0 +1,27 @@
+
+{
+    "homespaApp": {
+        "bookingActivity" : {
+            "home": {
+                "title": "Booking Activities",
+                "createLabel": "Create a new Booking Activity",
+                "createOrEditLabel": "Create or edit a Booking Activity"
+            },
+            "created": "A new Booking Activity is created with identifier {{ param }}",
+            "updated": "A Booking Activity is updated with identifier {{ param }}",
+            "deleted": "A Booking Activity is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Booking Activity {{ id }}?"
+            },
+            "detail": {
+                "title": "Booking Activity"
+            },
+            "bookingId": "Booking Id",
+            "staffId": "Staff Id",
+            "treatmentId": "Treatment Id",
+            "startDate": "Start Date",
+            "finishDate": "Finish Date",
+            "status": "Status"
+        }
+    }
+}

@@ -1,12 +1,10 @@
 package com.fptu.capstone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -14,7 +12,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "category")
-public class Category extends AbstractAuditingEntity implements Serializable {
+public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,13 +29,17 @@ public class Category extends AbstractAuditingEntity implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @ManyToMany(mappedBy = "categories")
-    @JsonIgnore
-    private Set<Partner> partners = new HashSet<>();
+    @Column(name = "created_by")
+    private String createdBy;
 
-    @ManyToMany(mappedBy = "categories")
-    @JsonIgnore
-    private Set<Staff> staff = new HashSet<>();
+    @Column(name = "created_date")
+    private Instant createdDate;
+
+    @Column(name = "last_modified_by")
+    private String lastModifiedBy;
+
+    @Column(name = "last_modified_date")
+    private Instant lastModifiedDate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -87,54 +89,56 @@ public class Category extends AbstractAuditingEntity implements Serializable {
         this.status = status;
     }
 
-    public Set<Partner> getPartners() {
-        return partners;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public Category partners(Set<Partner> partners) {
-        this.partners = partners;
+    public Category createdBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
     }
 
-    public Category addPartner(Partner partner) {
-        this.partners.add(partner);
-        partner.getCategories().add(this);
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public Category createdDate(Instant createdDate) {
+        this.createdDate = createdDate;
         return this;
     }
 
-    public Category removePartner(Partner partner) {
-        this.partners.remove(partner);
-        partner.getCategories().remove(this);
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public Category lastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
         return this;
     }
 
-    public void setPartners(Set<Partner> partners) {
-        this.partners = partners;
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Set<Staff> getStaff() {
-        return staff;
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public Category staff(Set<Staff> staff) {
-        this.staff = staff;
+    public Category lastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
         return this;
     }
 
-    public Category addStaff(Staff staff) {
-        this.staff.add(staff);
-        staff.getCategories().add(this);
-        return this;
-    }
-
-    public Category removeStaff(Staff staff) {
-        this.staff.remove(staff);
-        staff.getCategories().remove(this);
-        return this;
-    }
-
-    public void setStaff(Set<Staff> staff) {
-        this.staff = staff;
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -165,6 +169,10 @@ public class Category extends AbstractAuditingEntity implements Serializable {
             ", name='" + getName() + "'" +
             ", imgUrl='" + getImgUrl() + "'" +
             ", status='" + getStatus() + "'" +
+            ", createdBy='" + getCreatedBy() + "'" +
+            ", createdDate='" + getCreatedDate() + "'" +
+            ", lastModifiedBy='" + getLastModifiedBy() + "'" +
+            ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             "}";
     }
 }

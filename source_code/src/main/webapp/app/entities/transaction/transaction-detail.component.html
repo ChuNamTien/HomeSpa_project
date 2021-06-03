@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="transaction">
+            <h2><span jhiTranslate="homespaApp.transaction.detail.title">Transaction</span> {{transaction.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.transaction.bookingId">Booking Id</span></dt>
+                <dd>
+                    <span>{{transaction.bookingId}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.transaction.code">Code</span></dt>
+                <dd>
+                    <span>{{transaction.code}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.transaction.amount">Amount</span></dt>
+                <dd>
+                    <span>{{transaction.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.transaction.ipAddress">Ip Address</span></dt>
+                <dd>
+                    <span>{{transaction.ipAddress}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.transaction.message">Message</span></dt>
+                <dd>
+                    <span>{{transaction.message}}</span>
+                </dd>
+                <dt><span jhiTranslate="homespaApp.transaction.status">Status</span></dt>
+                <dd>
+                    <span>{{transaction.status}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/transaction', transaction.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -16,13 +16,14 @@
             "detail": {
                 "title": "Serv"
             },
+            "categoryId": "Category Id",
             "name": "Name",
             "customerType": "Customer Type",
             "description": "Description",
-            "servImg": "Serv Img",
-            "treatment": "Treatment",
-            "partner": "Partner",
-            "voucher": "Voucher"
+            "createdBy": "Created By",
+            "createdDate": "Created Date",
+            "lastModifiedBy": "Last Modified By",
+            "lastModifiedDate": "Last Modified Date"
         }
     }
 }

@@ -1,12 +1,6 @@
-import { Moment } from 'moment';
-import { IPartnerImg } from 'app/shared/model//partner-img.model';
-import { IStaff } from 'app/shared/model//staff.model';
-import { IServ } from 'app/shared/model//serv.model';
-import { IVoucher } from 'app/shared/model//voucher.model';
-import { ICategory } from 'app/shared/model//category.model';
-
 export interface IPartner {
     id?: number;
+    userId?: number;
     name?: string;
     partnerType?: string;
     customerType?: string;
@@ -16,22 +10,18 @@ export interface IPartner {
     phone?: string;
     longCoord?: number;
     latCoord?: number;
-    openTime?: Moment;
-    closeTime?: Moment;
+    openTime?: number;
+    closeTime?: number;
     isWeekendOpen?: boolean;
     status?: boolean;
-    timeConfirm?: string;
+    confirmAfter?: number;
     bussinessLicenseUrl?: string;
-    partnerImgs?: IPartnerImg[];
-    staff?: IStaff[];
-    servs?: IServ[];
-    vouchers?: IVoucher[];
-    categories?: ICategory[];
 }
 
 export class Partner implements IPartner {
     constructor(
         public id?: number,
+        public userId?: number,
         public name?: string,
         public partnerType?: string,
         public customerType?: string,
@@ -41,17 +31,12 @@ export class Partner implements IPartner {
         public phone?: string,
         public longCoord?: number,
         public latCoord?: number,
-        public openTime?: Moment,
-        public closeTime?: Moment,
+        public openTime?: number,
+        public closeTime?: number,
         public isWeekendOpen?: boolean,
         public status?: boolean,
-        public timeConfirm?: string,
-        public bussinessLicenseUrl?: string,
-        public partnerImgs?: IPartnerImg[],
-        public staff?: IStaff[],
-        public servs?: IServ[],
-        public vouchers?: IVoucher[],
-        public categories?: ICategory[]
+        public confirmAfter?: number,
+        public bussinessLicenseUrl?: string
     ) {
         this.isWeekendOpen = this.isWeekendOpen || false;
         this.status = this.status || false;

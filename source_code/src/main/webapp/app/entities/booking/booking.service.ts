@@ -52,7 +52,8 @@ export class BookingService {
     private convertDateFromClient(booking: IBooking): IBooking {
         const copy: IBooking = Object.assign({}, booking, {
             startTime: booking.startTime != null && booking.startTime.isValid() ? booking.startTime.toJSON() : null,
-            finishTime: booking.finishTime != null && booking.finishTime.isValid() ? booking.finishTime.toJSON() : null
+            finishTime: booking.finishTime != null && booking.finishTime.isValid() ? booking.finishTime.toJSON() : null,
+            confirmTime: booking.confirmTime != null && booking.confirmTime.isValid() ? booking.confirmTime.toJSON() : null
         });
         return copy;
     }
@@ -60,6 +61,7 @@ export class BookingService {
     private convertDateFromServer(res: EntityResponseType): EntityResponseType {
         res.body.startTime = res.body.startTime != null ? moment(res.body.startTime) : null;
         res.body.finishTime = res.body.finishTime != null ? moment(res.body.finishTime) : null;
+        res.body.confirmTime = res.body.confirmTime != null ? moment(res.body.confirmTime) : null;
         return res;
     }
 
@@ -67,6 +69,7 @@ export class BookingService {
         res.body.forEach((booking: IBooking) => {
             booking.startTime = booking.startTime != null ? moment(booking.startTime) : null;
             booking.finishTime = booking.finishTime != null ? moment(booking.finishTime) : null;
+            booking.confirmTime = booking.confirmTime != null ? moment(booking.confirmTime) : null;
         });
         return res;
     }

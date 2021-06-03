@@ -40,6 +40,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = HomespaApp.class)
 public class ServImgResourceIntTest {
 
+    private static final Long DEFAULT_SERVICE_ID = 1L;
+    private static final Long UPDATED_SERVICE_ID = 2L;
+
     private static final String DEFAULT_IMG_URL = "AAAAAAAAAA";
     private static final String UPDATED_IMG_URL = "BBBBBBBBBB";
 
@@ -90,6 +93,7 @@ public class ServImgResourceIntTest {
      */
     public static ServImg createEntity(EntityManager em) {
         ServImg servImg = new ServImg()
+            .serviceId(DEFAULT_SERVICE_ID)
             .imgUrl(DEFAULT_IMG_URL)
             .status(DEFAULT_STATUS)
             .index(DEFAULT_INDEX);
@@ -116,6 +120,7 @@ public class ServImgResourceIntTest {
         List<ServImg> servImgList = servImgRepository.findAll();
         assertThat(servImgList).hasSize(databaseSizeBeforeCreate + 1);
         ServImg testServImg = servImgList.get(servImgList.size() - 1);
+        assertThat(testServImg.getServiceId()).isEqualTo(DEFAULT_SERVICE_ID);
         assertThat(testServImg.getImgUrl()).isEqualTo(DEFAULT_IMG_URL);
         assertThat(testServImg.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testServImg.getIndex()).isEqualTo(DEFAULT_INDEX);
@@ -151,6 +156,7 @@ public class ServImgResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(servImg.getId().intValue())))
+            .andExpect(jsonPath("$.[*].serviceId").value(hasItem(DEFAULT_SERVICE_ID.intValue())))
             .andExpect(jsonPath("$.[*].imgUrl").value(hasItem(DEFAULT_IMG_URL.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].index").value(hasItem(DEFAULT_INDEX.intValue())));
@@ -167,6 +173,7 @@ public class ServImgResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(servImg.getId().intValue()))
+            .andExpect(jsonPath("$.serviceId").value(DEFAULT_SERVICE_ID.intValue()))
             .andExpect(jsonPath("$.imgUrl").value(DEFAULT_IMG_URL.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.index").value(DEFAULT_INDEX.intValue()));
@@ -193,6 +200,7 @@ public class ServImgResourceIntTest {
         // Disconnect from session so that the updates on updatedServImg are not directly saved in db
         em.detach(updatedServImg);
         updatedServImg
+            .serviceId(UPDATED_SERVICE_ID)
             .imgUrl(UPDATED_IMG_URL)
             .status(UPDATED_STATUS)
             .index(UPDATED_INDEX);
@@ -206,6 +214,7 @@ public class ServImgResourceIntTest {
         List<ServImg> servImgList = servImgRepository.findAll();
         assertThat(servImgList).hasSize(databaseSizeBeforeUpdate);
         ServImg testServImg = servImgList.get(servImgList.size() - 1);
+        assertThat(testServImg.getServiceId()).isEqualTo(UPDATED_SERVICE_ID);
         assertThat(testServImg.getImgUrl()).isEqualTo(UPDATED_IMG_URL);
         assertThat(testServImg.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testServImg.getIndex()).isEqualTo(UPDATED_INDEX);

@@ -15,6 +15,7 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="userId"><span jhiTranslate="homespaApp.partner.userId">User Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="name"><span jhiTranslate="homespaApp.partner.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="partnerType"><span jhiTranslate="homespaApp.partner.partnerType">Partner Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="customerType"><span jhiTranslate="homespaApp.partner.customerType">Customer Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -28,7 +29,7 @@
             <th jhiSortBy="closeTime"><span jhiTranslate="homespaApp.partner.closeTime">Close Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="isWeekendOpen"><span jhiTranslate="homespaApp.partner.isWeekendOpen">Is Weekend Open</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="homespaApp.partner.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="timeConfirm"><span jhiTranslate="homespaApp.partner.timeConfirm">Time Confirm</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="confirmAfter"><span jhiTranslate="homespaApp.partner.confirmAfter">Confirm After</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="bussinessLicenseUrl"><span jhiTranslate="homespaApp.partner.bussinessLicenseUrl">Bussiness License Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
@@ -36,6 +37,7 @@
             <tbody>
             <tr *ngFor="let partner of partners ;trackBy: trackId">
                 <td><a [routerLink]="['/partner', partner.id, 'view' ]">{{partner.id}}</a></td>
+                <td>{{partner.userId}}</td>
                 <td>{{partner.name}}</td>
                 <td>{{partner.partnerType}}</td>
                 <td>{{partner.customerType}}</td>
@@ -45,11 +47,11 @@
                 <td>{{partner.phone}}</td>
                 <td>{{partner.longCoord}}</td>
                 <td>{{partner.latCoord}}</td>
-                <td>{{partner.openTime | date:'medium'}}</td>
-                <td>{{partner.closeTime | date:'medium'}}</td>
+                <td>{{partner.openTime}}</td>
+                <td>{{partner.closeTime}}</td>
                 <td>{{partner.isWeekendOpen}}</td>
                 <td>{{partner.status}}</td>
-                <td>{{partner.timeConfirm}}</td>
+                <td>{{partner.confirmAfter}}</td>
                 <td>{{partner.bussinessLicenseUrl}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

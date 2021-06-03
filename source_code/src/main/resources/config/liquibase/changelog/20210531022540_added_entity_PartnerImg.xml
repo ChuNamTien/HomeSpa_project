@@ -22,6 +22,10 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="partner_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="img_url" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -31,10 +35,6 @@
             </column>
 
             <column name="jhi_index" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="partner_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

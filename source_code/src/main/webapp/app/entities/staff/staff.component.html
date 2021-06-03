@@ -15,26 +15,24 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="userId"><span jhiTranslate="homespaApp.staff.userId">User Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="partnerId"><span jhiTranslate="homespaApp.staff.partnerId">Partner Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="type"><span jhiTranslate="homespaApp.staff.type">Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="homespaApp.staff.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="startTime"><span jhiTranslate="homespaApp.staff.startTime">Start Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="endTime"><span jhiTranslate="homespaApp.staff.endTime">End Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="partner.id"><span jhiTranslate="homespaApp.staff.partner">Partner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let staff of staff ;trackBy: trackId">
                 <td><a [routerLink]="['/staff', staff.id, 'view' ]">{{staff.id}}</a></td>
+                <td>{{staff.userId}}</td>
+                <td>{{staff.partnerId}}</td>
                 <td>{{staff.type}}</td>
                 <td>{{staff.status}}</td>
                 <td>{{staff.startTime}}</td>
                 <td>{{staff.endTime}}</td>
-                <td>
-                    <div *ngIf="staff.partner">
-                        <a [routerLink]="['../partner', staff.partner?.id, 'view' ]" >{{staff.partner?.id}}</a>
-                    </div>
-                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

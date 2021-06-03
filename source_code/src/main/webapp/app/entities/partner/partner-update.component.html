@@ -10,6 +10,11 @@
                         [(ngModel)]="partner.id" readonly />
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homespaApp.partner.userId" for="field_userId">User Id</label>
+                    <input type="number" class="form-control" name="userId" id="field_userId"
+                        [(ngModel)]="partner.userId" />
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="homespaApp.partner.name" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                         [(ngModel)]="partner.name" />
@@ -56,17 +61,13 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="homespaApp.partner.openTime" for="field_openTime">Open Time</label>
-                    <div class="d-flex">
-                        <input id="field_openTime" type="datetime-local" class="form-control" name="openTime" [(ngModel)]="openTime"
-                        />
-                    </div>
+                    <input type="number" class="form-control" name="openTime" id="field_openTime"
+                        [(ngModel)]="partner.openTime" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="homespaApp.partner.closeTime" for="field_closeTime">Close Time</label>
-                    <div class="d-flex">
-                        <input id="field_closeTime" type="datetime-local" class="form-control" name="closeTime" [(ngModel)]="closeTime"
-                        />
-                    </div>
+                    <input type="number" class="form-control" name="closeTime" id="field_closeTime"
+                        [(ngModel)]="partner.closeTime" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="homespaApp.partner.isWeekendOpen" for="field_isWeekendOpen">Is Weekend Open</label>
@@ -79,9 +80,9 @@
                         [(ngModel)]="partner.status" />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homespaApp.partner.timeConfirm" for="field_timeConfirm">Time Confirm</label>
-                    <input type="text" class="form-control" name="timeConfirm" id="field_timeConfirm"
-                        [(ngModel)]="partner.timeConfirm" />
+                    <label class="form-control-label" jhiTranslate="homespaApp.partner.confirmAfter" for="field_confirmAfter">Confirm After</label>
+                    <input type="number" class="form-control" name="confirmAfter" id="field_confirmAfter"
+                        [(ngModel)]="partner.confirmAfter" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="homespaApp.partner.bussinessLicenseUrl" for="field_bussinessLicenseUrl">Bussiness License Url</label>
@@ -89,12 +90,6 @@
                         [(ngModel)]="partner.bussinessLicenseUrl" />
                 </div>
 
-                <div class="form-group">
-                    <label jhiTranslate="homespaApp.partner.category" for="field_category">Category</label>
-                    <select class="form-control" id="field_category" multiple name="category" [(ngModel)]="partner.categories">
-                        <option [ngValue]="getSelected(partner.categories, categoryOption)" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.category}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

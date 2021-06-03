@@ -16,15 +16,17 @@
             "detail": {
                 "title": "Treatment"
             },
+            "serviceId": "Service Id",
             "name": "Name",
             "status": "Status",
             "duration": "Duration",
             "price": "Price",
             "discount": "Discount",
             "description": "Description",
-            "serv": "Serv",
-            "staff": "Staff",
-            "booking": "Booking"
+            "createdBy": "Created By",
+            "createdDate": "Created Date",
+            "lastModifiedBy": "Last Modified By",
+            "lastModifiedDate": "Last Modified Date"
         }
     }
 }

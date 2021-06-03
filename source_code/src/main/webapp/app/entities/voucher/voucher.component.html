@@ -15,26 +15,36 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="partnerId"><span jhiTranslate="homespaApp.voucher.partnerId">Partner Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="name"><span jhiTranslate="homespaApp.voucher.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="type"><span jhiTranslate="homespaApp.voucher.type">Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="discription"><span jhiTranslate="homespaApp.voucher.discription">Discription</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="discount"><span jhiTranslate="homespaApp.voucher.discount">Discount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="partner.id"><span jhiTranslate="homespaApp.voucher.partner">Partner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="priceAbove"><span jhiTranslate="homespaApp.voucher.priceAbove">Price Above</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="maxDiscount"><span jhiTranslate="homespaApp.voucher.maxDiscount">Max Discount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="homespaApp.voucher.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdBy"><span jhiTranslate="homespaApp.voucher.createdBy">Created By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdDate"><span jhiTranslate="homespaApp.voucher.createdDate">Created Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedBy"><span jhiTranslate="homespaApp.voucher.lastModifiedBy">Last Modified By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedDate"><span jhiTranslate="homespaApp.voucher.lastModifiedDate">Last Modified Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let voucher of vouchers ;trackBy: trackId">
                 <td><a [routerLink]="['/voucher', voucher.id, 'view' ]">{{voucher.id}}</a></td>
+                <td>{{voucher.partnerId}}</td>
                 <td>{{voucher.name}}</td>
                 <td>{{voucher.type}}</td>
                 <td>{{voucher.discription}}</td>
                 <td>{{voucher.discount}}</td>
-                <td>
-                    <div *ngIf="voucher.partner">
-                        <a [routerLink]="['../partner', voucher.partner?.id, 'view' ]" >{{voucher.partner?.id}}</a>
-                    </div>
-                </td>
+                <td>{{voucher.priceAbove}}</td>
+                <td>{{voucher.maxDiscount}}</td>
+                <td>{{voucher.status}}</td>
+                <td>{{voucher.createdBy}}</td>
+                <td>{{voucher.createdDate | date:'medium'}}</td>
+                <td>{{voucher.lastModifiedBy}}</td>
+                <td>{{voucher.lastModifiedDate | date:'medium'}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

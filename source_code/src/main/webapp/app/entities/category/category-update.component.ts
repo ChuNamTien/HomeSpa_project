@@ -2,14 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { JhiAlertService } from 'ng-jhipster';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from './category.service';
-import { IPartner } from 'app/shared/model/partner.model';
-import { PartnerService } from 'app/entities/partner';
-import { IStaff } from 'app/shared/model/staff.model';
-import { StaffService } from 'app/entities/staff';
 
 @Component({
     selector: 'jhi-category-update',
@@ -18,36 +15,18 @@ import { StaffService } from 'app/entities/staff';
 export class CategoryUpdateComponent implements OnInit {
     category: ICategory;
     isSaving: boolean;
+    createdDate: string;
+    lastModifiedDate: string;
 
-    partners: IPartner[];
-
-    staff: IStaff[];
-
-    constructor(
-        private jhiAlertService: JhiAlertService,
-        private categoryService: CategoryService,
-        private partnerService: PartnerService,
-        private staffService: StaffService,
-        private activatedRoute: ActivatedRoute
-    ) {}
+    constructor(private categoryService: CategoryService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ category }) => {
             this.category = category;
+            this.createdDate = this.category.createdDate != null ? this.category.createdDate.format(DATE_TIME_FORMAT) : null;
+            this.lastModifiedDate = this.category.lastModifiedDate != null ? this.category.lastModifiedDate.format(DATE_TIME_FORMAT) : null;
         });
-        this.partnerService.query().subscribe(
-            (res: HttpResponse<IPartner[]>) => {
-                this.partners = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
-        this.staffService.query().subscribe(
-            (res: HttpResponse<IStaff[]>) => {
-                this.staff = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
     }
 
     previousState() {
@@ -56,6 +35,8 @@ export class CategoryUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        this.category.createdDate = this.createdDate != null ? moment(this.createdDate, DATE_TIME_FORMAT) : null;
+        this.category.lastModifiedDate = this.lastModifiedDate != null ? moment(this.lastModifiedDate, DATE_TIME_FORMAT) : null;
         if (this.category.id !== undefined) {
             this.subscribeToSaveResponse(this.categoryService.update(this.category));
         } else {
@@ -74,28 +55,5 @@ export class CategoryUpdateComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
-    }
-
-    private onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackPartnerById(index: number, item: IPartner) {
-        return item.id;
-    }
-
-    trackStaffById(index: number, item: IStaff) {
-        return item.id;
-    }
-
-    getSelected(selectedVals: Array<any>, option: any) {
-        if (selectedVals) {
-            for (let i = 0; i < selectedVals.length; i++) {
-                if (option.id === selectedVals[i].id) {
-                    return selectedVals[i];
-                }
-            }
-        }
-        return option;
     }
 }

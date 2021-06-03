@@ -16,6 +16,7 @@
             "detail": {
                 "title": "Partner"
             },
+            "userId": "User Id",
             "name": "Name",
             "partnerType": "Partner Type",
             "customerType": "Customer Type",
@@ -29,13 +30,8 @@
             "closeTime": "Close Time",
             "isWeekendOpen": "Is Weekend Open",
             "status": "Status",
-            "timeConfirm": "Time Confirm",
-            "bussinessLicenseUrl": "Bussiness License Url",
-            "partnerImg": "Partner Img",
-            "staff": "Staff",
-            "serv": "Serv",
-            "voucher": "Voucher",
-            "category": "Category"
+            "confirmAfter": "Confirm After",
+            "bussinessLicenseUrl": "Bussiness License Url"
         }
     }
 }

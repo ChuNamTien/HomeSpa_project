@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -40,6 +42,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = HomespaApp.class)
 public class TreatmentResourceIntTest {
 
+    private static final Long DEFAULT_SERVICE_ID = 1L;
+    private static final Long UPDATED_SERVICE_ID = 2L;
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -57,6 +62,18 @@ public class TreatmentResourceIntTest {
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
+
+    private static final Instant DEFAULT_CREATED_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Instant DEFAULT_LAST_MODIFIED_BY = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_LAST_MODIFIED_BY = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Instant DEFAULT_LAST_MODIFIED_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_LAST_MODIFIED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private TreatmentRepository treatmentRepository;
@@ -99,12 +116,17 @@ public class TreatmentResourceIntTest {
      */
     public static Treatment createEntity(EntityManager em) {
         Treatment treatment = new Treatment()
+            .serviceId(DEFAULT_SERVICE_ID)
             .name(DEFAULT_NAME)
             .status(DEFAULT_STATUS)
             .duration(DEFAULT_DURATION)
             .price(DEFAULT_PRICE)
             .discount(DEFAULT_DISCOUNT)
-            .description(DEFAULT_DESCRIPTION);
+            .description(DEFAULT_DESCRIPTION)
+            .createdBy(DEFAULT_CREATED_BY)
+            .createdDate(DEFAULT_CREATED_DATE)
+            .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY)
+            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE);
         return treatment;
     }
 
@@ -128,12 +150,17 @@ public class TreatmentResourceIntTest {
         List<Treatment> treatmentList = treatmentRepository.findAll();
         assertThat(treatmentList).hasSize(databaseSizeBeforeCreate + 1);
         Treatment testTreatment = treatmentList.get(treatmentList.size() - 1);
+        assertThat(testTreatment.getServiceId()).isEqualTo(DEFAULT_SERVICE_ID);
         assertThat(testTreatment.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testTreatment.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testTreatment.getDuration()).isEqualTo(DEFAULT_DURATION);
         assertThat(testTreatment.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testTreatment.getDiscount()).isEqualTo(DEFAULT_DISCOUNT);
         assertThat(testTreatment.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testTreatment.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
+        assertThat(testTreatment.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
+        assertThat(testTreatment.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
+        assertThat(testTreatment.getLastModifiedDate()).isEqualTo(DEFAULT_LAST_MODIFIED_DATE);
     }
 
     @Test
@@ -166,12 +193,17 @@ public class TreatmentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(treatment.getId().intValue())))
+            .andExpect(jsonPath("$.[*].serviceId").value(hasItem(DEFAULT_SERVICE_ID.intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION.doubleValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
             .andExpect(jsonPath("$.[*].discount").value(hasItem(DEFAULT_DISCOUNT.doubleValue())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
+            .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY.toString())))
+            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())));
     }
     
     @Test
@@ -185,12 +217,17 @@ public class TreatmentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(treatment.getId().intValue()))
+            .andExpect(jsonPath("$.serviceId").value(DEFAULT_SERVICE_ID.intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION.doubleValue()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
             .andExpect(jsonPath("$.discount").value(DEFAULT_DISCOUNT.doubleValue()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY.toString()))
+            .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
+            .andExpect(jsonPath("$.lastModifiedBy").value(DEFAULT_LAST_MODIFIED_BY.toString()))
+            .andExpect(jsonPath("$.lastModifiedDate").value(DEFAULT_LAST_MODIFIED_DATE.toString()));
     }
 
     @Test
@@ -214,12 +251,17 @@ public class TreatmentResourceIntTest {
         // Disconnect from session so that the updates on updatedTreatment are not directly saved in db
         em.detach(updatedTreatment);
         updatedTreatment
+            .serviceId(UPDATED_SERVICE_ID)
             .name(UPDATED_NAME)
             .status(UPDATED_STATUS)
             .duration(UPDATED_DURATION)
             .price(UPDATED_PRICE)
             .discount(UPDATED_DISCOUNT)
-            .description(UPDATED_DESCRIPTION);
+            .description(UPDATED_DESCRIPTION)
+            .createdBy(UPDATED_CREATED_BY)
+            .createdDate(UPDATED_CREATED_DATE)
+            .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
 
         restTreatmentMockMvc.perform(put("/api/treatments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -230,12 +272,17 @@ public class TreatmentResourceIntTest {
         List<Treatment> treatmentList = treatmentRepository.findAll();
         assertThat(treatmentList).hasSize(databaseSizeBeforeUpdate);
         Treatment testTreatment = treatmentList.get(treatmentList.size() - 1);
+        assertThat(testTreatment.getServiceId()).isEqualTo(UPDATED_SERVICE_ID);
         assertThat(testTreatment.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testTreatment.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testTreatment.getDuration()).isEqualTo(UPDATED_DURATION);
         assertThat(testTreatment.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testTreatment.getDiscount()).isEqualTo(UPDATED_DISCOUNT);
         assertThat(testTreatment.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testTreatment.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
+        assertThat(testTreatment.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
+        assertThat(testTreatment.getLastModifiedBy()).isEqualTo(UPDATED_LAST_MODIFIED_BY);
+        assertThat(testTreatment.getLastModifiedDate()).isEqualTo(UPDATED_LAST_MODIFIED_DATE);
     }
 
     @Test

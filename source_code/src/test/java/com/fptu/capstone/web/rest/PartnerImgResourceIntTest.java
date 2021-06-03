@@ -40,6 +40,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = HomespaApp.class)
 public class PartnerImgResourceIntTest {
 
+    private static final Long DEFAULT_PARTNER_ID = 1L;
+    private static final Long UPDATED_PARTNER_ID = 2L;
+
     private static final String DEFAULT_IMG_URL = "AAAAAAAAAA";
     private static final String UPDATED_IMG_URL = "BBBBBBBBBB";
 
@@ -90,6 +93,7 @@ public class PartnerImgResourceIntTest {
      */
     public static PartnerImg createEntity(EntityManager em) {
         PartnerImg partnerImg = new PartnerImg()
+            .partnerId(DEFAULT_PARTNER_ID)
             .imgUrl(DEFAULT_IMG_URL)
             .isHiddent(DEFAULT_IS_HIDDENT)
             .index(DEFAULT_INDEX);
@@ -116,6 +120,7 @@ public class PartnerImgResourceIntTest {
         List<PartnerImg> partnerImgList = partnerImgRepository.findAll();
         assertThat(partnerImgList).hasSize(databaseSizeBeforeCreate + 1);
         PartnerImg testPartnerImg = partnerImgList.get(partnerImgList.size() - 1);
+        assertThat(testPartnerImg.getPartnerId()).isEqualTo(DEFAULT_PARTNER_ID);
         assertThat(testPartnerImg.getImgUrl()).isEqualTo(DEFAULT_IMG_URL);
         assertThat(testPartnerImg.isIsHiddent()).isEqualTo(DEFAULT_IS_HIDDENT);
         assertThat(testPartnerImg.getIndex()).isEqualTo(DEFAULT_INDEX);
@@ -151,6 +156,7 @@ public class PartnerImgResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(partnerImg.getId().intValue())))
+            .andExpect(jsonPath("$.[*].partnerId").value(hasItem(DEFAULT_PARTNER_ID.intValue())))
             .andExpect(jsonPath("$.[*].imgUrl").value(hasItem(DEFAULT_IMG_URL.toString())))
             .andExpect(jsonPath("$.[*].isHiddent").value(hasItem(DEFAULT_IS_HIDDENT.booleanValue())))
             .andExpect(jsonPath("$.[*].index").value(hasItem(DEFAULT_INDEX.intValue())));
@@ -167,6 +173,7 @@ public class PartnerImgResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(partnerImg.getId().intValue()))
+            .andExpect(jsonPath("$.partnerId").value(DEFAULT_PARTNER_ID.intValue()))
             .andExpect(jsonPath("$.imgUrl").value(DEFAULT_IMG_URL.toString()))
             .andExpect(jsonPath("$.isHiddent").value(DEFAULT_IS_HIDDENT.booleanValue()))
             .andExpect(jsonPath("$.index").value(DEFAULT_INDEX.intValue()));
@@ -193,6 +200,7 @@ public class PartnerImgResourceIntTest {
         // Disconnect from session so that the updates on updatedPartnerImg are not directly saved in db
         em.detach(updatedPartnerImg);
         updatedPartnerImg
+            .partnerId(UPDATED_PARTNER_ID)
             .imgUrl(UPDATED_IMG_URL)
             .isHiddent(UPDATED_IS_HIDDENT)
             .index(UPDATED_INDEX);
@@ -206,6 +214,7 @@ public class PartnerImgResourceIntTest {
         List<PartnerImg> partnerImgList = partnerImgRepository.findAll();
         assertThat(partnerImgList).hasSize(databaseSizeBeforeUpdate);
         PartnerImg testPartnerImg = partnerImgList.get(partnerImgList.size() - 1);
+        assertThat(testPartnerImg.getPartnerId()).isEqualTo(UPDATED_PARTNER_ID);
         assertThat(testPartnerImg.getImgUrl()).isEqualTo(UPDATED_IMG_URL);
         assertThat(testPartnerImg.isIsHiddent()).isEqualTo(UPDATED_IS_HIDDENT);
         assertThat(testPartnerImg.getIndex()).isEqualTo(UPDATED_INDEX);

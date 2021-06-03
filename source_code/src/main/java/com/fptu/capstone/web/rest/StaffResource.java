@@ -3,7 +3,6 @@ package com.fptu.capstone.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.fptu.capstone.domain.Staff;
 import com.fptu.capstone.service.StaffService;
-import com.fptu.capstone.service.dto.StaffDTO;
 import com.fptu.capstone.web.rest.errors.BadRequestAlertException;
 import com.fptu.capstone.web.rest.util.HeaderUtil;
 import com.fptu.capstone.web.rest.util.PaginationUtil;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -86,20 +85,14 @@ public class StaffResource {
      * GET  /staff : get all the staff.
      *
      * @param pageable the pagination information
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of staff in body
      */
     @GetMapping("/staff")
     @Timed
-    public ResponseEntity<List<Staff>> getAllStaff(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public ResponseEntity<List<Staff>> getAllStaff(Pageable pageable) {
         log.debug("REST request to get a page of Staff");
-        Page<Staff> page;
-        if (eagerload) {
-            page = staffService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = staffService.findAll(pageable);
-        }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/staff?eagerload=%b", eagerload));
+        Page<Staff> page = staffService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/staff");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -130,13 +123,4 @@ public class StaffResource {
         staffService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-    
-    // LamDT9 Start
-    @GetMapping("/staff/get-all-staff-by-partner-id")
-    public ResponseEntity<List<StaffDTO>> getAllStaffByPartnerId(@RequestParam("partnerId") Long partnerId) {
-    	List<StaffDTO> lstObj = new ArrayList();
-    	lstObj = staffService.getAllStaffByPartnerId(partnerId);
-        return new ResponseEntity<>(lstObj, HttpStatus.OK);
-    }
-    // LamDT9 End
 }

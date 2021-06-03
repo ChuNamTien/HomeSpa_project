@@ -4,12 +4,9 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiAlertService } from 'ng-jhipster';
 
 import { ICustomer } from 'app/shared/model/customer.model';
 import { CustomerService } from './customer.service';
-import { IVoucher } from 'app/shared/model/voucher.model';
-import { VoucherService } from 'app/entities/voucher';
 
 @Component({
     selector: 'jhi-customer-update',
@@ -18,16 +15,9 @@ import { VoucherService } from 'app/entities/voucher';
 export class CustomerUpdateComponent implements OnInit {
     customer: ICustomer;
     isSaving: boolean;
-
-    vouchers: IVoucher[];
     dob: string;
 
-    constructor(
-        private jhiAlertService: JhiAlertService,
-        private customerService: CustomerService,
-        private voucherService: VoucherService,
-        private activatedRoute: ActivatedRoute
-    ) {}
+    constructor(private customerService: CustomerService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.isSaving = false;
@@ -35,12 +25,6 @@ export class CustomerUpdateComponent implements OnInit {
             this.customer = customer;
             this.dob = this.customer.dob != null ? this.customer.dob.format(DATE_TIME_FORMAT) : null;
         });
-        this.voucherService.query().subscribe(
-            (res: HttpResponse<IVoucher[]>) => {
-                this.vouchers = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
     }
 
     previousState() {
@@ -68,24 +52,5 @@ export class CustomerUpdateComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
-    }
-
-    private onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackVoucherById(index: number, item: IVoucher) {
-        return item.id;
-    }
-
-    getSelected(selectedVals: Array<any>, option: any) {
-        if (selectedVals) {
-            for (let i = 0; i < selectedVals.length; i++) {
-                if (option.id === selectedVals[i].id) {
-                    return selectedVals[i];
-                }
-            }
-        }
-        return option;
     }
 }

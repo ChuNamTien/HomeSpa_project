@@ -1,13 +1,14 @@
-import { IPartner } from 'app/shared/model//partner.model';
-import { IStaff } from 'app/shared/model//staff.model';
+import { Moment } from 'moment';
 
 export interface ICategory {
     id?: number;
     name?: string;
     imgUrl?: string;
     status?: string;
-    partners?: IPartner[];
-    staff?: IStaff[];
+    createdBy?: string;
+    createdDate?: Moment;
+    lastModifiedBy?: string;
+    lastModifiedDate?: Moment;
 }
 
 export class Category implements ICategory {
@@ -16,7 +17,9 @@ export class Category implements ICategory {
         public name?: string,
         public imgUrl?: string,
         public status?: string,
-        public partners?: IPartner[],
-        public staff?: IStaff[]
+        public createdBy?: string,
+        public createdDate?: Moment,
+        public lastModifiedBy?: string,
+        public lastModifiedDate?: Moment
     ) {}
 }

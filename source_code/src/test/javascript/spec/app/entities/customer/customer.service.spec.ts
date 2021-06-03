@@ -25,7 +25,7 @@ describe('Service Tests', () => {
             httpMock = injector.get(HttpTestingController);
             currentDate = moment();
 
-            elemDefault = new Customer(0, currentDate, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', false);
+            elemDefault = new Customer(0, 0, currentDate, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', false);
         });
 
         describe('Service methods', async () => {
@@ -70,6 +70,7 @@ describe('Service Tests', () => {
             it('should update a Customer', async () => {
                 const returnedFromService = Object.assign(
                     {
+                        userId: 1,
                         dob: currentDate.format(DATE_TIME_FORMAT),
                         phone: 'BBBBBB',
                         address: 'BBBBBB',
@@ -97,6 +98,7 @@ describe('Service Tests', () => {
             it('should return a list of Customer', async () => {
                 const returnedFromService = Object.assign(
                     {
+                        userId: 1,
                         dob: currentDate.format(DATE_TIME_FORMAT),
                         phone: 'BBBBBB',
                         address: 'BBBBBB',

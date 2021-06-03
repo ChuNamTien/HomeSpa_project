@@ -5,6 +5,10 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homespaApp.partnerImg.partnerId">Partner Id</span></dt>
+                <dd>
+                    <span>{{partnerImg.partnerId}}</span>
+                </dd>
                 <dt><span jhiTranslate="homespaApp.partnerImg.imgUrl">Img Url</span></dt>
                 <dd>
                     <span>{{partnerImg.imgUrl}}</span>
@@ -16,12 +20,6 @@
                 <dt><span jhiTranslate="homespaApp.partnerImg.index">Index</span></dt>
                 <dd>
                     <span>{{partnerImg.index}}</span>
-                </dd>
-                <dt><span jhiTranslate="homespaApp.partnerImg.partner">Partner</span></dt>
-                <dd>
-                    <div *ngIf="partnerImg.partner">
-                        <a [routerLink]="['/partner', partnerImg.partner?.id, 'view']">{{partnerImg.partner?.id}}</a>
-                    </div>
                 </dd>
             </dl>
 

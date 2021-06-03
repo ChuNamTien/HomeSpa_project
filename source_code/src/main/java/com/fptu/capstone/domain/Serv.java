@@ -1,13 +1,10 @@
 package com.fptu.capstone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -15,13 +12,16 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "serv")
-public class Serv extends AbstractAuditingEntity implements Serializable {
+public class Serv implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "category_id")
+    private Long categoryId;
 
     @Column(name = "name")
     private String name;
@@ -32,17 +32,17 @@ public class Serv extends AbstractAuditingEntity implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "serv")
-    private Set<ServImg> servImgs = new HashSet<>();
-    @OneToMany(mappedBy = "serv")
-    private Set<Treatment> treatments = new HashSet<>();
-    @ManyToOne
-    @JsonIgnoreProperties("servs")
-    private Partner partner;
+    @Column(name = "created_by")
+    private String createdBy;
 
-    @ManyToMany(mappedBy = "servs")
-    @JsonIgnore
-    private Set<Voucher> vouchers = new HashSet<>();
+    @Column(name = "created_date")
+    private Instant createdDate;
+
+    @Column(name = "last_modified_by")
+    private String lastModifiedBy;
+
+    @Column(name = "last_modified_date")
+    private Instant lastModifiedDate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -51,6 +51,19 @@ public class Serv extends AbstractAuditingEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public Serv categoryId(Long categoryId) {
+        this.categoryId = categoryId;
+        return this;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getName() {
@@ -92,92 +105,56 @@ public class Serv extends AbstractAuditingEntity implements Serializable {
         this.description = description;
     }
 
-    public Set<ServImg> getServImgs() {
-        return servImgs;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public Serv servImgs(Set<ServImg> servImgs) {
-        this.servImgs = servImgs;
+    public Serv createdBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
     }
 
-    public Serv addServImg(ServImg servImg) {
-        this.servImgs.add(servImg);
-        servImg.setServ(this);
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public Serv createdDate(Instant createdDate) {
+        this.createdDate = createdDate;
         return this;
     }
 
-    public Serv removeServImg(ServImg servImg) {
-        this.servImgs.remove(servImg);
-        servImg.setServ(null);
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public Serv lastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
         return this;
     }
 
-    public void setServImgs(Set<ServImg> servImgs) {
-        this.servImgs = servImgs;
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Set<Treatment> getTreatments() {
-        return treatments;
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public Serv treatments(Set<Treatment> treatments) {
-        this.treatments = treatments;
+    public Serv lastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
         return this;
     }
 
-    public Serv addTreatment(Treatment treatment) {
-        this.treatments.add(treatment);
-        treatment.setServ(this);
-        return this;
-    }
-
-    public Serv removeTreatment(Treatment treatment) {
-        this.treatments.remove(treatment);
-        treatment.setServ(null);
-        return this;
-    }
-
-    public void setTreatments(Set<Treatment> treatments) {
-        this.treatments = treatments;
-    }
-
-    public Partner getPartner() {
-        return partner;
-    }
-
-    public Serv partner(Partner partner) {
-        this.partner = partner;
-        return this;
-    }
-
-    public void setPartner(Partner partner) {
-        this.partner = partner;
-    }
-
-    public Set<Voucher> getVouchers() {
-        return vouchers;
-    }
-
-    public Serv vouchers(Set<Voucher> vouchers) {
-        this.vouchers = vouchers;
-        return this;
-    }
-
-    public Serv addVoucher(Voucher voucher) {
-        this.vouchers.add(voucher);
-        voucher.getServs().add(this);
-        return this;
-    }
-
-    public Serv removeVoucher(Voucher voucher) {
-        this.vouchers.remove(voucher);
-        voucher.getServs().remove(this);
-        return this;
-    }
-
-    public void setVouchers(Set<Voucher> vouchers) {
-        this.vouchers = vouchers;
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -205,9 +182,14 @@ public class Serv extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "Serv{" +
             "id=" + getId() +
+            ", categoryId=" + getCategoryId() +
             ", name='" + getName() + "'" +
             ", customerType='" + getCustomerType() + "'" +
             ", description='" + getDescription() + "'" +
+            ", createdBy='" + getCreatedBy() + "'" +
+            ", createdDate='" + getCreatedDate() + "'" +
+            ", lastModifiedBy='" + getLastModifiedBy() + "'" +
+            ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             "}";
     }
 }

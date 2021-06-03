@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -40,6 +42,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = HomespaApp.class)
 public class ServResourceIntTest {
 
+    private static final Long DEFAULT_CATEGORY_ID = 1L;
+    private static final Long UPDATED_CATEGORY_ID = 2L;
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -48,6 +53,18 @@ public class ServResourceIntTest {
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
+
+    private static final Instant DEFAULT_CREATED_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final String DEFAULT_LAST_MODIFIED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_LAST_MODIFIED_BY = "BBBBBBBBBB";
+
+    private static final Instant DEFAULT_LAST_MODIFIED_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_LAST_MODIFIED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private ServRepository servRepository;
@@ -90,9 +107,14 @@ public class ServResourceIntTest {
      */
     public static Serv createEntity(EntityManager em) {
         Serv serv = new Serv()
+            .categoryId(DEFAULT_CATEGORY_ID)
             .name(DEFAULT_NAME)
             .customerType(DEFAULT_CUSTOMER_TYPE)
-            .description(DEFAULT_DESCRIPTION);
+            .description(DEFAULT_DESCRIPTION)
+            .createdBy(DEFAULT_CREATED_BY)
+            .createdDate(DEFAULT_CREATED_DATE)
+            .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY)
+            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE);
         return serv;
     }
 
@@ -116,9 +138,14 @@ public class ServResourceIntTest {
         List<Serv> servList = servRepository.findAll();
         assertThat(servList).hasSize(databaseSizeBeforeCreate + 1);
         Serv testServ = servList.get(servList.size() - 1);
+        assertThat(testServ.getCategoryId()).isEqualTo(DEFAULT_CATEGORY_ID);
         assertThat(testServ.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testServ.getCustomerType()).isEqualTo(DEFAULT_CUSTOMER_TYPE);
         assertThat(testServ.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testServ.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
+        assertThat(testServ.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
+        assertThat(testServ.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
+        assertThat(testServ.getLastModifiedDate()).isEqualTo(DEFAULT_LAST_MODIFIED_DATE);
     }
 
     @Test
@@ -151,9 +178,14 @@ public class ServResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(serv.getId().intValue())))
+            .andExpect(jsonPath("$.[*].categoryId").value(hasItem(DEFAULT_CATEGORY_ID.intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].customerType").value(hasItem(DEFAULT_CUSTOMER_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
+            .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY.toString())))
+            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())));
     }
     
     @Test
@@ -167,9 +199,14 @@ public class ServResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(serv.getId().intValue()))
+            .andExpect(jsonPath("$.categoryId").value(DEFAULT_CATEGORY_ID.intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.customerType").value(DEFAULT_CUSTOMER_TYPE.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY.toString()))
+            .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
+            .andExpect(jsonPath("$.lastModifiedBy").value(DEFAULT_LAST_MODIFIED_BY.toString()))
+            .andExpect(jsonPath("$.lastModifiedDate").value(DEFAULT_LAST_MODIFIED_DATE.toString()));
     }
 
     @Test
@@ -193,9 +230,14 @@ public class ServResourceIntTest {
         // Disconnect from session so that the updates on updatedServ are not directly saved in db
         em.detach(updatedServ);
         updatedServ
+            .categoryId(UPDATED_CATEGORY_ID)
             .name(UPDATED_NAME)
             .customerType(UPDATED_CUSTOMER_TYPE)
-            .description(UPDATED_DESCRIPTION);
+            .description(UPDATED_DESCRIPTION)
+            .createdBy(UPDATED_CREATED_BY)
+            .createdDate(UPDATED_CREATED_DATE)
+            .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
 
         restServMockMvc.perform(put("/api/servs")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -206,9 +248,14 @@ public class ServResourceIntTest {
         List<Serv> servList = servRepository.findAll();
         assertThat(servList).hasSize(databaseSizeBeforeUpdate);
         Serv testServ = servList.get(servList.size() - 1);
+        assertThat(testServ.getCategoryId()).isEqualTo(UPDATED_CATEGORY_ID);
         assertThat(testServ.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testServ.getCustomerType()).isEqualTo(UPDATED_CUSTOMER_TYPE);
         assertThat(testServ.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testServ.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
+        assertThat(testServ.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
+        assertThat(testServ.getLastModifiedBy()).isEqualTo(UPDATED_LAST_MODIFIED_BY);
+        assertThat(testServ.getLastModifiedDate()).isEqualTo(UPDATED_LAST_MODIFIED_DATE);
     }
 
     @Test

@@ -1,0 +1,39 @@
+{
+    "name": "BookingActivity",
+    "fields": [
+        {
+            "fieldName": "bookingId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "staffId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "treatmentId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "finishDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20210603084522",
+    "entityTableName": "booking_activity",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
